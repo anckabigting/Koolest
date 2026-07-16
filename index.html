@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koolest | Aircon Cleaning Services</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Koolest</a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#report" style="color: var(--error-red); font-weight: 700;">Report an Issue</a></li>
+                <li><a href="#booking" class="btn btn-yellow" style="padding: 10px 20px;">Book Now</a></li>
+            </ul>
+        </div>
+
+        <div class="bars-animation">
+            <div class="bar" style="--i:6;"></div>
+            <div class="bar" style="--i:5;"></div>
+            <div class="bar" style="--i:4;"></div>
+            <div class="bar" style="--i:3;"></div>
+            <div class="bar" style="--i:2;"></div>
+            <div class="bar" style="--i:1;"></div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1>Because a dirty aircon blows. <span>Literally.</span></h1>
+                <p>We flush out bacteria, dust, and stubborn clogs so you can breathe pristine air and slash up to 30% off your monthly power bills.</p>
+                <a href="#booking" class="btn btn-yellow">Book a Clean Breeze</a>
+                <div class="hero-badges">
+                    <div class="badge">Eco-Friendly Flush</div>
+                    <div class="badge">100% Mess-Free Guarantee</div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/600x450/20b2aa/ffffff?text=Pristine+Aircon+Cleaning" alt="Koolest Professional Cleaning Process">
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our Specialized Air Care</h2>
+            <p class="section-subtitle">Transparent pricing, zero shortcuts. Choose the standard refresh or our maximum deep restoration packages.</p>
+            
+            <div class="efficiency-banner">
+                <div class="efficiency-text">
+                    <h3>Is your aircon running a fever?</h3>
+                    <p>Clogged cooling coils force your compressor to run double-time. Routine maintenance directly drops electricity usage.</p>
+                </div>
+                <a href="#booking" class="btn btn-yellow">Save on Bills</a>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/400x250/20b2aa/ffffff?text=General+Cleaning" alt="General Filter Cleaning" class="service-img">
+                    <div class="service-content">
+                        <span class="service-tag">Routine Maintenance</span>
+                        <h3>General Filter Refresh</h3>
+                        <p>Perfect for quarterly upkeep. We perform a deep casing scrub, filter pressure wash, and a structural systemic checklist evaluation to prevent future water leaks.</p>
+                        <a href="#booking" class="btn btn-green">Book This Service</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/400x250/20b2aa/ffffff?text=Chemical+Deep+Wash" alt="Deep Chemical Wash" class="service-img">
+                    <div class="service-content">
+                        <span class="service-tag">Deep Restoration</span>
+                        <h3>Hydro-Chemical Flush</h3>
+                        <p>For systems that blow weak air or emit a stale smell. Uses specialized biodegradable solutions to dissolve deeply embedded mold, jelly clogs, and dust blankets completely.</p>
+                        <a href="#booking" class="btn btn-green">Book This Service</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/400x250/20b2aa/ffffff?text=System+Diagnostics" alt="System Diagnostics" class="service-img">
+                    <div class="service-content">
+                        <span class="service-tag">Repairs & Diagnosis</span>
+                        <h3>Full Health Assessment</h3>
+                        <p>Is your unit making strange rattling noises or refusing to cool down? We inspect system electrical parts, check refrigerant pressure levels, and secure mechanical brackets.</p>
+                        <a href="#booking" class="btn btn-green">Book This Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="booking-section">
+        <div class="container">
+            <div class="booking-card">
+                <h2 class="section-title" style="color: var(--dark-aqua);">Schedule Your Appointment</h2>
+                <p class="section-subtitle">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
+                
+                <form id="bookingForm" action="https://docs.google.com/forms/u/0/d/e/YOUR_BOOKING_FORM_ID_HERE/formResponse" method="POST" target="hidden_iframe">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookName">Full Name</label>
+                            <input type="text" name="entry.111111" id="bookName" class="form-control text-dark-form" placeholder="Jane Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookContact">Contact Number</label>
+                            <input type="tel" name="entry.222222" id="bookContact" class="form-control text-dark-form" placeholder="0917XXXXXXX" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookService">Select Aircon Service</label>
+                            <select name="entry.333333" id="bookService" class="form-control text-dark-form" required>
+                                <option value="" disabled selected>Choose a package...</option>
+                                <option value="General Filter Refresh">General Filter Refresh</option>
+                                <option value="Hydro-Chemical Flush">Hydro-Chemical Flush</option>
+                                <option value="Full Health Assessment">Full Health Assessment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookDate">Preferred Schedule Date</label>
+                            <input type="date" name="entry.444444" id="bookDate" class="form-control text-dark-form" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-yellow btn-large">Secure My Schedule Slot</button>
+                </form>
+                
+                <div id="bookingSuccess" class="success-message-booking">
+                    🎉 Booking Request Received! We've saved your slot. Our customer concierge will text or call you shortly to confirm.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Real Feedback From Chilled Clients</h2>
+            <p class="section-subtitle">See why home and office owners depend on us to keep their indoor air fresh and reliable.</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"My split-type unit was constantly dripping water down my wall. The team arrived on time, wrapped the unit in a specialized plastic jacket, and left everything completely dry. No more leaks!"</p>
+                    <div class="client-name">— Elijah Festin, Bacoor Cavite</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Exceptional service. They clearly explained the difference between a simple filter rinse and their chemical coil flush. Our living room feels like winter again."</p>
+                    <div class="client-name">— Jeonghan, Sa puso q</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Very professional crew. They wore clean indoor footwear protectors and didn't leave a single drop of dirty water on my floor. Highly recommended."</p>
+                    <div class="client-name">— Joanna R., Condo Resident</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-contact">
+                    <h3><span style="--i:3;" data-text="Freshen Up">Freshen Up</span>
+                    <span style="--i:2;" data-text="Book a Clean Breeze">Book a Clean Breeze</span>
+                    <span style="--i:1;" data-text="Book Koolest">Book Koolest</span></h3>
+                    
+                    <p style="color: #a0c4c1; margin-bottom: 24px;">Ready to fix your unit's performance? Reserve your slot now!</p>
+                    <ul class="contact-methods">
+                        <li>📍 Dasmariñas, Cavite, Philippines</li>
+                        <li>📞 Phone: <a href="tel:+639123456789">+63 912 345 6789</a></li>
+                        <li>✉️ Email: <a href="mailto:mekmek_pogi@gmail.com">mekmek_pogi@gmail.com</a></li>
+                        <li>⏰ Operational Hours: Mon - Sat | 8:00 AM - 5:00 PM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-report" id="report">
+                    <h3>Encountered a Problem?</h3>
+                    <p style="color: #cbdad8; margin-bottom: 20px;">Service wasn't up to your standard? Let us know directly. We promise to address the issue within 24 hours.</p>
+                    
+                    <form id="issueForm" action="https://docs.google.com/forms/u/0/d/e/YOUR_PROBLEM_FORM_ID_HERE/formResponse" method="POST" target="hidden_iframe">
+                        <div class="form-group">
+                            <label for="clientName">Your Name</label>
+                            <input type="text" name="entry.555555" id="clientName" class="form-control" placeholder="Jane Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientContact">Contact Number / Email</label>
+                            <input type="text" name="entry.666666" id="clientContact" class="form-control" placeholder="0917XXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="issueDetails">Describe what went wrong</label>
+                            <textarea name="entry.777777" id="issueDetails" class="form-control" placeholder="Please share details (e.g., unit still making sounds, missed area) so we can fix it right away..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-yellow" style="width: 100%; font-weight: 700;">Submit Escalation Report</button>
+                    </form>
+                    
+                    <div id="formSuccess" class="success-message">
+                        Report Received! Our senior service manager has been alerted and will contact you directly within 2 hours to organize a resolution team.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Koolest Aircon Services. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // BOOKING FORM SUBMISSION
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            const form = this;
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('bookingSuccess').style.display = 'block';
+            }, 300);
+        });
+
+        // ESCALATION FORM SUBMISSION
+        document.getElementById('issueForm').addEventListener('submit', function(e) {
+            const form = this;
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

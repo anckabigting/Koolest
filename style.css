@@ -1,0 +1,584 @@
+/* --- BRAND COLOR PALETTE & VARIABLES --- */
+:root {
+    --primary-aqua: #20b2aa;     /* Bright Aqua Blue */
+    --dark-aqua: #0a5c5a;        /* Deep Teal for strong contrast/readable text */
+    --light-aqua: #e6f7f6;       /* Very Soft Aqua Blue for backgrounds */
+    --accent-yellow: #ffbd00;    /* Vibrant Yellow for CTA highlights */
+    --cream: #fffdf6;            /* Warm Cream Base Background */
+    --white: #ffffff;            
+    --text-dark: #2d3748;        /* Deep Charcoal for general body text readability */
+    --light-gray: #fcfbf7;       /* Soft alternate section background */
+    --error-red: #e53e3e;        
+    --font-heading: 'Righteous', cursive;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --footer-bg: #0d413f;        /* Deep Premium Aqua-Navy for Footer */
+}
+
+/* --- BASE STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    background-color: var(--cream);
+    line-height: 1.6;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+section {
+    padding: 80px 0;
+}
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--dark-aqua);
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: 400; /* Righteous does not need heavy bolding */
+    letter-spacing: 0.5px;
+}
+.section-subtitle {
+    text-align: center;
+    color: #5a6e72;
+    max-width: 600px;
+    margin: 0 auto 48px auto;
+    font-size: 1.05rem;
+}
+
+/* --- BUTTON STYLES --- */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+}
+.btn-yellow {
+    background-color: var(--accent-yellow);
+    color: var(--dark-aqua);
+}
+.btn-yellow:hover {
+    background-color: #f2b200;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 189, 0, 0.4);
+}
+.btn-green {
+    background-color: var(--primary-aqua);
+    color: var(--white);
+}
+.btn-green:hover {
+    background-color: var(--dark-aqua);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(32, 178, 170, 0.3);
+}
+.btn-large {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+/* --- HEADER NAVIGATION --- */
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 12px rgba(10, 92, 90, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--dark-aqua);
+    text-decoration: none;
+}
+.logo span {
+    color: var(--accent-yellow);
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    align-items: center;
+}
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+.nav-links a:hover {
+    color: var(--primary-aqua);
+}
+
+/* --- PART 1: HERO SECTION --- */
+.hero {
+    background: linear-gradient(135deg, var(--white) 50%, var(--light-aqua) 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+.hero-text h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    color: var(--dark-aqua);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    font-weight: 400;
+}
+.hero-text h1 span {
+    color: var(--primary-aqua);
+}
+.hero-text p {
+    font-size: 1.15rem;
+    color: #4a5d5e;
+    margin-bottom: 32px;
+}
+.hero-badges {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+/* --- HERO BUTTON SPAN HOVER EFFECT --- */
+.hero-text .btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Spacing between the spans */
+}
+
+/* Base style for each span */
+.hero-text .btn span {
+    position: relative;
+    display: inline-block;
+    color: var(--dark-aqua);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition-delay: calc(0.05s * var(--i)); /* Uses your HTML inline --i variable */
+}
+
+/* Invisible duplicate layer using the HTML data-text attribute */
+.hero-text .btn span::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 100%; /* Positioned directly below the original text */
+    left: 0;
+    width: 100%;
+    color: var(--white); /* Changes to white on hover for contrast */
+    font-weight: 800;
+}
+
+/* Hover state: pushes original text UP out of view, pulls duplicate text UP into view */
+.hero-text .btn:hover span {
+    transform: translateY(-100%);
+}
+
+/* Header Slide Animation Bars */
+.bars-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    z-index: -1;
+}
+.bars-animation .bar {
+    width: 100%;
+    height: 100%;
+    background: var(--light-aqua);
+    transform: translateY(-100%);
+    animation: show-bars .5s ease-in-out forwards;
+    animation-delay: calc(.1s * var(--i));
+}
+@keyframes show-bars {
+   100% {
+    transform: translateY(0%);
+   } 
+}
+
+.badge {
+    background-color: var(--white);
+    border: 1px solid #d1eae8;
+    color: var(--dark-aqua);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(10, 92, 90, 0.04);
+}
+.badge::before {
+    content: "✓";
+    color: var(--primary-aqua);
+    font-weight: 900;
+}
+.hero-image img {
+    width: 100%;
+    border-radius: 20px;
+    border: 6px solid var(--white);
+    box-shadow: 0 20px 40px rgba(10, 92, 90, 0.1);
+}
+
+/* --- PART 2 & 3: SERVICES SECTION --- */
+.services-section {
+    background-color: var(--light-gray);
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
+}
+.service-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(10, 92, 90, 0.03);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    border: 1px solid #f0edf5;
+}
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(10, 92, 90, 0.1);
+}
+.service-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+.service-content {
+    padding: 28px;
+}
+.service-tag {
+    display: inline-block;
+    background-color: var(--light-aqua);
+    color: var(--dark-aqua);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+}
+.service-content h3 {
+    font-family: var(--font-heading);
+    color: var(--dark-aqua);
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+.service-content p {
+    color: #55686b;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+/* --- ENERGY EFFICIENCY CALLOUT --- */
+.efficiency-banner {
+    background: linear-gradient(135deg, var(--dark-aqua) 0%, #154c4a 100%);
+    color: var(--white);
+    padding: 48px;
+    border-radius: 20px;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    box-shadow: 0 12px 30px rgba(10, 92, 90, 0.15);
+}
+.efficiency-text h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--accent-yellow);
+}
+.efficiency-text p {
+    color: #d2ebea;
+    font-size: 1.05rem;
+}
+
+/* --- BOOKING SECTION --- */
+.booking-section {
+    background-color: var(--cream);
+}
+.booking-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--light-aqua);
+    border: 2px solid var(--primary-aqua);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 12px 35px rgba(10, 92, 90, 0.08);
+}
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+/* Specific Style Overrides to make standard text inside cream inputs sharp and legible */
+.text-dark-form {
+    background-color: var(--white) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid #b6dcd9 !important;
+    font-family: var(--font-body) !important; /* Forces highly readable sans-serif */
+}
+.text-dark-form:focus {
+    border-color: var(--dark-aqua) !important;
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.15);
+}
+.success-message-booking {
+    display: none;
+    background-color: var(--dark-aqua);
+    color: var(--white);
+    padding: 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 24px;
+    font-size: 1.1rem;
+}
+
+/* --- PART 4: TESTIMONIALS --- */
+.testimonials-section {
+    background-color: var(--light-gray);
+}
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+.testimonial-card {
+    background-color: var(--white);
+    padding: 36px;
+    border-radius: 16px;
+    border-top: 5px solid var(--accent-yellow);
+    box-shadow: 0 8px 20px rgba(10, 92, 90, 0.03);
+}
+.stars {
+    color: var(--accent-yellow);
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+}
+.testimonial-card p {
+    font-style: italic;
+    color: #435859;
+    margin-bottom: 20px;
+    font-size: 0.98rem;
+}
+.client-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--dark-aqua);
+}
+
+/* --- CONTACT & REPORT (FOOTER) --- */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--white);
+    padding: 80px 0 40px 0;
+    border-top: 8px solid var(--accent-yellow);
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-bottom: 48px;
+}
+/* --- FOOTER HEADING TYPING TEXT LOOP --- */
+.footer-contact h3 {
+    font-size: 1.8rem;
+    position: relative;
+    display: block;          /* Changed to block */
+    height: 45px;            /* Gives enough room for the text height */
+    width: 100%;             /* Let it span the full width of the column */
+    max-width: 350px;        /* Ensures the typing box has plenty of runway to type */
+    margin-bottom: 24px;
+}
+
+/* Stack the three cycling slogan spans directly on top of each other */
+.footer-contact h3 span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    color: transparent; 
+    white-space: nowrap;     /* Forces the text to stay on a single line */
+    user-select: none;
+    animation: display-text 12s linear infinite;
+    animation-delay: calc(-4s * var(--i)); 
+}
+
+/* The active typing text overlay */
+.footer-contact h3 span::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    border-right: 3px solid var(--accent-yellow); 
+    color: var(--accent-yellow); 
+    white-space: nowrap;     /* Crucial: prevents wrapping midway through typing */
+    overflow: hidden;
+    animation: fill-text 4s linear infinite;
+}
+
+/* Loop keyframe: Cycles the visibility of each span sequentially */
+@keyframes display-text {
+    0%, 33.33% {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    33.34%, 100% {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* Typing keyframe: Animates the width from 0 to 100% (typing & holding) */
+@keyframes fill-text {
+    0%, 10%, 100% {
+        width: 0;
+    }
+    70%, 90% {
+        width: 100%; /* Fully typed and held on screen */
+    }
+}
+.contact-methods {
+    list-style: none;
+    margin-bottom: 32px;
+}
+.contact-methods li {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #e2f2f1;
+}
+.contact-methods a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px dotted rgba(255,255,255,0.4);
+    transition: all 0.2s;
+}
+.contact-methods a:hover {
+    color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+}
+
+/* Form Styling inside Dark Footer */
+.form-group {
+    margin-bottom: 16px;
+    width: 100%;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: #cbdad8;
+    font-weight: 500;
+}
+.booking-card label {
+    color: var(--dark-aqua) !important;
+    font-weight: 700;
+}
+.form-control {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #135c59;
+    background-color: #12514e;
+    color: var(--white);
+    font-family: var(--font-body); /* Modern, clean and readable input text */
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+.form-control::placeholder {
+    color: #79aca8;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 0 3px rgba(255, 189, 0, 0.2);
+}
+textarea.form-control {
+    resize: vertical;
+    height: 120px;
+}
+
+.success-message {
+    display: none;
+    background-color: #1a6d6a;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid #14504d;
+    color: #a0c4c1;
+    font-size: 0.85rem;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .hero-grid, .footer-grid, .form-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .booking-card {
+        padding: 24px;
+    }
+    .hero-text h1 {
+        font-size: 2.8rem;
+    }
+    .efficiency-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px;
+    }
+    .nav-links {
+        display: none;
+    }
+}
