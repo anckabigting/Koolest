@@ -137,7 +137,6 @@ header {
 .hero {
     background: linear-gradient(135deg, var(--white) 50%, var(--light-aqua) 100%);
     padding: 40px 0 80px 0; /* Shorter top padding (40px) makes the space under the navbar thinner */
-    padding-top: 40px !important; /* Force this specific top padding */
     position: relative;
     overflow: hidden;
 }
