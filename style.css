@@ -136,10 +136,11 @@ header {
 /* --- PART 1: HERO SECTION --- */
 .hero {
     background: linear-gradient(135deg, var(--white) 50%, var(--light-aqua) 100%);
-    padding: 100px 0;
+    padding: 40px 0 80px 0; /* Shorter top padding (40px) makes the space under the navbar thinner */
     position: relative;
     overflow: hidden;
 }
+
 .hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
