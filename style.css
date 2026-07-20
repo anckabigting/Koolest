@@ -180,61 +180,12 @@ header {
 /* --- FIRST LINE CONFIGURATION --- */
 .hero-text h1 span:first-child::before {
     color: var(--dark-aqua);
-    border-right-color: var(--dark-aqua);
-    animation: loop-first-line 6s linear infinite;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    font-weight: 400;
 }
-
-/* --- SECOND LINE CONFIGURATION ("Literally.") --- */
-.hero-text h1 span:last-child::before {
-    color: var(--accent-yellow); /* Highlight color */
-    border-right-color: var(--accent-yellow);
-    animation: loop-second-line 6s linear infinite;
-}
-
-/* --- KEYFRAMES --- */
-
-/* First line: types instantly, stays fully visible, then resets */
-@keyframes loop-first-line {
-    0% {
-        width: 0;
-            border-right-style: solid;
-    }
-    35% {
-        width: 100%;
-        border-right-style: none; /* Hide cursor as second line starts */
-    }
-    90% {
-        width: 100%;
-        border-right-style: none; /* Hold text on screen */
-    }
-    95%, 100% {
-        width: 0;
-        border-right-style: solid; /* Reset back to start */
-    }
-}
-
-/* Second line: waits for first line, types, stays visible, then resets */
-@keyframes loop-second-line {
-    0%, 35% {
-        width: 0;
-        border-right-style: none; /* Keep hidden while line 1 types */
-    }
-    36% {
-        width: 0;
-        border-right-style: solid; /* Show cursor right before typing */
-    }
-    70% {
-        width: 100%;
-        border-right-style: solid;
-    }
-    71%, 90% {
-        width: 100%;
-        border-right-style: none; /* Hide cursor while holding */
-    }
-    95%, 100% {
-        width: 0;
-        border-right-style: none; /* Reset back to start */
-    }
+.hero-text h1 span {
+    color: var(--primary-aqua);
 }
 .hero-text p {
     font-size: 1.15rem;
