@@ -453,37 +453,92 @@ header {
     font-size: 1.1rem;
 }
 
-/* --- PART 4: TESTIMONIALS --- */
+/* --- PART 4: TESTIMONIALS (INFINITE MARQUEE) --- */
 .testimonials-section {
     background-color: var(--light-gray);
+    overflow: hidden; /* Fallback protection */
 }
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+
+/* Base style for the container to ensure the glow animation looks smooth */
+.marquee-container {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+    border: 2px solid transparent; /* Invisible border placeholder to prevent layout shifting */
+    border-radius: 16px;           /* Rounds the glowing border edges */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition fade-in */
 }
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-testimonials 15s linear infinite;
+}
+
+.marquee-group {
+    display: flex;
+    gap: 24px;       /* Matches your original grid spacing */
+    padding-right: 24px; /* Essential seamless gap spacing */
+}
+
 .testimonial-card {
     background-color: var(--white);
-    padding: 36px;
-    border-radius: 16px;
+    padding: 48px;                 /* Increased padding for a more spacious feel */
+    border-radius: 32px;           /* Noticeably smoother, larger rounded corners */
     border-top: 5px solid var(--accent-yellow);
-    box-shadow: 0 8px 20px rgba(10, 92, 90, 0.03);
+    box-shadow: 0 10px 30px rgba(10, 92, 90, 0.04);
+    
+    /* --- SIZE UPGRADES --- */
+    width: 450px;                  /* Increased card width from 350px to 450px */
+    min-height: 380px;             /* Forces a taller, more substantial box */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes the client name nicely to the bottom */
+    flex-shrink: 0;                /* Prevents cards from squishing */
 }
+
+/* This triggers when hovering anywhere over the marquee zone */
+.testimonial-card:hover {
+    /* 1. Changes the invisible border to a matching glow color */
+    border-color: var(--accent-yellow); 
+    
+    /* 2. Adds the vibrant outer glow effect */
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.6); 
+}
+
+/* Stops the marquee animation on hover */
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+}
+
 .stars {
     color: var(--accent-yellow);
     font-size: 1.3rem;
     margin-bottom: 16px;
 }
+
 .testimonial-card p {
     font-style: italic;
     color: #435859;
     margin-bottom: 20px;
     font-size: 0.98rem;
 }
+
 .client-name {
     font-weight: 700;
     font-size: 0.95rem;
     color: var(--dark-aqua);
+}
+
+/* Smooth linear transformation through exactly half the full track length */
+@keyframes scroll-testimonials {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* --- CONTACT & REPORT (FOOTER) --- */
