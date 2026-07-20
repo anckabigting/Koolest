@@ -148,6 +148,33 @@ header {
     position: relative;
     z-index: 2;
 }
+
+/* --- RESTORED HERO TYPING ANIMATION --- */
+
+.typing-container {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid var(--dark-aqua); /* The blinking cursor line */
+    
+    /* Adjust '3.5s' to change speed, and 'steps(30)' to match total character count */
+    animation: 
+        type-text 3.5s steps(30) infinite alternate,
+        blink-cursor 0.75s step-end infinite;
+}
+
+/* The typing layout motion effect */
+@keyframes type-text {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* The blinking flashing behavior of your cursor */
+@keyframes blink-cursor {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--dark-aqua); }
+}
+
 /* --- HERO HEADING LOOPING TYPING ANIMATION --- */
 .hero-text h1 {
     display: flex;
