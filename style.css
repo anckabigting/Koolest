@@ -329,7 +329,7 @@ header {
     overflow: hidden;
     white-space: nowrap;
     border-right: 4px solid transparent;
-    /* Gradient fill setup */
+    /* Gradient fill set-up */
     background: linear-gradient(135deg, #0b4f48 0%, #10b981 100%);
     -webkit-background-clip: text;
     background-clip: text;
