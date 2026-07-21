@@ -76,3 +76,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealElements.forEach(element => revealObserver.observe(element));
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    // ----------------------------------------------------
+    // 1. REPEATABLE SCROLL REVEAL ANIMATION
+    // ----------------------------------------------------
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add active class when entering viewport
+                entry.target.classList.add("active");
+            } else {
+                // Remove active class when leaving viewport (allows re-triggering)
+                entry.target.classList.remove("active");
+            }
+        });
+    }, {
+        threshold: 0.15, // Triggers when 15% visible
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    revealElements.forEach(element => revealObserver.observe(element));
+});
+

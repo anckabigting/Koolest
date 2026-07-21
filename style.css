@@ -190,6 +190,23 @@ header {
     color: var(--primary-aqua);
 }
 
+/* Active Highlight State */
+.nav-links.nav-active {
+    color: #20b2aa; /* Highlight color (Teal / Aqua) */
+}
+
+/* Optional: Subtle active underline indicator */
+.nav-links.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #20b2aa;
+    border-radius: 2px;
+}
+
 .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
