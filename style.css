@@ -1,7 +1,7 @@
 /* --- BRAND COLOR PALETTE & VARIABLES --- */
 :root {
     --primary-aqua: #20b2aa;     /* Bright Aqua Blue */
-    --dark-aqua: #0a5c5a;        /* Deep Teal for strong contrast/readable text */
+    --dark-aqua: #3f8083;        /* Deep Teal for strong contrast/readable text */
     --light-aqua: #e6f7f6;       /* Very Soft Aqua Blue for backgrounds */
     --accent-yellow: #ffbd00;    /* Vibrant Yellow for CTA highlights */
     --cream: #fffdf6;            /* Warm Cream Base Background */
@@ -11,7 +11,7 @@
     --error-red: #e53e3e;        
     --font-heading: 'Righteous', cursive;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-    --footer-bg: #0d413f;        /* Deep Premium Aqua-Navy for Footer */
+    --footer-bg: #306264;        /* Deep Premium Aqua-Navy for Footer */
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
