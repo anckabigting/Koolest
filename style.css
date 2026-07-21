@@ -304,8 +304,13 @@ header {
     position: relative;
     width: 100%;
     min-height: 80vh; /* Adjust as needed */
-    overflow: hidden; /* Prevents bubbles from causing scrollbars */
-    background: linear-gradient(135deg, #0a5c5a, #20b2aa); /* Example gradient */
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 85vh;
+    
+    /* Subtle diagonal gradient: White top-left to Mint bottom-right */
+    background: linear-gradient(135deg, #ffffff 0%, #f0fafd 40%, #e1f5f4 100%);
 }
 
 /* Container that spans the screen without interfering with user clicks */
@@ -322,19 +327,37 @@ header {
 
 /* 3. Make sure hero content sits above bubbles so buttons are clickable */
 .hero-content {
-    position: relative;
-    z-index: 20;
+    max-width: 1280px;      /* Matches max-w-7xl */
+    margin: 0 auto;         /* Centers the container on large screens */
+    padding: 0 1.5rem;      /* Left and right padding (24px) */
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 3rem;
+    align-items: center;
 }
 
-/* Base style for JS-created particles */
 .breeze-particle {
     position: absolute;
     bottom: -50px;
     border-radius: 50%;
-    /* Visually distinct cyan/teal gradient glow so it pops on light/dark backgrounds */
-    background: radial-gradient(circle, rgba(32, 178, 170, 0.5) 0%, rgba(255, 189, 0, 0.3) 100%);
-    border: 1px solid rgba(32, 178, 170, 0.6);
-    box-shadow: 0 0 10px rgba(32, 178, 170, 0.3);
+    
+    /* 1. Ultra-subtle background fill */
+    background: radial-gradient(
+        circle at 30% 30%, 
+        rgba(255, 255, 255, 0.4) 0%,   /* Soft top-left highlight */
+        rgba(32, 178, 170, 0.08) 60%,  /* Barely visible teal tint */
+        rgba(32, 178, 170, 0.02) 100%
+    );
+
+    /* 2. Delicate glass border */
+    border: 1px solid rgba(32, 178, 170, 0.25);
+
+    /* 3. Soft glow and slight backdrop blur for realism */
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.4), 
+                0 0 6px rgba(32, 178, 170, 0.08);
+    backdrop-filter: blur(1px);
+
     pointer-events: none;
     animation: floatBreeze linear infinite;
 }
@@ -346,16 +369,16 @@ header {
         opacity: 0;
     }
     15% {
-        opacity: 0.85;
+        opacity: 0.55;
     }
     50% {
         transform: translateY(-50vh) translateX(30px) scale(1.05);
     }
     85% {
-        opacity: 0.85;
+        opacity: 0.75;
     }
     100% {
-        transform: translateY(-105vh) translateX(-20px) scale(1.2);
+        transform: translateY(-100vh) translateX(-20px) scale(1.2);
         opacity: 0;
     }
 }
@@ -366,6 +389,15 @@ header {
     align-items: center;
     position: relative;
     z-index: 3;
+}
+
+/* Left Column Styling */
+.hero-text {
+    text-align: left;       /* Ensures left alignment (prevents centered text) */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns buttons and badges strictly to the left */
+    margin-left: 0;              /* Resets any unintended left margin */
 }
 
 /* --- HERO BUTTON SPAN HOVER EFFECT --- */
