@@ -12,6 +12,7 @@
     --font-heading: 'Righteous', cursive;
     --font-body: 'Plus Jakarta Sans', sans-serif;
     --footer-bg: #0d413f;        /* Deep Premium Aqua-Navy for Footer */
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- BASE STYLES --- */
@@ -139,6 +140,7 @@ header {
 .brand-title {
     font-size: 1.5rem;
     font-weight: 800;
+    font-family: (var(--font-heading));
     color: var(--dark-aqua, #0b4f48);
 }
 
@@ -174,7 +176,9 @@ header {
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-    
+
+
+
 .home {
 
     display: flex;
@@ -190,7 +194,44 @@ header {
 
 }
 
+@keyframes revealTextStagger {
+            0% { opacity: 0; transform: translateY(25px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
+        @keyframes typewriterSweep {
+            0% { width: 0%; }
+            50% { width: 100%; border-right-color: #ffbd00; }
+            100% { width: 100%; border-right-color: transparent; }
+        }
+
+        @keyframes floatBreeze {
+            0% { transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0.6); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) translateX(120px) rotate(360deg) scale(1.4); opacity: 0; }
+        }
+
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+    .breeze-particle {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(32, 178, 170, 0.15), rgba(255, 189, 0, 0.1));
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatBreeze 14s infinite linear;
+        }
+
+        .marquee-track {
+            animation: scroll-testimonials 24s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
 
 .home-info h1 {
 
@@ -645,12 +686,12 @@ header {
 
 .testimonial-card {
     width: 320px;
-    flex-shrink: 0;
-    padding: 1.5rem;
     background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 16px; /* Smooth rounded corners */
+    padding: 28px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Soft floating shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle outline */
 }
 
 @keyframes scroll-left {
@@ -665,14 +706,15 @@ header {
 .testimonials-section {
     background-color: var(--light-gray);
     overflow: hidden; /* Fallback protection */
+    padding: 60px 0;
 }
 
-/* Base style for the container to ensure the glow animation looks smooth */
+/* Base style for the container to ensure the animation looks smooth */
 .marquee-container {
     overflow: hidden;
     width: 100%;
     display: flex;
-    padding: 20px 0;
+    padding: 10px 0;
     border: 2px solid transparent; /* Invisible border placeholder to prevent layout shifting */
     border-radius: 16px;           /* Rounds the glowing border edges */
     transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition fade-in */
@@ -692,7 +734,7 @@ header {
 
 .testimonial-card {
     background-color: var(--white);
-    padding: 48px;                 /* Increased padding for a more spacious feel */
+    padding: 28px 24px;                 /* Increased padding for a more spacious feel */
     border-radius: 32px;           /* Noticeably smoother, larger rounded corners */
     border-top: 5px solid var(--accent-yellow);
     box-shadow: 0 10px 30px rgba(10, 92, 90, 0.04);
@@ -706,13 +748,10 @@ header {
     flex-shrink: 0;                /* Prevents cards from squishing */
 }
 
-/* This triggers when hovering anywhere over the marquee zone */
+/* Subtle lift on hover */
 .testimonial-card:hover {
-    /* 1. Changes the invisible border to a matching glow color */
-    border-color: var(--accent-yellow); 
-    
-    /* 2. Adds the vibrant outer glow effect */
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.6); 
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 /* Stops the marquee animation on hover */
@@ -733,10 +772,35 @@ header {
     font-size: 0.98rem;
 }
 
+/* 2. Client Section Styling */
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+/* Green dot marker */
+.client-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00a896; /* Matching brand aqua/green */
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Client Name */
 .client-name {
     font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--dark-aqua);
+    color: var(--dark-aqua); /* Dark title color */
+}
+
+/* Role / Subtitle in parentheses */
+.client-role {
+    font-weight: 700;
+    color: var(--dark-aqua); /* Soft gray for subtitle */
 }
 
 /* Smooth linear transformation through exactly half the full track length */
