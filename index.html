@@ -15,17 +15,23 @@
 
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">Koolest</a>
-            <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-                <li><a href="#report" style="color: var(--error-red); font-weight: 700;">Report an Issue</a></li>
-                <li><a href="#booking" class="btn btn-yellow" style="padding: 10px 20px;">Book Now</a></li>
-            </ul>
+
+<header class="navbar">
+        <div class="brand-container">
+            <div class="container nav-container"></div>
+            <img src="logo.png" alt="Koolest Logo" class="brand-logo">
+            <span class="brand-title">Koolest</span>
         </div>
+    <!-- Navigation Links -->
+        <nav class="nav-links">
+            <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#report" style="color: var(--error-red); font-weight: 700;">Report an Issue</a></li>
+                    <li><a href="#booking" class="btn btn-yellow" style="padding: 10px 20px;">Book Now</a></li>
+                </ul>
+        </nav>
+</header>
 
         <div class="bars-animation">
             <div class="bar" style="--i:6;"></div>
@@ -146,33 +152,44 @@
     </section>
 
     <section class="testimonials-section">
-  <div class="container">
-    <h2 class="section-title">What Our Clients Say</h2>
-    <p class="section-subtitle">Real reviews from our awesome clients.</p>
-    
-    <div class="marquee-container">
-      <div class="marquee-track">
-        
-        <!-- ORIGINAL GROUP -->
-        <div class="marquee-group">
-          <div class="testimonial-card">
-            <div class="stars">★★★★★</div>
-            <p>"Your testimonial text goes here."</p>
-            <div class="client-name">Client Name 1</div>
-          </div>
-          <!-- Put your other original cards here -->
-        </div>
+    <div class="testimonials-marquee-container">
+        <div class="testimonials-track">
+            <!-- First Set of Cards -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Best service team in town. Quick and thorough!"</p>
+                <span>- David H. (Homeowner)</span>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Saw an immediate drop in my electricity bill!"</p>
+                <span>- Sarah M. (Condo Owner)</span>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Zero disruption, pristine air quality returned."</p>
+                <span>- Marcus G. (Office Admin)</span>
+            </div>
 
-        <!-- DUPLICATE GROUP (Must exactly match the original group) -->
-        <div class="marquee-group" aria-hidden="true">
-          <div class="testimonial-card">
-            <div class="stars">★★★★★</div>
-            <p>"Your testimonial text goes here."</p>
-            <div class="client-name">Client Name 1</div>
-          </div>
-          <!-- Put the exact duplicates here -->
+            <!-- DUPLICATE SET (Required for Seamless Loop) -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Best service team in town. Quick and thorough!"</p>
+                <span>- David H. (Homeowner)</span>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Saw an immediate drop in my electricity bill!"</p>
+                <span>- Sarah M. (Condo Owner)</span>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Zero disruption, pristine air quality returned."</p>
+                <span>- Marcus G. (Office Admin)</span>
+            </div>
         </div>
-
+    </div>
+</section>
       </div>
     </div>
     
