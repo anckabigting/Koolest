@@ -295,8 +295,69 @@ header {
 .hero {
     background: linear-gradient(135deg, var(--white) 50%, var(--light-aqua) 100%);
     padding: 100px 0;
-    position: relative;
+    position: relative !important;
     overflow: hidden;
+}
+
+/* 1. Container section must be relative so bubbles stay inside it */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 80vh; /* Adjust as needed */
+    overflow: hidden; /* Prevents bubbles from causing scrollbars */
+    background: linear-gradient(135deg, #0a5c5a, #20b2aa); /* Example gradient */
+}
+
+/* Container that spans the screen without interfering with user clicks */
+#breeze-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Crucial: lets users click buttons through it */
+    z-index: 5; /* Keeps bubbles floating above section backgrounds */
+}
+
+/* 3. Make sure hero content sits above bubbles so buttons are clickable */
+.hero-content {
+    position: relative;
+    z-index: 20;
+}
+
+/* Base style for JS-created particles */
+.breeze-particle {
+    position: absolute;
+    bottom: -50px;
+    border-radius: 50%;
+    /* Visually distinct cyan/teal gradient glow so it pops on light/dark backgrounds */
+    background: radial-gradient(circle, rgba(32, 178, 170, 0.5) 0%, rgba(255, 189, 0, 0.3) 100%);
+    border: 1px solid rgba(32, 178, 170, 0.6);
+    box-shadow: 0 0 10px rgba(32, 178, 170, 0.3);
+    pointer-events: none;
+    animation: floatBreeze linear infinite;
+}
+
+/* Float Up Animation Keyframes */
+@keyframes floatBreeze {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.7);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.85;
+    }
+    50% {
+        transform: translateY(-50vh) translateX(30px) scale(1.05);
+    }
+    85% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(-105vh) translateX(-20px) scale(1.2);
+        opacity: 0;
+    }
 }
 .hero-grid {
     display: grid;
@@ -304,7 +365,7 @@ header {
     gap: 48px;
     align-items: center;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 /* --- HERO BUTTON SPAN HOVER EFFECT --- */

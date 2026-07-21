@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-
+<!-- Target container for JavaScript -->
+    <div id="breeze-container"></div>
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
 
@@ -34,19 +36,23 @@
                 </ul>
         </nav>
 </header>
-
-        <div class="bars-animation">
-            <div class="bar" style="--i:6;"></div>
-            <div class="bar" style="--i:5;"></div>
-            <div class="bar" style="--i:4;"></div>
-            <div class="bar" style="--i:3;"></div>
-            <div class="bar" style="--i:2;"></div>
-            <div class="bar" style="--i:1;"></div>
-        </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
+<!-- BUBBLES CONTAINER -->
+        <div class="bubbles-container">
+            <!-- We use inline CSS custom variables (--x, --size, --delay, --duration) to make each bubble unique -->
+            <span class="bubble" style="--x: 10%; --size: 35px; --delay: 0s; --duration: 8s;"></span>
+            <span class="bubble" style="--x: 25%; --size: 20px; --delay: 2s; --duration: 6s;"></span>
+            <span class="bubble" style="--x: 40%; --size: 50px; --delay: 4s; --duration: 11s;"></span>
+            <span class="bubble" style="--x: 55%; --size: 28px; --delay: 1s; --duration: 7s;"></span>
+            <span class="bubble" style="--x: 70%; --size: 42px; --delay: 3s; --duration: 9s;"></span>
+            <span class="bubble" style="--x: 85%; --size: 22px; --delay: 5s; --duration: 6.5s;"></span>
+            <span class="bubble" style="--x: 92%; --size: 38px; --delay: 0.5s; --duration: 10s;"></span>
+    </div>
+
+
         <div class="container hero-grid">
             <div class="hero-text">
                 <h1><span style="--i:2;" data-text="Because a dirty aircon blows.">Because a dirty aircon blows.</span> 
