@@ -11,7 +11,7 @@
     --error-red: #e53e3e;        
     --font-heading: 'Righteous', cursive;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-    --footer-bg: #306264;        /* Deep Premium Aqua-Navy for Footer */
+    --footer-bg: #0d413f;        /* Deep Premium Aqua-Navy for Footer */
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
