@@ -54,3 +54,25 @@ function submitReport(event) {
         reportSuccess.style.display = "block";
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Select all elements with the 'reveal' class
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add the 'active' class to trigger the CSS transition
+                entry.target.classList.add("active");
+                
+                // Optional: Stop observing once revealed so it stays visible
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15, // Triggers when 15% of the element is visible in viewport
+        rootMargin: "0px 0px -50px 0px" // Triggers slightly before it enters the screen
+    });
+
+    revealElements.forEach(element => revealObserver.observe(element));
+});
