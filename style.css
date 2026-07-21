@@ -327,14 +327,8 @@ header {
 
 /* 3. Make sure hero content sits above bubbles so buttons are clickable */
 .hero-content {
-    max-width: 1280px;      /* Matches max-w-7xl */
-    margin: 0 auto;         /* Centers the container on large screens */
-    padding: 0 1.5rem;      /* Left and right padding (24px) */
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 3rem;
-    align-items: center;
+    position: relative;
+    z-index: 20;
 }
 
 .breeze-particle {
@@ -389,15 +383,6 @@ header {
     align-items: center;
     position: relative;
     z-index: 3;
-}
-
-/* Left Column Styling */
-.hero-text {
-    text-align: left;       /* Ensures left alignment (prevents centered text) */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Aligns buttons and badges strictly to the left */
-    margin-left: 0;              /* Resets any unintended left margin */
 }
 
 /* --- HERO BUTTON SPAN HOVER EFFECT --- */
