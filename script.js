@@ -101,3 +101,45 @@ document.addEventListener("DOMContentLoaded", () => {
     revealElements.forEach(element => revealObserver.observe(element));
 });
 
+const bookingForm = document.getElementById("booking-form"); // Replace with your form ID
+
+if (bookingForm) {
+  bookingForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Collect data from your HTML input fields
+    const formData = {
+      fullName: document.getElementById("fullName").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      serviceType: document.getElementById("serviceType").value,
+      bookingDate: document.getElementById("bookingDate").value,
+      notes: document.getElementById("notes").value,
+    };
+
+    try {
+      const response = await fetch("/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Trigger your existing front-end success message or UI modal!
+        alert("🎉 Booking confirmed! Thank you!");
+        bookingForm.reset();
+      } else {
+        // Display validation or server error
+        console.error("Submission error:", data.details || data.error);
+        alert(`Error: ${data.error || "Failed to submit booking."}`);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      alert("Something went wrong. Please check your connection and try again.");
+    }
+  });
+}
