@@ -125,31 +125,39 @@
                 <h2 class="section-title" style="color: var(--dark-aqua);">Schedule Your Appointment</h2>
                 <p class="section-subtitle">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
                 
-                <form id="bookingForm" action="https://docs.google.com/forms/u/0/d/e/YOUR_BOOKING_FORM_ID_HERE/formResponse" method="POST" target="hidden_iframe">
+                <form id="bookingForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="bookName">Full Name</label>
-                            <input type="text" name="entry.111111" id="bookName" class="form-control text-dark-form" placeholder="Jane Doe" required>
+                            <label for="fullName">Full Name</label>
+                            <input type="text" name="fullName" id="fullName" class="form-control text-dark-form" placeholder="Jane Doe" required>
                         </div>
                         <div class="form-group">
-                            <label for="bookContact">Contact Number</label>
-                            <input type="tel" name="entry.222222" id="bookContact" class="form-control text-dark-form" placeholder="0917XXXXXXX" required>
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" id="email" class="form-control text-dark-form" placeholder="jane@example.com" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="bookService">Select Aircon Service</label>
-                            <select name="entry.333333" id="bookService" class="form-control text-dark-form" required>
+                            <label for="phone">Contact Number</label>
+                            <input type="tel" name="phone" id="phone" class="form-control text-dark-form" placeholder="09171234567" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serviceType">Select Aircon Service</label>
+                            <select name="serviceType" id="serviceType" class="form-control text-dark-form" required>
                                 <option value="" disabled selected>Choose a package...</option>
                                 <option value="General Filter Refresh">General Filter Refresh</option>
                                 <option value="Hydro-Chemical Flush">Hydro-Chemical Flush</option>
                                 <option value="Full Health Assessment">Full Health Assessment</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="bookDate">Preferred Schedule Date</label>
-                            <input type="date" name="entry.444444" id="bookDate" class="form-control text-dark-form" required>
+                            <label for="bookingDate">Preferred Schedule Date</label>
+                            <input type="date" name="bookingDate" id="bookingDate" class="form-control text-dark-form" required>
                         </div>
                     </div>
                     
