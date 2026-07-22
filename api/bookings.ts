@@ -1,12 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { bookingSchema } from "../src/assets/libs/validations/booking"; // Adjust path if you moved libs!
+import { bookingSchema } from "../src/assets/libs/validations/booking";
 import { prisma } from "../src/assets/libs/prisma";
+import { ratelimit } from "../src/assets/libs/ratelimit";
 
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  // 1. Only allow POST requests for creating a booking
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -14,12 +14,34 @@ export default async function handler(
     });
   }
 
+  // 1. Get client IP address for rate-limiting identification
+  const clientIp =
+    (req.headers["x-forwarded-for"] as string)?.split(",")[0] ||
+    req.socket.remoteAddress ||
+    "127.0.0.1";
+
+  // 2. Perform Rate Limit Check
+  const { success, limit, remaining, reset } = await ratelimit.limit(
+    `booking_limiter_${clientIp}`
+  );
+
+  // Set rate limit headers so clients know their quota
+  res.setHeader("X-RateLimit-Limit", limit.toString());
+  res.setHeader("X-RateLimit-Remaining", remaining.toString());
+  res.setHeader("X-RateLimit-Reset", reset.toString());
+
+  if (!success) {
+    return res.status(429).json({
+      success: false,
+      error: "Too many booking requests! Please wait a few minutes before trying again.",
+    });
+  }
+
   try {
-    // 2. Parse request body through Zod Schema
+    // 3. Validate form input using Zod
     const validationResult = bookingSchema.safeParse(req.body);
 
     if (!validationResult.success) {
-      // Return 400 Bad Request if validation fails, passing detailed field errors
       return res.status(400).json({
         success: false,
         error: "Validation failed",
@@ -29,7 +51,7 @@ export default async function handler(
 
     const validData = validationResult.data;
 
-    // 3. Insert record into Neon database using Prisma ORM
+    // 4. Save to Neon database
     const newBooking = await prisma.booking.create({
       data: {
         fullName: validData.fullName,
@@ -41,7 +63,6 @@ export default async function handler(
       },
     });
 
-    // 4. Return success response to the client
     return res.status(201).json({
       success: true,
       message: "Booking submitted successfully!",
