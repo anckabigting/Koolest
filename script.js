@@ -1,3 +1,27 @@
+ // Hamburger Mobile Nav
+ document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburger-btn");
+  const navMenu = document.getElementById("nav-menu");
+  const navLinks = document.querySelectorAll(".nav-links a");
+
+  if (hamburger && navMenu) {
+    // Toggle mobile menu open/close
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("is-active");
+      navMenu.classList.toggle("mobile-open");
+    });
+
+    // Close mobile menu when clicking any menu link
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("is-active");
+        navMenu.classList.remove("mobile-open");
+      });
+    });
+  }
+});
+ 
+ 
  // BOOKING FORM SUBMISSION
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             const form = this;
