@@ -8,6 +8,6 @@ node_modules/
 
 .vercel
 .env*
-src/assets/cleaning1.jpg
-src/assets/cleaning2.jpg
-src/assets/cleaning3.jpg
+.src/assets/cleaning1.jpg
+.src/assets/cleaning2.jpg
+.src/assets/cleaning3.jpg
