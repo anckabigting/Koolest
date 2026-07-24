@@ -1,11 +1,17 @@
 import { z } from "zod";
 
-// List of allowed aircon service types matching your frontend
+// List of allowed aircon & washing machine service types matching your frontend
 export const SERVICE_TYPES = [
-  "Wall-Mounted Aircon",
-  "Cassette Type Aircon",
-  "Floor Standing Aircon",
-  "Window Type Aircon",
+  "installation",
+  "regular-cleaning",
+  "full-down-cleaning",
+  "dismantling",
+  "relocation",
+  "troubleshooting",
+  "repair",
+  "charging-refrigerant",
+  "repiping-reinsulation",
+  "washing-machine",
 ] as const;
 
 export const bookingSchema = z.object({
@@ -27,9 +33,10 @@ export const bookingSchema = z.object({
     .max(15, "Phone number is too long")
     .regex(/^[0-9+\-\s()]+$/, "Invalid phone number format"),
 
-  serviceType: z.enum(SERVICE_TYPES, {
-  message: "Please select a valid service type",
-}),
+  serviceType: z.enum(
+    [SERVICE_TYPES[0], ...SERVICE_TYPES.slice(1)],
+    { message: "Please select a valid service type" }
+  ),
 
   bookingDate: z.coerce.date().refine((date) => {
     // Ensures the date chosen is not in the past (comparing to today's date)

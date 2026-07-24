@@ -1,3 +1,21 @@
+ // BOOKING FORM SUBMISSION
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            const form = this;
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('bookingSuccess').style.display = 'block';
+            }, 300);
+        });
+
+        // ESCALATION FORM SUBMISSION
+        document.getElementById('issueForm').addEventListener('submit', function(e) {
+            const form = this;
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+            }, 300);
+        });
+
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Set minimum booking date dynamically to today
   const dateInput = document.getElementById("bookingDate");

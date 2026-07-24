@@ -160,7 +160,7 @@ header {
 .brand-title {
     font-size: 1.5rem;
     font-weight: 800;
-    font-family: (var(--font-heading));
+    font-family: var(--font-heading);
     color: var(--dark-aqua, #0b4f48);
 }
 
@@ -764,7 +764,8 @@ header {
 
 /* --- BOOKING SECTION --- */
 .booking-section {
-    background-color: var(--cream);
+    background-color: var(--footer-bg);
+    border-bottom: 8px solid var(--accent-yellow);
 }
 .booking-card {
     max-width: 800px;
