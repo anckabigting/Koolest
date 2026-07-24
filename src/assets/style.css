@@ -1274,24 +1274,3 @@ textarea.form-control {
     }
 }
 
-/* --- RESPONSIVE DESIGN --- */
-@media (max-width: 768px) {
-    .hero-grid, .footer-grid, .form-row {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    .booking-card {
-        padding: 24px;
-    }
-    .hero-text h1 {
-        font-size: 2.8rem;
-    }
-    .efficiency-banner {
-        flex-direction: column;
-        text-align: center;
-        padding: 32px;
-    }
-    .nav-links {
-        display: none;
-    }
-}
