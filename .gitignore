@@ -1,13 +1,16 @@
-node_modules
-# Keep environment variables out of version control
-# .gitignore
+# Dependencies
 node_modules/
+
+# Environment variables
 .env
 .env.local
+.env*
+
+# Frameworks and Builders
+.vercel
 /generated/prisma
 
-.vercel
-.env*
-.src/assets/cleaning1.jpg
-.src/assets/cleaning2.jpg
-.src/assets/cleaning3.jpg
+# Specific Assets
+src/assets/cleaning1.jpg
+src/assets/cleaning2.jpg
+src/assets/cleaning3.jpg
