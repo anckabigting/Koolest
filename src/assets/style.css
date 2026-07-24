@@ -1246,7 +1246,7 @@ textarea.form-control {
 }
 
 /* --- MOBILE RESPONSIVE NAV --- */
-@media (max-width: 768px) {
+@media (max-width: 780px) {
     /* Show the hamburger icon on mobile */
     .hamburger {
         display: flex !important;
