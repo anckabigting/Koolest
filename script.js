@@ -1,21 +1,21 @@
  // Hamburger Mobile Nav
  document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.getElementById("hamburger-btn");
-  const navMenu = document.getElementById("nav-menu");
-  const navLinks = document.querySelectorAll(".nav-links a");
+  const hamburger = document.getElementById("hamburger-btn") || document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+  const navItems = document.querySelectorAll(".nav-links a");
 
-  if (hamburger && navMenu) {
-    // Toggle mobile menu open/close
+  if (hamburger && navLinks) {
     hamburger.addEventListener("click", () => {
-      hamburger.classList.toggle("is-active");
-      navMenu.classList.toggle("mobile-open");
+      // Toggle 'active' class on both elements
+      hamburger.classList.toggle("active");
+      navLinks.classList.toggle("active");
     });
 
-    // Close mobile menu when clicking any menu link
-    navLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        hamburger.classList.remove("is-active");
-        navMenu.classList.remove("mobile-open");
+    // Close menu when a link is clicked
+    navItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navLinks.classList.remove("active");
       });
     });
   }
