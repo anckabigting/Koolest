@@ -1,17 +1,15 @@
- // Hamburger Mobile Nav
- document.addEventListener("DOMContentLoaded", () => {
+// Hamburger Mobile Nav
+document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.getElementById("hamburger-btn") || document.querySelector(".hamburger");
   const navLinks = document.querySelector(".nav-links");
   const navItems = document.querySelectorAll(".nav-links a");
 
   if (hamburger && navLinks) {
     hamburger.addEventListener("click", () => {
-      // Toggle 'active' class on both elements
       hamburger.classList.toggle("active");
       navLinks.classList.toggle("active");
     });
 
-    // Close menu when a link is clicked
     navItems.forEach((item) => {
       item.addEventListener("click", () => {
         hamburger.classList.remove("active");
@@ -19,28 +17,7 @@
       });
     });
   }
-});
- 
- 
- // BOOKING FORM SUBMISSION
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            const form = this;
-            setTimeout(() => {
-                form.style.display = 'none';
-                document.getElementById('bookingSuccess').style.display = 'block';
-            }, 300);
-        });
 
-        // ESCALATION FORM SUBMISSION
-        document.getElementById('issueForm').addEventListener('submit', function(e) {
-            const form = this;
-            setTimeout(() => {
-                form.style.display = 'none';
-                document.getElementById('formSuccess').style.display = 'block';
-            }, 300);
-        });
-
-document.addEventListener("DOMContentLoaded", () => {
   // 1. Set minimum booking date dynamically to today
   const dateInput = document.getElementById("bookingDate");
   if (dateInput) {
@@ -70,19 +47,21 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   revealElements.forEach((element) => revealObserver.observe(element));
 
-  // 4. Connect Real Booking Form Submission to /api/bookings
+  // 4. Booking Form Submission & API Request
   const bookingForm = document.getElementById("bookingForm");
+  const bookingHeader = document.getElementById("bookingHeader");
+  const successMsg = document.getElementById("bookingSuccess");
 
   if (bookingForm) {
     bookingForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Read values matching the updated index.html input IDs
+      // Read values matching index.html IDs
       const formData = {
         fullName: document.getElementById("fullName")?.value || "",
         email: document.getElementById("email")?.value || "",
         phone: document.getElementById("phone")?.value || "",
-        serviceType: document.getElementById("serviceType")?.value || "",
+        serviceType: document.getElementById("service-type")?.value || "", // Fixed ID: service-type
         bookingDate: document.getElementById("bookingDate")?.value || "",
       };
 
@@ -98,14 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (data.success) {
-          // Hide form & reveal success message
+          // Hide both the header and form on success
+          if (bookingHeader) bookingHeader.style.display = "none";
           bookingForm.style.display = "none";
-          const successMsg = document.getElementById("bookingSuccess");
+
+          // Show success message container
           if (successMsg) {
             successMsg.style.display = "block";
             successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
           } else {
-            alert("🎉 Booking confirmed! Thank you!");
+            alert("Booking confirmed! Thank you!");
           }
           bookingForm.reset();
         } else {
@@ -116,6 +97,17 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Network error:", err);
         alert("Something went wrong. Please check your connection and try again.");
       }
+    });
+  }
+
+  // 5. Escalation / Issue Form Submission
+  const issueForm = document.getElementById("issueForm");
+  if (issueForm) {
+    issueForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      issueForm.style.display = "none";
+      const formSuccess = document.getElementById("formSuccess");
+      if (formSuccess) formSuccess.style.display = "block";
     });
   }
 });
@@ -142,30 +134,24 @@ function initBreezeFloaterParticles() {
   }
 }
 
-// Troubleshooting Report Submission
-function submitReport(event) {
-  event.preventDefault();
-  const issueForm = document.getElementById("issueForm");
-  if (issueForm) issueForm.style.display = "none";
-  const formSuccess = document.getElementById("formSuccess");
-  if (formSuccess) formSuccess.style.display = "block";
-}
-
+// Slideshow Controller
 let slideIndex = 0;
 showSlides();
 
 function showSlides() {
   let slides = document.getElementsByClassName("slide");
-  
+
   for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
+    slides[i].style.display = "none";
   }
-  
+
   slideIndex++;
-  if (slideIndex > slides.length) { 
-    slideIndex = 1; 
-  }    
-  
-  slides[slideIndex - 1].style.display = "block";  
-  setTimeout(showSlides, 3000); // Changes image every 3 seconds
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+
+  if (slides.length > 0) {
+    slides[slideIndex - 1].style.display = "block";
+  }
+  setTimeout(showSlides, 3000);
 }

@@ -29,9 +29,9 @@ export const bookingSchema = z.object({
 
   phone: z
     .string()
-    .min(10, "Phone number must be at least 10 digits")
-    .max(15, "Phone number is too long")
-    .regex(/^[0-9+\-\s()]+$/, "Invalid phone number format"),
+    .trim()
+    .length(11, "Phone number must be exactly 11 digits")
+    .regex(/^[0-9]{11}$/, "Phone number must contain digits only"),
 
   serviceType: z.enum(
     [SERVICE_TYPES[0], ...SERVICE_TYPES.slice(1)],

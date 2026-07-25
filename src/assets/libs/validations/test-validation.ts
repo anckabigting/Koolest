@@ -1,6 +1,6 @@
 import { bookingSchema } from "./booking"; // Adjust path if needed
 
-// 🧪 Test 1: Bad Input (Should fail)
+// Test 1: Bad Input (Should fail)
 const invalidData = {
   fullName: "A",
   email: "not-an-email",
@@ -12,13 +12,13 @@ const invalidData = {
 const result1 = bookingSchema.safeParse(invalidData);
 
 if (!result1.success) {
-  console.log("❌ Test 1 Failed as expected! Validation Errors:");
+  console.log("Test 1 Failed as expected! Validation Errors:");
   console.log(result1.error.flatten().fieldErrors);
 }
 
 console.log("\n-----------------------------------\n");
 
-// 🧪 Test 2: Good Input (Should pass)
+// Test 2: Good Input (Should pass)
 const validData = {
   fullName: "Juan Dela Cruz",
   email: "juan@example.com",
@@ -31,6 +31,6 @@ const validData = {
 const result2 = bookingSchema.safeParse(validData);
 
 if (result2.success) {
-  console.log("✅ Test 2 Passed! Validated Data:");
+  console.log("Test 2 Passed! Validated Data:");
   console.log(result2.data);
 }

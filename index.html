@@ -218,68 +218,83 @@
     <!-- Booking Section with Official Dropdown Options -->
     <section id="booking" class="reveal booking-section">
         <div class="reveal container">
+
             <div class="booking-card">
-                <h2 class="section-title" style="color: var(--dark-aqua);">Schedule Your Appointment</h2>
-                <p class="section-subtitle">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
-                
-                <form id="bookingForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input type="text" name="fullName" id="fullName" class="form-control text-dark-form" placeholder="Jane Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" id="email" class="form-control text-dark-form" placeholder="jane@example.com" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Contact Number</label>
-                            <input type="tel" name="phone" id="phone" class="form-control text-dark-form" placeholder="09171234567" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="service-type">Select Service</label>
-                            <select id="service-type" name="service" class="form-control text-dark-form" required>
-                                <option value="" disabled selected>Choose a service...</option>
-                                
-                                <optgroup label="Air Conditioning Services">
-                                    <option value="installation">Installation</option>
-                                    <option value="regular-cleaning">Regular Cleaning</option>
-                                    <option value="full-down-cleaning">Full Down Cleaning</option>
-                                    <option value="dismantling">Dismantling</option>
-                                    <option value="relocation">Relocation</option>
-                                    <option value="troubleshooting">Troubleshooting</option>
-                                    <option value="repair">Repair</option>
-                                    <option value="charging-refrigerant">Charging Refrigerant</option>
-                                    <option value="repiping-reinsulation">Repiping & Reinsulation</option>
-                                </optgroup>
-
-                                <optgroup label="Appliance Services">
-                                    <option value="washing-machine">Automatic Washing Machine</option>
-                                </optgroup>
-                            </select>        
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="bookingDate">Preferred Schedule Date</label>
-                            <input type="date" name="bookingDate" id="bookingDate" class="form-control text-dark-form" required>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-yellow btn-large">Secure My Schedule Slot</button>
-                </form>
-                
-                <div id="bookingSuccess" class="success-message-booking">
-                    🎉 Booking Request Received! We've saved your slot. Our customer concierge will text or call you shortly to confirm.
-                </div>
+    <!-- Header wrapper so JS can hide it on success -->
+    <div id="bookingHeader" class="booking-header">
+        <h2 class="section-title" style="color: var(--dark-aqua);">Schedule Your Appointment</h2>
+        <p class="section-subtitle">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
+    </div>
+    
+    <form id="bookingForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" name="fullName" id="fullName" class="form-control text-dark-form" placeholder="Jane Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" class="form-control text-dark-form" placeholder="jane@example.com" required>
             </div>
         </div>
-    </section>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Contact Number</label>
+                <!-- Native 11-digit enforcement -->
+                <input 
+                    type="tel" 
+                    name="phone" 
+                    id="phone" 
+                    class="form-control text-dark-form" 
+                    placeholder="09171234567" 
+                    pattern="[0-9]{11}"
+                    minlength="11"
+                    maxlength="11"
+                    inputmode="numeric"
+                    title="Please enter exactly 11 digits (e.g. 09171234567)" 
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="service-type">Select Service</label>
+                <select id="service-type" name="service" class="form-control text-dark-form" required>
+                    <option value="" disabled selected>Choose a service...</option>
+                    
+                    <optgroup label="Air Conditioning Services">
+                        <option value="installation">Installation</option>
+                        <option value="regular-cleaning">Regular Cleaning</option>
+                        <option value="full-down-cleaning">Full Down Cleaning</option>
+                        <option value="dismantling">Dismantling</option>
+                        <option value="relocation">Relocation</option>
+                        <option value="troubleshooting">Troubleshooting</option>
+                        <option value="repair">Repair</option>
+                        <option value="charging-refrigerant">Charging Refrigerant</option>
+                        <option value="repiping-reinsulation">Repiping & Reinsulation</option>
+                    </optgroup>
+
+                    <optgroup label="Appliance Services">
+                        <option value="washing-machine">Automatic Washing Machine</option>
+                    </optgroup>
+                </select>        
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="bookingDate">Preferred Schedule Date</label>
+                <input type="date" name="bookingDate" id="bookingDate" class="form-control text-dark-form" required>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-yellow btn-large">Secure My Schedule Slot</button>
+    </form>
+    
+    <div id="bookingSuccess" class="success-message-booking" style="display: none;">
+        Booking Request Received! We've saved your slot. Our customer concierge will text or call you shortly to confirm.
+    </div>
+</div>
 
     <section id="testimonials" class="reveal testimonials-section">
         <div class="container" style="text-align: center; margin-bottom: 40px;">
