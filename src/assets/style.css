@@ -896,7 +896,7 @@ header {
 }
 .success-message-booking {
     display: none;
-    background-color: var(--dark-aqua);
+    background-color: transparent !important;
     color: var(--white);
     padding: 24px;
     border-radius: 8px;
@@ -1196,9 +1196,7 @@ textarea.form-control {
 
 .success-message {
     display: none;
-    background-color: #1a6d6a;
     color: white;
-    padding: 20px;
     border-radius: 8px;
     margin-top: 16px;
     font-weight: 600;
