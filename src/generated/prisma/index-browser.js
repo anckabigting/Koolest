@@ -128,7 +128,8 @@ exports.Prisma.BookingScalarFieldEnum = {
   createdAt: 'createdAt',
   fullName: 'fullName',
   serviceType: 'serviceType',
-  notes: 'notes'
+  notes: 'notes',
+  status: 'status'
 };
 
 exports.Prisma.SortOrder = {
@@ -145,7 +146,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.BookingStatus = exports.$Enums.BookingStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   Booking: 'Booking'

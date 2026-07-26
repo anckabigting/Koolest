@@ -932,6 +932,7 @@ export namespace Prisma {
     fullName: string | null
     serviceType: string | null
     notes: string | null
+    status: $Enums.BookingStatus | null
   }
 
   export type BookingMaxAggregateOutputType = {
@@ -943,6 +944,7 @@ export namespace Prisma {
     fullName: string | null
     serviceType: string | null
     notes: string | null
+    status: $Enums.BookingStatus | null
   }
 
   export type BookingCountAggregateOutputType = {
@@ -954,6 +956,7 @@ export namespace Prisma {
     fullName: number
     serviceType: number
     notes: number
+    status: number
     _all: number
   }
 
@@ -967,6 +970,7 @@ export namespace Prisma {
     fullName?: true
     serviceType?: true
     notes?: true
+    status?: true
   }
 
   export type BookingMaxAggregateInputType = {
@@ -978,6 +982,7 @@ export namespace Prisma {
     fullName?: true
     serviceType?: true
     notes?: true
+    status?: true
   }
 
   export type BookingCountAggregateInputType = {
@@ -989,6 +994,7 @@ export namespace Prisma {
     fullName?: true
     serviceType?: true
     notes?: true
+    status?: true
     _all?: true
   }
 
@@ -1073,6 +1079,7 @@ export namespace Prisma {
     fullName: string | null
     serviceType: string
     notes: string | null
+    status: $Enums.BookingStatus
     _count: BookingCountAggregateOutputType | null
     _min: BookingMinAggregateOutputType | null
     _max: BookingMaxAggregateOutputType | null
@@ -1101,6 +1108,7 @@ export namespace Prisma {
     fullName?: boolean
     serviceType?: boolean
     notes?: boolean
+    status?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1112,6 +1120,7 @@ export namespace Prisma {
     fullName?: boolean
     serviceType?: boolean
     notes?: boolean
+    status?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1123,6 +1132,7 @@ export namespace Prisma {
     fullName?: boolean
     serviceType?: boolean
     notes?: boolean
+    status?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectScalar = {
@@ -1134,9 +1144,10 @@ export namespace Prisma {
     fullName?: boolean
     serviceType?: boolean
     notes?: boolean
+    status?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "bookingDate" | "createdAt" | "fullName" | "serviceType" | "notes", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "bookingDate" | "createdAt" | "fullName" | "serviceType" | "notes" | "status", ExtArgs["result"]["booking"]>
 
   export type $BookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Booking"
@@ -1150,6 +1161,7 @@ export namespace Prisma {
       fullName: string | null
       serviceType: string
       notes: string | null
+      status: $Enums.BookingStatus
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -1581,6 +1593,7 @@ export namespace Prisma {
     readonly fullName: FieldRef<"Booking", 'String'>
     readonly serviceType: FieldRef<"Booking", 'String'>
     readonly notes: FieldRef<"Booking", 'String'>
+    readonly status: FieldRef<"Booking", 'BookingStatus'>
   }
     
 
@@ -1974,7 +1987,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     fullName: 'fullName',
     serviceType: 'serviceType',
-    notes: 'notes'
+    notes: 'notes',
+    status: 'status'
   };
 
   export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
@@ -2038,6 +2052,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BookingStatus'
+   */
+  export type EnumBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookingStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'BookingStatus[]'
+   */
+  export type ListEnumBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookingStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2066,6 +2094,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
     notes?: StringNullableFilter<"Booking"> | string | null
+    status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   }
 
   export type BookingOrderByWithRelationInput = {
@@ -2077,6 +2106,7 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
     notes?: SortOrderInput | SortOrder
+    status?: SortOrder
   }
 
   export type BookingWhereUniqueInput = Prisma.AtLeast<{
@@ -2091,6 +2121,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
     notes?: StringNullableFilter<"Booking"> | string | null
+    status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   }, "id">
 
   export type BookingOrderByWithAggregationInput = {
@@ -2102,6 +2133,7 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
     notes?: SortOrderInput | SortOrder
+    status?: SortOrder
     _count?: BookingCountOrderByAggregateInput
     _max?: BookingMaxOrderByAggregateInput
     _min?: BookingMinOrderByAggregateInput
@@ -2119,6 +2151,7 @@ export namespace Prisma {
     fullName?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     serviceType?: StringWithAggregatesFilter<"Booking"> | string
     notes?: StringNullableWithAggregatesFilter<"Booking"> | string | null
+    status?: EnumBookingStatusWithAggregatesFilter<"Booking"> | $Enums.BookingStatus
   }
 
   export type BookingCreateInput = {
@@ -2130,6 +2163,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
+    status?: $Enums.BookingStatus
   }
 
   export type BookingUncheckedCreateInput = {
@@ -2141,6 +2175,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
+    status?: $Enums.BookingStatus
   }
 
   export type BookingUpdateInput = {
@@ -2152,6 +2187,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
   export type BookingUncheckedUpdateInput = {
@@ -2163,6 +2199,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
   export type BookingCreateManyInput = {
@@ -2174,6 +2211,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
+    status?: $Enums.BookingStatus
   }
 
   export type BookingUpdateManyMutationInput = {
@@ -2185,6 +2223,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
   export type BookingUncheckedUpdateManyInput = {
@@ -2196,6 +2235,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2239,6 +2279,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumBookingStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookingStatus | EnumBookingStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookingStatusFilter<$PrismaModel> | $Enums.BookingStatus
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -2253,6 +2300,7 @@ export namespace Prisma {
     fullName?: SortOrder
     serviceType?: SortOrder
     notes?: SortOrder
+    status?: SortOrder
   }
 
   export type BookingMaxOrderByAggregateInput = {
@@ -2264,6 +2312,7 @@ export namespace Prisma {
     fullName?: SortOrder
     serviceType?: SortOrder
     notes?: SortOrder
+    status?: SortOrder
   }
 
   export type BookingMinOrderByAggregateInput = {
@@ -2275,6 +2324,7 @@ export namespace Prisma {
     fullName?: SortOrder
     serviceType?: SortOrder
     notes?: SortOrder
+    status?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2327,6 +2377,16 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumBookingStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookingStatus | EnumBookingStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookingStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookingStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBookingStatusFilter<$PrismaModel>
+    _max?: NestedEnumBookingStatusFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2337,6 +2397,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type EnumBookingStatusFieldUpdateOperationsInput = {
+    set?: $Enums.BookingStatus
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2376,6 +2440,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumBookingStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookingStatus | EnumBookingStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookingStatusFilter<$PrismaModel> | $Enums.BookingStatus
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2446,6 +2517,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumBookingStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookingStatus | EnumBookingStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookingStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookingStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBookingStatusFilter<$PrismaModel>
+    _max?: NestedEnumBookingStatusFilter<$PrismaModel>
   }
 
 
