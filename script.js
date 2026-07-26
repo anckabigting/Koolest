@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
   revealElements.forEach((element) => revealObserver.observe(element));
 
   // 4. Booking Form Submission & API Request
-  // 4. Booking Form Submission & API Request
 const bookingForm = document.getElementById("bookingForm");
 const bookingHeader = document.getElementById("bookingHeader");
 const successMsg = document.getElementById("bookingSuccess");
