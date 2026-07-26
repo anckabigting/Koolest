@@ -14,7 +14,12 @@ export const SERVICE_TYPES = [
 ];
 
 export const bookingSchema = z.object({
-  fullName: z.string().min(5, "Full name must be at least 5 characters long").max(100, "Full name is too long").trim().regex(/^\S+\s+\S+/, "Please enter your full name (first and last name)"),
+  fullName: z
+    .string()
+    .trim()
+    .min(2, "Full name must be at least 2 characters long")
+    .max(100, "Full name is too long")
+    .regex(/^\S+\s+\S+/, "Please enter your full name (first and last name)"),
   email: z.string().email("Please enter a valid email address").trim().toLowerCase(),
   phone: z.string().trim().length(11, "Phone number must be exactly 11 digits").regex(/^[0-9]{11}$/, "Phone number must contain digits only"),
   serviceType: z.enum([SERVICE_TYPES[0], ...SERVICE_TYPES.slice(1)], { message: "Please select a valid service type" }),
