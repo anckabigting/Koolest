@@ -1,3 +1,4 @@
+// @ts-ignore 
 import { bookingSchema } from "./booking"; // Adjust path if needed
 
 // Test 1: Bad Input (Should fail)
