@@ -80,6 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
         bookingDate: document.getElementById("bookingDate")?.value || "",
       };
 
+      // Restrict phone input to digits only, live as the user types
+      const phoneInput = document.getElementById("phone");
+      if (phoneInput) {
+        phoneInput.addEventListener("input", () => {
+          phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
+        });
+      }
+
       try {
         const response = await fetch("/api/bookings", {
           method: "POST",
