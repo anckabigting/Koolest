@@ -52,9 +52,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const bookingHeader = document.getElementById("bookingHeader");
   const successMsg = document.getElementById("bookingSuccess");
 
+  // Maps Zod field names (from the API's validation error object) to the
+  // actual input elements, so we can anchor the native tooltip to the right field.
+  const fieldInputMap = {
+    fullName: () => document.getElementById("fullName"),
+    email: () => document.getElementById("email"),
+    phone: () => document.getElementById("phone"),
+    serviceType: () => document.getElementById("service-type"),
+    bookingDate: () => document.getElementById("bookingDate"),
+  };
+
   if (bookingForm) {
     bookingForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Clear any previous custom validity messages before a fresh attempt
+      Object.values(fieldInputMap).forEach((getEl) => {
+        const el = getEl();
+        if (el) el.setCustomValidity("");
+      });
 
       const formData = {
         fullName: document.getElementById("fullName")?.value || "",
@@ -77,30 +93,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!response.ok || !data.success) {
           console.error("Submission error details:", data.details || data.error);
-          alert(getFriendlyErrorMessage(data));
+          showFieldError(data);
           return;
         }
 
         showSuccessUI();
       } catch (err) {
         console.error("API request failed:", err);
-        alert(`Something went wrong: ${err.message}`);
+        showGenericError(`Something went wrong: ${err.message}`);
       }
     });
   }
 
-  // Extracts the first readable Zod validation message from the API response,
-  // falling back to the generic error string if none is found.
-  function getFriendlyErrorMessage(data) {
+  // Shows the server's validation message as a native browser tooltip,
+  // anchored to the exact field that failed (matches built-in HTML5 validation UI).
+  function showFieldError(data) {
     if (data?.details) {
       const firstField = Object.keys(data.details).find(
         (key) => key !== "_errors" && data.details[key]?._errors?.length
       );
-      if (firstField) {
-        return data.details[firstField]._errors[0];
+      if (firstField && fieldInputMap[firstField]) {
+        const message = data.details[firstField]._errors[0];
+        const el = fieldInputMap[firstField]();
+        if (el) {
+          el.setCustomValidity(message);
+          el.reportValidity();
+          // Clear it on next input so the browser doesn't keep blocking submission
+          el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+          return;
+        }
       }
     }
-    return data?.error || "Failed to submit booking. Please try again.";
+    showGenericError(data?.error || "Failed to submit booking. Please try again.");
+  }
+
+  // Fallback for errors that aren't tied to a specific field (e.g. rate limiting,
+  // server errors) — shown on the Full Name field since it's first in the form.
+  function showGenericError(message) {
+    const el = document.getElementById("fullName");
+    if (el) {
+      el.setCustomValidity(message);
+      el.reportValidity();
+      el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+    } else {
+      alert(message);
+    }
   }
 
   function showSuccessUI() {
