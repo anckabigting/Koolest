@@ -10,6 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
 }
 
 enum BookingStatus {
@@ -21,10 +22,12 @@ enum BookingStatus {
 
 model Booking {
   id          String   @id @default(cuid())
-  fullName    String   @map("full_name")
   email       String
   phone       String
-  serviceType String   @map("service_type")
   bookingDate DateTime @map("booking_date")
   createdAt   DateTime @default(now()) @map("created_at")
+  fullName    String   @map("full_name")
+  serviceType String   @map("service_type")
+
+  @@map("Booking") // Ensures Prisma targets the exact "Booking" table name
 }
