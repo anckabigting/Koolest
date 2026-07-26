@@ -3,9 +3,9 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import { Pool } from "@neondatabase/serverless";
 
 const globalForPrisma = globalThis;
-
+// test
 console.log("DATABASE_URL length:", process.env.DATABASE_URL?.length);
-console.log("DATABASE_URL JSON:", JSON.stringify(process.env.DATABASE_URL));
+console.log("DATABASE_URL JSON:", JSON.stringify(process.env.DATABASE_URL)); // //
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
