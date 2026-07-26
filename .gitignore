@@ -10,7 +10,4 @@ node_modules/
 .vercel
 /generated/prisma
 
-# Specific Assets
-src/assets/cleaning1.jpg
-src/assets/cleaning2.jpg
-src/assets/cleaning3.jpg
+
