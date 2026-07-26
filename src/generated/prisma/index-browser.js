@@ -122,12 +122,12 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.BookingScalarFieldEnum = {
   id: 'id',
-  fullName: 'fullName',
   email: 'email',
   phone: 'phone',
-  serviceType: 'serviceType',
   bookingDate: 'bookingDate',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  fullName: 'fullName',
+  serviceType: 'serviceType'
 };
 
 exports.Prisma.SortOrder = {
@@ -138,6 +138,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 
