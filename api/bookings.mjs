@@ -1,6 +1,6 @@
 import { bookingSchema } from "../src/assets/libs/validations/booking.js";
 import { prisma } from "../src/assets/libs/prisma.js";
-import { ratelimit } from "../src/assets/libs/ratelimit.ts";
+import { ratelimit } from "../src/assets/libs/ratelimit.js";
 
 export default async function handler(req, res) {
   // 1. HTTP Method Check
