@@ -21,7 +21,7 @@ enum BookingStatus {
 
 model Booking {
   id          String   @id @default(cuid())
-  email       String   @unique
+  email       String
   phone       String
   bookingDate DateTime @map("bookingDate")
   createdAt   DateTime @default(now()) @map("createdAt")

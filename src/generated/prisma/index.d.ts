@@ -2081,17 +2081,17 @@ export namespace Prisma {
 
   export type BookingWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    email?: string
     AND?: BookingWhereInput | BookingWhereInput[]
     OR?: BookingWhereInput[]
     NOT?: BookingWhereInput | BookingWhereInput[]
+    email?: StringFilter<"Booking"> | string
     phone?: StringFilter<"Booking"> | string
     bookingDate?: DateTimeFilter<"Booking"> | Date | string
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
     notes?: StringNullableFilter<"Booking"> | string | null
-  }, "id" | "email">
+  }, "id">
 
   export type BookingOrderByWithAggregationInput = {
     id?: SortOrder
