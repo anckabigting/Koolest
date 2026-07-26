@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koolest | Admin - Bookings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-aqua: #20b2aa;
+      --dark-aqua: #3f8083;
+      --light-aqua: #e6f7f6;
+      --accent-yellow: #ffbd00;
+      --cream: #fffdf6;
+      --text-dark: #2d3748;
+      --error-red: #e53e3e;
+      --success-green: #2f9e5c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* Password gate */
+    #loginGate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .login-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-box h1 {
+      font-size: 1.4rem;
+      color: var(--dark-aqua);
+      margin-bottom: 8px;
+    }
+    .login-box p {
+      color: #667;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent-yellow);
+      color: var(--dark-aqua);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .login-error {
+      color: var(--error-red);
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Dashboard */
+    #dashboard { display: none; padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .dash-header h1 { color: var(--dark-aqua); font-size: 1.6rem; }
+    .dash-header button {
+      background: var(--light-aqua);
+      color: var(--dark-aqua);
+      border: 1px solid var(--primary-aqua);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .table-wrap {
+      background: #fff;
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+    }
+    th {
+      background: var(--light-aqua);
+      color: var(--dark-aqua);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    tr:hover td { background: #fafdfd; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .status-PENDING { background: #fff3cd; color: #8a6d00; }
+    .status-CONFIRMED { background: #d6eefc; color: #14608a; }
+    .status-COMPLETED { background: #d9f2e3; color: var(--success-green); }
+    .status-CANCELLED { background: #fbdcdc; color: var(--error-red); }
+
+    select.status-select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .loading, .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #889;
+    }
+    .save-indicator {
+      font-size: 0.75rem;
+      color: var(--success-green);
+      margin-left: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .save-indicator.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Password Gate -->
+  <div id="loginGate">
+    <div class="login-box">
+      <h1>Koolest Admin</h1>
+      <p>Enter the admin password to view bookings.</p>
+      <input type="password" id="passwordInput" placeholder="Password" />
+      <button id="loginBtn">Unlock Dashboard</button>
+      <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+    <div class="dash-header">
+      <h1>Bookings Dashboard</h1>
+      <button id="refreshBtn">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <div id="loadingState" class="loading">Loading bookings...</div>
+      <table id="bookingsTable" style="display: none;">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Service</th>
+            <th>Schedule Date</th>
+            <th>Status</th>
+            <th>Booked On</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"></tbody>
+      </table>
+      <div id="emptyState" class="empty-state" style="display: none;">No bookings yet.</div>
+    </div>
+  </div>
+
+  <script>
+    const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
+    let adminPassword = "";
+
+    const loginGate = document.getElementById("loginGate");
+    const dashboard = document.getElementById("dashboard");
+    const passwordInput = document.getElementById("passwordInput");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginError = document.getElementById("loginError");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const loadingState = document.getElementById("loadingState");
+    const bookingsTable = document.getElementById("bookingsTable");
+    const bookingsBody = document.getElementById("bookingsBody");
+    const emptyState = document.getElementById("emptyState");
+
+    // Restore session (so refreshing the page doesn't force re-login every time)
+    const savedPassword = sessionStorage.getItem("koolest_admin_pw");
+    if (savedPassword) {
+      adminPassword = savedPassword;
+      unlockDashboard();
+    }
+
+    loginBtn.addEventListener("click", attemptLogin);
+    passwordInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") attemptLogin();
+    });
+    refreshBtn.addEventListener("click", loadBookings);
+
+    async function attemptLogin() {
+      const candidate = passwordInput.value;
+      if (!candidate) return;
+
+      adminPassword = candidate;
+      const ok = await loadBookings(true);
+      if (ok) {
+        sessionStorage.setItem("koolest_admin_pw", candidate);
+        unlockDashboard();
+      } else {
+        loginError.style.display = "block";
+      }
+    }
+
+    function unlockDashboard() {
+      loginGate.style.display = "none";
+      dashboard.style.display = "block";
+      loadBookings();
+    }
+
+    async function loadBookings(isLoginAttempt = false) {
+      loadingState.style.display = "block";
+      bookingsTable.style.display = "none";
+      emptyState.style.display = "none";
+
+      try {
+        const res = await fetch("/api/admin/bookings", {
+          headers: { "x-admin-password": adminPassword },
+        });
+
+        if (res.status === 401) {
+          if (!isLoginAttempt) {
+            sessionStorage.removeItem("koolest_admin_pw");
+            loginGate.style.display = "flex";
+            dashboard.style.display = "none";
+          }
+          return false;
+        }
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error || "Failed to load bookings.");
+
+        renderBookings(data.data);
+        return true;
+      } catch (err) {
+        console.error("Failed to load bookings:", err);
+        loadingState.textContent = "Something went wrong loading bookings.";
+        return false;
+      }
+    }
+
+    function renderBookings(bookings) {
+      loadingState.style.display = "none";
+
+      if (!bookings || bookings.length === 0) {
+        emptyState.style.display = "block";
+        return;
+      }
+
+      bookingsTable.style.display = "table";
+      bookingsBody.innerHTML = "";
+
+      bookings.forEach((booking) => {
+        const row = document.createElement("tr");
+
+        const scheduleDate = new Date(booking.bookingDate).toLocaleDateString();
+        const bookedOn = new Date(booking.createdAt).toLocaleDateString();
+
+        row.innerHTML = `
+          <td>${escapeHtml(booking.fullName || "-")}</td>
+          <td>${escapeHtml(booking.email)}</td>
+          <td>${escapeHtml(booking.phone)}</td>
+          <td>${escapeHtml(booking.serviceType)}</td>
+          <td>${scheduleDate}</td>
+          <td>
+            <select class="status-select" data-id="${booking.id}">
+              ${STATUS_OPTIONS.map(
+                (s) => `<option value="${s}" ${s === booking.status ? "selected" : ""}>${s}</option>`
+              ).join("")}
+            </select>
+            <span class="save-indicator" id="save-${booking.id}">Saved!</span>
+          </td>
+          <td>${bookedOn}</td>
+        `;
+
+        bookingsBody.appendChild(row);
+      });
+
+      // Wire up status change handlers
+      document.querySelectorAll(".status-select").forEach((select) => {
+        select.addEventListener("change", () => updateStatus(select));
+      });
+    }
+
+    async function updateStatus(select) {
+      const id = select.dataset.id;
+      const status = select.value;
+
+      try {
+        const res = await fetch("/api/admin/update-status", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-password": adminPassword,
+          },
+          body: JSON.stringify({ id, status }),
+        });
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error || "Update failed.");
+
+        const indicator = document.getElementById(`save-${id}`);
+        if (indicator) {
+          indicator.classList.add("show");
+          setTimeout(() => indicator.classList.remove("show"), 1500);
+        }
+      } catch (err) {
+        console.error("Status update failed:", err);
+        alert(`Failed to update status: ${err.message}`);
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>
