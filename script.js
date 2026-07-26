@@ -86,10 +86,8 @@ if (bookingForm) {
         alert(`Error: ${data.error || "Failed to submit booking."}`);
       }
     } catch (err) {
-      console.warn("API request failed, falling back to static success display:", err);
-      
-      // Fallback: Show success UI anyway so the user/tester isn't blocked!
-      showSuccessUI();
+      console.error("API request failed:", err);
+      alert(`Something went wrong: ${err.message}`);
     }
   });
 }
