@@ -24,10 +24,10 @@ model Booking {
   id          String   @id @default(cuid())
   email       String
   phone       String
-  bookingDate DateTime @map("booking_date")
-  createdAt   DateTime @default(now()) @map("created_at")
-  fullName    String   @map("full_name")
-  serviceType String   @map("service_type")
+  booking_date DateTime @map("booking_date")
+  created_at   DateTime @default(now()) @map("created_at")
+  full_name    String   @map("full_name")
+  service_type String   @map("service_type")
 
   @@map("Booking") // Ensures Prisma targets the exact "Booking" table name
 }
