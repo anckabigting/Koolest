@@ -48,62 +48,74 @@ document.addEventListener("DOMContentLoaded", () => {
   revealElements.forEach((element) => revealObserver.observe(element));
 
   // 4. Booking Form Submission & API Request
-const bookingForm = document.getElementById("bookingForm");
-const bookingHeader = document.getElementById("bookingHeader");
-const successMsg = document.getElementById("bookingSuccess");
-
-if (bookingForm) {
-  bookingForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = {
-      fullName: document.getElementById("fullName")?.value || "",
-      email: document.getElementById("email")?.value || "",
-      phone: document.getElementById("phone")?.value || "",
-      serviceType: document.getElementById("service-type")?.value || "",
-      bookingDate: document.getElementById("bookingDate")?.value || "",
-    };
-
-    try {
-      const response = await fetch("/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server returned status ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        showSuccessUI();
-      } else {
-        console.error("Submission error details:", data.details || data.error);
-        alert(`Error: ${data.error || "Failed to submit booking."}`);
-      }
-    } catch (err) {
-      console.error("API request failed:", err);
-      alert(`Something went wrong: ${err.message}`);
-    }
-  });
-}
-
-function showSuccessUI() {
-  const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
+  const bookingForm = document.getElementById("bookingForm");
+  const bookingHeader = document.getElementById("bookingHeader");
   const successMsg = document.getElementById("bookingSuccess");
 
-  // Hide the entire light-blue card container
-  if (bookingCard) bookingCard.style.display = "none";
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  // Show only the standalone teal success banner
-  if (successMsg) {
-    successMsg.style.display = "block";
+      const formData = {
+        fullName: document.getElementById("fullName")?.value || "",
+        email: document.getElementById("email")?.value || "",
+        phone: document.getElementById("phone")?.value || "",
+        serviceType: document.getElementById("service-type")?.value || "",
+        bookingDate: document.getElementById("bookingDate")?.value || "",
+      };
+
+      try {
+        const response = await fetch("/api/bookings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error("Submission error details:", data.details || data.error);
+          alert(getFriendlyErrorMessage(data));
+          return;
+        }
+
+        showSuccessUI();
+      } catch (err) {
+        console.error("API request failed:", err);
+        alert(`Something went wrong: ${err.message}`);
+      }
+    });
   }
-}
+
+  // Extracts the first readable Zod validation message from the API response,
+  // falling back to the generic error string if none is found.
+  function getFriendlyErrorMessage(data) {
+    if (data?.details) {
+      const firstField = Object.keys(data.details).find(
+        (key) => key !== "_errors" && data.details[key]?._errors?.length
+      );
+      if (firstField) {
+        return data.details[firstField]._errors[0];
+      }
+    }
+    return data?.error || "Failed to submit booking. Please try again.";
+  }
+
+  function showSuccessUI() {
+    const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
+    const successMsg = document.getElementById("bookingSuccess");
+
+    // Hide the entire light-blue card container
+    if (bookingCard) bookingCard.style.display = "none";
+
+    // Show only the standalone teal success banner
+    if (successMsg) {
+      successMsg.style.display = "block";
+    }
+  }
+
   // 5. Escalation / Issue Form Submission
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
