@@ -931,6 +931,7 @@ export namespace Prisma {
     createdAt: Date | null
     fullName: string | null
     serviceType: string | null
+    notes: string | null
   }
 
   export type BookingMaxAggregateOutputType = {
@@ -941,6 +942,7 @@ export namespace Prisma {
     createdAt: Date | null
     fullName: string | null
     serviceType: string | null
+    notes: string | null
   }
 
   export type BookingCountAggregateOutputType = {
@@ -951,6 +953,7 @@ export namespace Prisma {
     createdAt: number
     fullName: number
     serviceType: number
+    notes: number
     _all: number
   }
 
@@ -963,6 +966,7 @@ export namespace Prisma {
     createdAt?: true
     fullName?: true
     serviceType?: true
+    notes?: true
   }
 
   export type BookingMaxAggregateInputType = {
@@ -973,6 +977,7 @@ export namespace Prisma {
     createdAt?: true
     fullName?: true
     serviceType?: true
+    notes?: true
   }
 
   export type BookingCountAggregateInputType = {
@@ -983,6 +988,7 @@ export namespace Prisma {
     createdAt?: true
     fullName?: true
     serviceType?: true
+    notes?: true
     _all?: true
   }
 
@@ -1066,6 +1072,7 @@ export namespace Prisma {
     createdAt: Date
     fullName: string | null
     serviceType: string
+    notes: string | null
     _count: BookingCountAggregateOutputType | null
     _min: BookingMinAggregateOutputType | null
     _max: BookingMaxAggregateOutputType | null
@@ -1093,6 +1100,7 @@ export namespace Prisma {
     createdAt?: boolean
     fullName?: boolean
     serviceType?: boolean
+    notes?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1103,6 +1111,7 @@ export namespace Prisma {
     createdAt?: boolean
     fullName?: boolean
     serviceType?: boolean
+    notes?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1113,6 +1122,7 @@ export namespace Prisma {
     createdAt?: boolean
     fullName?: boolean
     serviceType?: boolean
+    notes?: boolean
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectScalar = {
@@ -1123,9 +1133,10 @@ export namespace Prisma {
     createdAt?: boolean
     fullName?: boolean
     serviceType?: boolean
+    notes?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "bookingDate" | "createdAt" | "fullName" | "serviceType", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "bookingDate" | "createdAt" | "fullName" | "serviceType" | "notes", ExtArgs["result"]["booking"]>
 
   export type $BookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Booking"
@@ -1138,6 +1149,7 @@ export namespace Prisma {
       createdAt: Date
       fullName: string | null
       serviceType: string
+      notes: string | null
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -1568,6 +1580,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Booking", 'DateTime'>
     readonly fullName: FieldRef<"Booking", 'String'>
     readonly serviceType: FieldRef<"Booking", 'String'>
+    readonly notes: FieldRef<"Booking", 'String'>
   }
     
 
@@ -1960,7 +1973,8 @@ export namespace Prisma {
     bookingDate: 'bookingDate',
     createdAt: 'createdAt',
     fullName: 'fullName',
-    serviceType: 'serviceType'
+    serviceType: 'serviceType',
+    notes: 'notes'
   };
 
   export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
@@ -2051,6 +2065,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
+    notes?: StringNullableFilter<"Booking"> | string | null
   }
 
   export type BookingOrderByWithRelationInput = {
@@ -2061,6 +2076,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
+    notes?: SortOrderInput | SortOrder
   }
 
   export type BookingWhereUniqueInput = Prisma.AtLeast<{
@@ -2074,6 +2090,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
+    notes?: StringNullableFilter<"Booking"> | string | null
   }, "id" | "email">
 
   export type BookingOrderByWithAggregationInput = {
@@ -2084,6 +2101,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
+    notes?: SortOrderInput | SortOrder
     _count?: BookingCountOrderByAggregateInput
     _max?: BookingMaxOrderByAggregateInput
     _min?: BookingMinOrderByAggregateInput
@@ -2100,6 +2118,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
     fullName?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     serviceType?: StringWithAggregatesFilter<"Booking"> | string
+    notes?: StringNullableWithAggregatesFilter<"Booking"> | string | null
   }
 
   export type BookingCreateInput = {
@@ -2110,6 +2129,7 @@ export namespace Prisma {
     createdAt?: Date | string
     fullName?: string | null
     serviceType: string
+    notes?: string | null
   }
 
   export type BookingUncheckedCreateInput = {
@@ -2120,6 +2140,7 @@ export namespace Prisma {
     createdAt?: Date | string
     fullName?: string | null
     serviceType: string
+    notes?: string | null
   }
 
   export type BookingUpdateInput = {
@@ -2130,6 +2151,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookingUncheckedUpdateInput = {
@@ -2140,6 +2162,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookingCreateManyInput = {
@@ -2150,6 +2173,7 @@ export namespace Prisma {
     createdAt?: Date | string
     fullName?: string | null
     serviceType: string
+    notes?: string | null
   }
 
   export type BookingUpdateManyMutationInput = {
@@ -2160,6 +2184,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BookingUncheckedUpdateManyInput = {
@@ -2170,6 +2195,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2226,6 +2252,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     fullName?: SortOrder
     serviceType?: SortOrder
+    notes?: SortOrder
   }
 
   export type BookingMaxOrderByAggregateInput = {
@@ -2236,6 +2263,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     fullName?: SortOrder
     serviceType?: SortOrder
+    notes?: SortOrder
   }
 
   export type BookingMinOrderByAggregateInput = {
@@ -2246,6 +2274,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     fullName?: SortOrder
     serviceType?: SortOrder
+    notes?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {

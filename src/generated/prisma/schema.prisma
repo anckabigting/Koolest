@@ -27,6 +27,7 @@ model Booking {
   createdAt   DateTime @default(now()) @map("createdAt")
   fullName    String?  @map("fullName")
   serviceType String   @map("serviceType")
+  notes       String?  @map("notes")
 
   @@map("Booking") // Ensures Prisma targets the exact "Booking" table name
 }

@@ -127,7 +127,8 @@ exports.Prisma.BookingScalarFieldEnum = {
   bookingDate: 'bookingDate',
   createdAt: 'createdAt',
   fullName: 'fullName',
-  serviceType: 'serviceType'
+  serviceType: 'serviceType',
+  notes: 'notes'
 };
 
 exports.Prisma.SortOrder = {

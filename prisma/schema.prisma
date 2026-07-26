@@ -21,12 +21,13 @@ enum BookingStatus {
 
 model Booking {
   id          String   @id @default(cuid())
-  email       String   @unique
+  email       String   
   phone       String
   bookingDate DateTime @map("bookingDate")
   createdAt   DateTime @default(now()) @map("createdAt")
   fullName    String?   @map("fullName")
   serviceType String   @map("serviceType")
+  notes String? @map("notes")
 
 
   @@map("Booking") // Ensures Prisma targets the exact "Booking" table name

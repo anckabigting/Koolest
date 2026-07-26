@@ -43,18 +43,18 @@ export default async function handler(req, res) {
       });
     }
 
-    const { id, email, phone, booking_date, created_at, full_name, service_type} = validationResult.data;
+    const { email, phone, bookingDate, fullName, serviceType } = validationResult.data;
 
-    // 6. Save to Neon via Prisma
     const newBooking = await prisma.booking.create({
       data: {
-        id,
         email,
         phone,
-        booking_date: new Date(booking_date),
-        created_at: new Date(),
-        full_name,
-        service_type,
+        bookingDate: new Date(bookingDate),
+        fullName,
+        serviceType,
+        
+        // createdAt has @default(now()) — no need to set it manually
+        // id has @default(cuid()) — no need to set it manually
       },
     });
 
