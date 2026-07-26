@@ -1,4 +1,4 @@
-import { bookingSchema } from "../src/assets/libs/validations/booking.ts";
+import { bookingSchema } from "../src/assets/libs/validations/booking.js";
 import { prisma } from "../src/assets/libs/prisma.ts";
 import { ratelimit } from "../src/assets/libs/ratelimit.ts";
 
