@@ -1155,6 +1155,18 @@ footer {
 }
 
 /* Form Styling inside Dark Footer */
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233f8083' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 16px;
+  padding: 12px 42px 13px 13px; /* increase top/bottom padding slightly */
+  line-height: 1.4;
+}
+
 .form-group {
     margin-bottom: 16px;
     width: 100%;
