@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koolest | Admin - Bookings</title>
-  <link rel="icon" type="image/png" href="koolest_logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
   <style>
@@ -58,6 +57,12 @@
     }
     .login-error {
       color: var(--error-red);
+      font-size: 0.85rem;
+      margin-top: 16px;
+      display: none;
+    }
+    .session-expired-msg {
+      color: var(--dark-aqua);
       font-size: 0.85rem;
       margin-top: 16px;
       display: none;
@@ -142,6 +147,7 @@
       <p>Sign in with your authorized Google account to view bookings.</p>
       <div id="googleSignInBtn"></div>
       <div class="login-error" id="loginError">This Google account is not authorized to access the admin dashboard.</div>
+      <div class="session-expired-msg" id="sessionExpiredMsg">Your session has expired. Please sign in again.</div>
     </div>
   </div>
 
@@ -179,10 +185,12 @@
 
     const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
     let idToken = null;
+    let expiryTimer = null;
 
     const loginGate = document.getElementById("loginGate");
     const dashboard = document.getElementById("dashboard");
     const loginError = document.getElementById("loginError");
+    const sessionExpiredMsg = document.getElementById("sessionExpiredMsg");
     const refreshBtn = document.getElementById("refreshBtn");
     const signOutBtn = document.getElementById("signOutBtn");
     const signedInAs = document.getElementById("signedInAs");
@@ -210,6 +218,7 @@
 
     async function handleGoogleSignIn(response) {
       idToken = response.credential;
+      sessionExpiredMsg.style.display = "none";
       const ok = await loadBookings(true);
       if (ok) {
         sessionStorage.setItem("koolest_admin_id_token", idToken);
@@ -223,23 +232,58 @@
     function unlockDashboard() {
       loginGate.style.display = "none";
       dashboard.style.display = "block";
+      loginError.style.display = "none";
+      sessionExpiredMsg.style.display = "none";
       loadBookings();
       try {
         const payload = JSON.parse(atob(idToken.split(".")[1]));
         signedInAs.textContent = `Signed in as ${payload.email}`;
+        scheduleExpiryCheck(payload.exp);
       } catch (e) {
         // ignore decode issues, non-critical display text
       }
+    }
+
+    // Proactively signs the admin out the moment the Google ID token's own
+    // expiry time passes, rather than waiting for the next API call to fail.
+    function scheduleExpiryCheck(expUnixSeconds) {
+      if (expiryTimer) clearTimeout(expiryTimer);
+      const msUntilExpiry = expUnixSeconds * 1000 - Date.now();
+
+      if (msUntilExpiry <= 0) {
+        expireSession();
+        return;
+      }
+      expiryTimer = setTimeout(expireSession, msUntilExpiry);
+    }
+
+    function expireSession() {
+      sessionStorage.removeItem("koolest_admin_id_token");
+      idToken = null;
+      if (expiryTimer) {
+        clearTimeout(expiryTimer);
+        expiryTimer = null;
+      }
+      google.accounts.id.disableAutoSelect();
+      dashboard.style.display = "none";
+      loginGate.style.display = "flex";
+      loginError.style.display = "none";
+      sessionExpiredMsg.style.display = "block";
     }
 
     refreshBtn.addEventListener("click", () => loadBookings());
     signOutBtn.addEventListener("click", () => {
       sessionStorage.removeItem("koolest_admin_id_token");
       idToken = null;
+      if (expiryTimer) {
+        clearTimeout(expiryTimer);
+        expiryTimer = null;
+      }
       google.accounts.id.disableAutoSelect();
       dashboard.style.display = "none";
       loginGate.style.display = "flex";
       loginError.style.display = "none";
+      sessionExpiredMsg.style.display = "none";
     });
 
     async function loadBookings(isLoginAttempt = false) {
@@ -254,10 +298,7 @@
 
         if (res.status === 401 || res.status === 403) {
           if (!isLoginAttempt) {
-            sessionStorage.removeItem("koolest_admin_id_token");
-            idToken = null;
-            loginGate.style.display = "flex";
-            dashboard.style.display = "none";
+            expireSession();
           }
           return false;
         }
@@ -329,6 +370,11 @@
           },
           body: JSON.stringify({ id, status }),
         });
+
+        if (res.status === 401 || res.status === 403) {
+          expireSession();
+          return;
+        }
 
         const data = await res.json();
         if (!data.success) throw new Error(data.error || "Update failed.");
