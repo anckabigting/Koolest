@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koolest | Admin - Bookings</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
       --primary-aqua: #20b2aa;
@@ -184,8 +184,10 @@
     const GOOGLE_CLIENT_ID = "1027962690032-67mdn9rnofps2peorjbbqljhi9llpr78.apps.googleusercontent.com";
 
     const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
+    const INACTIVITY_LIMIT_MS = 15 * 60 * 1000; // 15 minutes
     let idToken = null;
     let expiryTimer = null;
+    let inactivityTimer = null;
 
     const loginGate = document.getElementById("loginGate");
     const dashboard = document.getElementById("dashboard");
@@ -242,6 +244,7 @@
       } catch (e) {
         // ignore decode issues, non-critical display text
       }
+      startInactivityTracking();
     }
 
     // Proactively signs the admin out the moment the Google ID token's own
@@ -257,6 +260,32 @@
       expiryTimer = setTimeout(expireSession, msUntilExpiry);
     }
 
+    // Signs the admin out after a period of no mouse/keyboard/scroll activity,
+    // independent of the Google token's own expiry.
+    const ACTIVITY_EVENTS = ["mousemove", "mousedown", "keydown", "scroll", "touchstart"];
+
+    function startInactivityTracking() {
+      resetInactivityTimer();
+      ACTIVITY_EVENTS.forEach((evt) =>
+        document.addEventListener(evt, resetInactivityTimer, { passive: true })
+      );
+    }
+
+    function stopInactivityTracking() {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+        inactivityTimer = null;
+      }
+      ACTIVITY_EVENTS.forEach((evt) =>
+        document.removeEventListener(evt, resetInactivityTimer)
+      );
+    }
+
+    function resetInactivityTimer() {
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(expireSession, INACTIVITY_LIMIT_MS);
+    }
+
     function expireSession() {
       sessionStorage.removeItem("koolest_admin_id_token");
       idToken = null;
@@ -264,6 +293,7 @@
         clearTimeout(expiryTimer);
         expiryTimer = null;
       }
+      stopInactivityTracking();
       google.accounts.id.disableAutoSelect();
       dashboard.style.display = "none";
       loginGate.style.display = "flex";
@@ -279,6 +309,7 @@
         clearTimeout(expiryTimer);
         expiryTimer = null;
       }
+      stopInactivityTracking();
       google.accounts.id.disableAutoSelect();
       dashboard.style.display = "none";
       loginGate.style.display = "flex";
