@@ -1,13 +1,15 @@
 import { prisma } from "../../src/assets/libs/prisma.js";
+import { verifyAdmin } from "./_verifyAdmin.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ success: false, error: "Method Not Allowed. Use GET." });
   }
 
-  const providedPassword = req.headers["x-admin-password"];
-  if (!providedPassword || providedPassword !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({ success: false, error: "Unauthorized." });
+  try {
+    await verifyAdmin(req);
+  } catch (err) {
+    return res.status(err.statusCode || 401).json({ success: false, error: err.message });
   }
 
   try {

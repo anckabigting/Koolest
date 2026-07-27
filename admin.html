@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koolest | Admin - Bookings</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
       --primary-aqua: #20b2aa;
@@ -24,7 +25,6 @@
       min-height: 100vh;
     }
 
-    /* Password gate */
     #loginGate {
       display: flex;
       align-items: center;
@@ -51,33 +51,17 @@
       font-size: 0.9rem;
       margin-bottom: 24px;
     }
-    .login-box input {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      margin-bottom: 12px;
-    }
-    .login-box button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      background: var(--accent-yellow);
-      color: var(--dark-aqua);
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
+    #googleSignInBtn {
+      display: flex;
+      justify-content: center;
     }
     .login-error {
       color: var(--error-red);
       font-size: 0.85rem;
-      margin-top: 10px;
+      margin-top: 16px;
       display: none;
     }
 
-    /* Dashboard */
     #dashboard { display: none; padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
     .dash-header {
       display: flex;
@@ -88,6 +72,7 @@
       gap: 12px;
     }
     .dash-header h1 { color: var(--dark-aqua); font-size: 1.6rem; }
+    .dash-header .header-actions { display: flex; gap: 10px; align-items: center; }
     .dash-header button {
       background: var(--light-aqua);
       color: var(--dark-aqua);
@@ -96,6 +81,10 @@
       padding: 8px 16px;
       cursor: pointer;
       font-weight: 600;
+    }
+    .signed-in-as {
+      font-size: 0.8rem;
+      color: #667;
     }
 
     .table-wrap {
@@ -120,19 +109,6 @@
       letter-spacing: 0.4px;
     }
     tr:hover td { background: #fafdfd; }
-
-    .status-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    .status-PENDING { background: #fff3cd; color: #8a6d00; }
-    .status-CONFIRMED { background: #d6eefc; color: #14608a; }
-    .status-COMPLETED { background: #d9f2e3; color: var(--success-green); }
-    .status-CANCELLED { background: #fbdcdc; color: var(--error-red); }
 
     select.status-select {
       padding: 6px 10px;
@@ -159,22 +135,23 @@
 </head>
 <body>
 
-  <!-- Password Gate -->
   <div id="loginGate">
     <div class="login-box">
       <h1>Koolest Admin</h1>
-      <p>Enter the admin password to view bookings.</p>
-      <input type="password" id="passwordInput" placeholder="Password" />
-      <button id="loginBtn">Unlock Dashboard</button>
-      <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+      <p>Sign in with your authorized Google account to view bookings.</p>
+      <div id="googleSignInBtn"></div>
+      <div class="login-error" id="loginError">This Google account is not authorized to access the admin dashboard.</div>
     </div>
   </div>
 
-  <!-- Dashboard -->
   <div id="dashboard">
     <div class="dash-header">
       <h1>Bookings Dashboard</h1>
-      <button id="refreshBtn">Refresh</button>
+      <div class="header-actions">
+        <span class="signed-in-as" id="signedInAs"></span>
+        <button id="refreshBtn">Refresh</button>
+        <button id="signOutBtn">Sign Out</button>
+      </div>
     </div>
     <div class="table-wrap">
       <div id="loadingState" class="loading">Loading bookings...</div>
@@ -197,43 +174,47 @@
   </div>
 
   <script>
+    const GOOGLE_CLIENT_ID = "1027962690032-67mdn9rnofps2peorjbbqljhi9llpr78.apps.googleusercontent.com";
+
     const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
-    let adminPassword = "";
+    let idToken = null;
 
     const loginGate = document.getElementById("loginGate");
     const dashboard = document.getElementById("dashboard");
-    const passwordInput = document.getElementById("passwordInput");
-    const loginBtn = document.getElementById("loginBtn");
     const loginError = document.getElementById("loginError");
     const refreshBtn = document.getElementById("refreshBtn");
+    const signOutBtn = document.getElementById("signOutBtn");
+    const signedInAs = document.getElementById("signedInAs");
     const loadingState = document.getElementById("loadingState");
     const bookingsTable = document.getElementById("bookingsTable");
     const bookingsBody = document.getElementById("bookingsBody");
     const emptyState = document.getElementById("emptyState");
 
-    // Restore session (so refreshing the page doesn't force re-login every time)
-    const savedPassword = sessionStorage.getItem("koolest_admin_pw");
-    if (savedPassword) {
-      adminPassword = savedPassword;
+    const savedToken = sessionStorage.getItem("koolest_admin_id_token");
+    if (savedToken) {
+      idToken = savedToken;
       unlockDashboard();
     }
 
-    loginBtn.addEventListener("click", attemptLogin);
-    passwordInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") attemptLogin();
-    });
-    refreshBtn.addEventListener("click", loadBookings);
+    window.onload = () => {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleSignIn,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("googleSignInBtn"),
+        { theme: "outline", size: "large", text: "signin_with" }
+      );
+    };
 
-    async function attemptLogin() {
-      const candidate = passwordInput.value;
-      if (!candidate) return;
-
-      adminPassword = candidate;
+    async function handleGoogleSignIn(response) {
+      idToken = response.credential;
       const ok = await loadBookings(true);
       if (ok) {
-        sessionStorage.setItem("koolest_admin_pw", candidate);
+        sessionStorage.setItem("koolest_admin_id_token", idToken);
         unlockDashboard();
       } else {
+        idToken = null;
         loginError.style.display = "block";
       }
     }
@@ -242,7 +223,23 @@
       loginGate.style.display = "none";
       dashboard.style.display = "block";
       loadBookings();
+      try {
+        const payload = JSON.parse(atob(idToken.split(".")[1]));
+        signedInAs.textContent = `Signed in as ${payload.email}`;
+      } catch (e) {
+        // ignore decode issues, non-critical display text
+      }
     }
+
+    refreshBtn.addEventListener("click", () => loadBookings());
+    signOutBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("koolest_admin_id_token");
+      idToken = null;
+      google.accounts.id.disableAutoSelect();
+      dashboard.style.display = "none";
+      loginGate.style.display = "flex";
+      loginError.style.display = "none";
+    });
 
     async function loadBookings(isLoginAttempt = false) {
       loadingState.style.display = "block";
@@ -251,12 +248,13 @@
 
       try {
         const res = await fetch("/api/admin/bookings", {
-          headers: { "x-admin-password": adminPassword },
+          headers: { Authorization: `Bearer ${idToken}` },
         });
 
-        if (res.status === 401) {
+        if (res.status === 401 || res.status === 403) {
           if (!isLoginAttempt) {
-            sessionStorage.removeItem("koolest_admin_pw");
+            sessionStorage.removeItem("koolest_admin_id_token");
+            idToken = null;
             loginGate.style.display = "flex";
             dashboard.style.display = "none";
           }
@@ -312,7 +310,6 @@
         bookingsBody.appendChild(row);
       });
 
-      // Wire up status change handlers
       document.querySelectorAll(".status-select").forEach((select) => {
         select.addEventListener("change", () => updateStatus(select));
       });
@@ -327,7 +324,7 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "x-admin-password": adminPassword,
+            Authorization: `Bearer ${idToken}`,
           },
           body: JSON.stringify({ id, status }),
         });
