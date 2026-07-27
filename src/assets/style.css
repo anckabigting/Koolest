@@ -364,8 +364,8 @@ header {
     padding: 100px 0;
     position: relative !important;
     overflow: hidden;
+    display: flex; 
 }
-
 /* 1. Container section must be relative so bubbles stay inside it */
 .hero-section {
     position: relative;
@@ -1304,4 +1304,47 @@ textarea.form-control {
         display: block;
         padding: 10px 0;
     }
+
+    /* --- HERO RESPONSIVE FIX --- */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-text {
+    order: 1;
+  }
+
+  .hero-bg-slideshow {
+    position: relative;   /* was absolute, 50% width pinned to whole section */
+    width: 100%;
+    height: 280px;
+    order: 2;
+    margin-top: 32px;
+  }
+
+  .hero-bg-slideshow::before {
+    display: none;        /* that left-fade gradient makes no sense stacked */
+  }
+
+  .hero-badges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    min-height: auto;
+    padding: 50px 0;
+  }
+
+  .hero-text h1 {
+    align-items: center;
+  }
+
+  .hero-text h1 span::before {
+    font-size: 2rem;      /* your typewriter h1 has no explicit size — inherits huge browser default on some screens */
+  }
+}
 }
