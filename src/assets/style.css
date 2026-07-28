@@ -1033,7 +1033,7 @@ header {
 }
 
 .section-title {
-  color: #1e3a40; /* Dark Teal */
+  color: var(--dark-aqua); /* Dark Teal */
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
@@ -1044,7 +1044,7 @@ header {
   font-size: 1rem;
   margin-bottom: 2rem;
 }
-
+    
 /* Feedback Form Card */
 .form-card {
   background-color: #ffffff;
@@ -1062,7 +1062,7 @@ header {
 }
 
 .styled-form label {
-  color: #2b7a78; /* Teal label color */
+  color: #556b6e !important; /* Teal label color */
   font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
@@ -1081,7 +1081,7 @@ header {
   box-sizing: border-box;
 }
 
-.form-input:focus {
+.form-input:focus { 
   border-color: #2b7a78;
   box-shadow: 0 0 0 3px rgba(43, 122, 120, 0.15);
 }
@@ -1100,6 +1100,45 @@ header {
 .form-textarea {
   resize: vertical;
   min-height: 100px;
+}
+
+/* Container for star alignment */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse; /* Reverses order so CSS hover highlighting works left-to-right */
+  justify-content: flex-end;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+
+/* Hide default radio buttons */
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+/* Base Star Styling */
+.star-rating label {
+  font-size: 1.6rem;
+  color: #ccc !important; /* Default unselected star color */
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.1s ease;
+  margin-bottom: 0 !important; /* Prevent parent label margin interference */
+}
+
+/* Hover Effect: Turn hovered star and all previous stars yellow */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #f4c414 !important; /* Matches your theme's yellow button color */
+}
+
+/* Selected State: Keep stars yellow when clicked/checked */
+.star-rating input[type="radio"]:checked ~ label {
+  color: #f4c414 !important;
+}
+
+/* Subtle bounce effect when clicking a star */
+.star-rating label:active {
+  transform: scale(1.2);
 }
 
 /* Button Styling */
