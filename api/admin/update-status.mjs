@@ -1,5 +1,6 @@
 import { prisma } from "../../src/assets/libs/prisma.js";
 import { verifyAdmin } from "./_verifyAdmin.js";
+import { sendStatusChangeEmail } from "../../src/assets/libs/email.js";
 
 const VALID_STATUSES = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
 
@@ -33,6 +34,9 @@ export default async function handler(req, res) {
       where: { id },
       data: { status },
     });
+
+    // Fire-and-forget: don't let a slow/failed email delay or break the response.
+    sendStatusChangeEmail(updatedBooking);
 
     return res.status(200).json({
       success: true,
