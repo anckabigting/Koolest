@@ -19,6 +19,7 @@
     
     <link rel="stylesheet" href="src/assets/style.css">
     <script src="script.js" defer></script>
+    
 </head>
 <body>
 <!-- Target container for JavaScript -->
@@ -463,65 +464,35 @@
   </div>
 </section>
 
-    <footer id="contact">
-        <div class="reveal container">
-            <div class="footer-grid">
-                
-                <div class="footer-contact">
-                    <h3><span style="--i:3;" data-text="Freshen Up">Freshen Up</span>
-                    <span style="--i:2;" data-text="Book a Clean Breeze">Book a Clean Breeze</span>
-                    <span style="--i:1;" data-text="Book Koolest">Book Koolest</span></h3>
-                    
-                    <p style="color: #a0c4c1; margin-bottom: 24px;">Ready to fix your unit's performance? Reserve your slot now!</p>
-                    <ul class="contact-methods" style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-phone" style="color: #FFC700; margin-right: 8px;"></i> Support: <a href="tel:+639753396764">+63 975 339 6764</a>
-                        </li>
-                        <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-envelope" style="color: #FFC700; margin-right: 8px;"></i> Email: <a href="mailto:koolest.acservices@gmail.com">koolest.acservices@gmail.com</a>
-                        </li>
-                        <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-location-dot" style="color: #FFC700; margin-right: 8px;"></i> Location: <span>Dasmariñas, Cavite, Philippines</span></a>
-                        </li>
-                        <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-map-pin" style="color: #FFC700; margin-right: 8px;"></i> Service Area: <span>Cavite, Philippines</span></li>
-                        </li>
-                        <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-clock" style="color: #FFC700; margin-right: 8px;"></i>Service Hours: <span>Mon - Sat</span> <span>(8:00 AM - 5:00 PM)</span>
-                        </li>
-                    </ul>
-                </div>
+    <!-- ================= CONTACT SECTION ================= -->
+<section id="contact-section" class="section-padding contact-container">
+  <div class="contact-info">
+    <h2 class="section-title text-light">Book a Service</h2>
+    <p class="section-subtitle text-light">Ready to fix your unit's performance? Reserve your slot now!</p>
 
-                <div class="footer-report" id="report">
-                    <h3>Encountered a Problem?</h3>
-                    <p style="color: #cbdad8; margin-bottom: 20px;">Service wasn't up to your standard? Let us know directly. We promise to address the issue within 24 hours.</p>
-                    
-                    <form id="issueForm" action="https://docs.google.com/forms/u/0/d/e/YOUR_PROBLEM_FORM_ID_HERE/formResponse" method="POST" target="hidden_iframe">
-                        <div class="form-group">
-                            <label for="clientName">Your Name</label>
-                            <input type="text" name="entry.555555" id="clientName" class="form-control" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clientContact">Contact Number</label>
-                            <input type="text" name="entry.666666" id="clientContact" class="form-control" placeholder="0917XXXXXXX" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="issueDetails">Describe what went wrong</label>
-                            <textarea name="entry.777777" id="issueDetails" class="form-control" placeholder="Please share details (e.g., unit still making sounds, missed area) so we can fix it right away..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-yellow" style="width: 100%; font-weight: 700;">Submit Escalation Report</button>
-                    </form>
-                    
-                    <div id="formSuccess" class="success-message">
-                        Report Received! Our senior service manager has been alerted and will contact you directly within 2 hours to organize a resolution team.
-                    </div>
-                </div>
+    <ul class="contact-details">
+      <li><i class="fa-solid fa-phone"></i> <strong>Support:</strong> <a href="tel:+639753396764">+63 975 339 6764</a></li>
+      <li><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <a href="mailto:koolest.acservices@gmail.com">koolest.acservices@gmail.com</a></li>
+      <li><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Dasmariñas, Cavite, Philippines</li>
+      <li><i class="fa-solid fa-map-location-dot"></i> <strong>Service Area:</strong> Cavite, Philippines</li>
+      <li><i class="fa-solid fa-clock"></i> <strong>Service Hours:</strong> Mon – Sat (8:00 AM – 5:00 PM)</li>
+    </ul>
+  </div>
+</section>
 
-            </div>
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="report-issue.html">Report a Problem</a>
+    </div>
+  </div>
+</footer>
 
-            <div class="copyright">
-                <p>&copy; 2026 Koolest Aircon Services. All Rights Reserved.</p>
-            </div>
-        </div>
+<!-- ================= BACK TO TOP BUTTON ================= -->
+<button id="backToTopBtn" title="Go to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
     </footer>
 </html>
