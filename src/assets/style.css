@@ -89,10 +89,22 @@ section {
     font-size: 1rem;
     text-align: center;
 }
+
 .btn-yellow {
-    background-color: var(--accent-yellow);
-    color: var(--dark-aqua);
+  background-color: #f4c414;
+  color: #1e3a40;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: none;
+  
+  /* Keeps "Save on Bills" on one line */
+  white-space: nowrap; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .btn-yellow:hover {
     background-color: #f2b200;
     transform: translateY(-2px);
