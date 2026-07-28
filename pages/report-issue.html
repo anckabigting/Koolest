@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report a Website Issue - Koolest AC Services</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="report-issue.css"/>
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-snowflake"></i> Koolest
+      </a>
+      
+      <nav class="nav-links">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#reviews">Reviews</a>
+        <a href="index.html#rate-us">Rate Us</a>
+        <a href="index.html#contact-section">Contact Us</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="report-issue.html" class="nav-link nav-active">Report an Issue</a>
+        <a href="index.html#contact-section" class="btn-yellow">Book Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= REPORT BUG FORM SECTION ================= -->
+  <main class="section-padding">
+    <div class="form-card">
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+      
+      <h2 class="section-title">Report a Website Issue</h2>
+      <p class="section-subtitle">Spotted a bug, broken link, or display issue on our site? Let us know so we can fix it right away!</p>
+
+      <form id="bugReportForm" class="styled-form">
+        <!-- Name (Optional) -->
+        <div class="form-group">
+          <label for="reporterName">Your Name <span class="optional-text">(Optional)</span></label>
+          <input type="text" id="reporterName" class="form-input" placeholder="e.g. Jane Doe" />
+        </div>
+
+        <!-- Email for Follow-up -->
+        <div class="form-group">
+          <label for="reporterEmail">Email Address</label>
+          <input type="email" id="reporterEmail" class="form-input" placeholder="e.g. jane@example.com" required />
+        </div>
+
+        <!-- Issue Category -->
+        <div class="form-group">
+          <label for="issueType">Type of Issue</label>
+          <select id="issueType" class="form-input form-select" required>
+            <option value="" disabled selected>Select issue category...</option>
+            <option value="broken-link">Broken Link or Button</option>
+            <option value="layout-display">Visual / Layout Glitch</option>
+            <option value="form-error">Form Submission Error</option>
+            <option value="mobile-issue">Mobile / Screen Display Problem</option>
+            <option value="other">Other Website Bug</option>
+          </select>
+        </div>
+
+        <!-- Issue Description -->
+        <div class="form-group">
+          <label for="issueDetails">Describe the Bug</label>
+          <textarea id="issueDetails" class="form-input form-textarea" rows="4" placeholder="Please describe what happened (e.g. 'The Book Now button didn't respond on mobile')..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-yellow btn-full">Submit Bug Report</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="report-issue.html">Report a Problem</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
