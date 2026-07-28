@@ -249,25 +249,12 @@ header {
             100% { transform: translateY(-10vh) translateX(120px) rotate(360deg) scale(1.4); opacity: 0; }
         }
 
-        @keyframes scroll-testimonials {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
     .breeze-particle {
             position: absolute;
             background: linear-gradient(135deg, rgba(32, 178, 170, 0.15), rgba(255, 189, 0, 0.1));
             border-radius: 50%;
             pointer-events: none;
             animation: floatBreeze 14s infinite linear;
-        }
-
-        .marquee-track {
-            animation: scroll-testimonials 24s linear infinite;
-        }
-
-        .marquee-track:hover {
-            animation-play-state: paused;
         }
 
 .home-info h1 {
@@ -924,21 +911,15 @@ header {
     gap: 1.5rem;
     width: max-content;
     animation: scroll-left 25s linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .testimonials-track:hover {
     animation-play-state: paused; /* Optional: pauses on hover */
 }
 
-.testimonial-card {
-    width: 320px;
-    background: #ffffff;
-    border-radius: 16px; /* Smooth rounded corners */
-    padding: 28px 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* Soft floating shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle outline */
-}
 
 @keyframes scroll-left {
     0% {
@@ -955,29 +936,6 @@ header {
     padding: 60px 0;
 }
 
-/* Base style for the container to ensure the animation looks smooth */
-.marquee-container {
-    overflow: hidden;
-    width: 100%;
-    display: flex;
-    padding: 10px 0;
-    border: 2px solid transparent; /* Invisible border placeholder to prevent layout shifting */
-    border-radius: 16px;           /* Rounds the glowing border edges */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition fade-in */
-}
-
-.marquee-track {
-    display: flex;
-    width: max-content;
-    animation: scroll-testimonials 15s linear infinite;
-}
-
-.marquee-group {
-    display: flex;
-    gap: 24px;       /* Matches your original grid spacing */
-    padding-right: 24px; /* Essential seamless gap spacing */
-}
-
 .testimonial-card {
     background-color: var(--white);
     padding: 28px 24px;                 /* Increased padding for a more spacious feel */
@@ -992,17 +950,13 @@ header {
     flex-direction: column;
     justify-content: space-between; /* Pushes the client name nicely to the bottom */
     flex-shrink: 0;                /* Prevents cards from squishing */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Subtle lift on hover */
 .testimonial-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-/* Stops the marquee animation on hover */
-.marquee-container:hover .marquee-track {
-    animation-play-state: paused;
 }
 
 .stars {
@@ -1057,6 +1011,149 @@ header {
     100% {
         transform: translateX(-50%);
     }
+}
+
+/* Layout & Container Utils */
+.section-padding {
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  color: #1e3a40; /* Dark Teal */
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+  color: #556b6e;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Feedback Form Card */
+.form-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.styled-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+}
+
+.styled-form label {
+  color: #2b7a78; /* Teal label color */
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #7bcbc4; /* Light teal border */
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #2c3e50;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #2b7a78;
+  box-shadow: 0 0 0 3px rgba(43, 122, 120, 0.15);
+}
+
+/* Custom Select Dropdown Styling */
+.form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%231e3a40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Button Styling */
+.btn-yellow {
+  background-color: #f4c414; /* Yellow matching Book Now button */
+  color: #1e3a40;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-yellow:hover {
+  background-color: #e0b30f;
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Gallery Styling */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.img-wrapper {
+  width: 100%;
+  height: 220px;
+  background-color: #f0f7f7; /* Soft placeholder fallback */
+  overflow: hidden;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .img-wrapper img {
+  transform: scale(1.03);
+}
+
+.gallery-caption {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  font-weight: 700;
+  color: #1e3a40;
+  background-color: #ffffff;
 }
 
 /* --- CONTACT & REPORT (FOOTER) --- */
@@ -1139,7 +1236,8 @@ footer {
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: flex-start;
+    gap: 15px;
     color: #e2f2f1;
 }
 .contact-methods a {

@@ -40,7 +40,9 @@
         <ul class="nav-links" id="nav-menu">
                 <li><a href="#services">Services</a></li>
                 <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#feedback-section">Feedback</a></li>
                 <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#gallery-section">Gallery</a></li>
                 <li><a href="#report" style="color: var(--error-red); font-weight: 700;">Report an Issue</a></li>
                 <li><a href="#booking" class="btn btn-yellow" style="padding: 10px 20px;">Book Now</a></li>
             </ul>
@@ -312,24 +314,27 @@
     </div>
     <div class="testimonials-marquee-container">
         <div class="testimonials-track">
-            
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Super professional. They brought protective sheets and left zero mess on my cream walls. Best service team in town."</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Sarah M.</span>
-                    <span class="client-role">(Condo Owner)</span>
-                </div>
-            </div>
 
-            <div class="testimonial-card">
+              <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
                 <p>"We have been using Koolest for our entire coworking space. They clean 14 wall units in one night shift. Zero disruption."</p>
                 <div class="client-info">
                     <span class="client-dot"></span>
                     <span class="client-name">Marcus G.</span>
                     <span class="client-role">(Office Admin)</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"I have been using Koolest team at regular intervals to clean my AC unit, and I am consitently satisifed with their work.
+                    They are always incredibly friendly and take time to do a very detailed and thorough cleaning every single time. On top of the
+                    excellent quality of their work, their service is highly affordable. I highly recommend them to anyone looking for reliable and
+                    top-notch AC maintenance!"</p>
+                <div class="client-info">
+                    <span class="client-dot"></span>
+                    <span class="client-name">Sir P.</span>
+                    <span class="client-role">The Villas at Dasmariñas Highlands</span>
                 </div>
             </div>
 
@@ -378,6 +383,71 @@
     </div>
 </section>
 
+<!-- ================= FEEDBACK SECTION ================= -->
+<section id="feedback-section" class="section-padding">
+  <div class="form-card">
+    <h2 class="section-title">Client Reviews & Feedback</h2>
+    <p class="section-subtitle">How did we do? Leave your feedback below!</p>
+
+    <form id="feedbackForm" class="styled-form">
+      <div class="form-group">
+        <label for="clientName">Your Name</label>
+        <input type="text" id="clientName" class="form-input" placeholder="e.g. Jane Doe" required />
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating</label>
+        <select id="rating" class="form-input form-select" required>
+          <option value="" disabled selected>Select a rating...</option>
+          <option value="5">⭐⭐⭐⭐⭐ (5 - Excellent)</option>
+          <option value="4">⭐⭐⭐⭐ (4 - Very Good)</option>
+          <option value="3">⭐⭐⭐ (3 - Average)</option>
+          <option value="2">⭐⭐ (2 - Poor)</option>
+          <option value="1">⭐ (1 - Very Poor)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Your Feedback</label>
+        <textarea id="comment" class="form-input form-textarea" rows="4" placeholder="Tell us about your experience..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-yellow btn-full">Submit Feedback</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= GALLERY SECTION ================= -->
+<section id="gallery-section" class="section-padding">
+  <div class="container">
+    <h2 class="section-title">Our Team in Action</h2>
+    <p class="section-subtitle">Take a look at our team delivering quality service on the job.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <div class="img-wrapper">
+          <img src="assets/images/team-1.jpg" alt="On-site Maintenance" loading="lazy" />
+        </div>
+        <div class="gallery-caption">On-site Maintenance</div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="img-wrapper">
+          <img src="assets/images/team-2.jpg" alt="Quality Inspection" loading="lazy" />
+        </div>
+        <div class="gallery-caption">Quality Inspection</div>
+      </div>
+
+      <div class="gallery-card">
+        <div class="img-wrapper">
+          <img src="assets/images/team-3.jpg" alt="Installation Service" loading="lazy" />
+        </div>
+        <div class="gallery-caption">Installation Service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <footer id="contact">
         <div class="reveal container">
             <div class="footer-grid">
@@ -396,13 +466,13 @@
                             <i class="fa-solid fa-envelope" style="color: #FFC700; margin-right: 8px;"></i> Email: <a href="mailto:koolest.acservices@gmail.com">koolest.acservices@gmail.com</a>
                         </li>
                         <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-location-dot" style="color: #FFC700; margin-right: 8px;"></i> Location: Dasmariñas, Cavite, Philippines
+                            <i class="fa-solid fa-location-dot" style="color: #FFC700; margin-right: 8px;"></i> Location: <span>Dasmariñas, Cavite, Philippines</span></a>
                         </li>
                         <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-map-pin" style="color: #FFC700; margin-right: 8px;"></i> Service Area: Cavite, Philippines
+                            <i class="fa-solid fa-map-pin" style="color: #FFC700; margin-right: 8px;"></i> Service Area: <span>Cavite, Philippines</span></li>
                         </li>
                         <li style="margin-bottom: 12px;">
-                            <i class="fa-solid fa-clock" style="color: #FFC700; margin-right: 8px;"></i> Service Hours: Mon - Sat (8:00 AM - 5:00 PM)
+                            <i class="fa-solid fa-clock" style="color: #FFC700; margin-right: 8px;"></i>Service Hours: <span>Mon - Sat</span> <span>(8:00 AM - 5:00 PM)</span>
                         </li>
                     </ul>
                 </div>

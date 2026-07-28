@@ -132,6 +132,14 @@ exports.Prisma.BookingScalarFieldEnum = {
   status: 'status'
 };
 
+exports.Prisma.FeedbackScalarFieldEnum = {
+  id: 'id',
+  clientName: 'clientName',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,7 +162,8 @@ exports.BookingStatus = exports.$Enums.BookingStatus = {
 };
 
 exports.Prisma.ModelName = {
-  Booking: 'Booking'
+  Booking: 'Booking',
+  Feedback: 'Feedback'
 };
 
 /**

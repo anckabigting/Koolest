@@ -32,3 +32,13 @@ model Booking {
 
   @@map("Booking") // Ensures Prisma targets the exact "Booking" table name
 }
+
+model Feedback {
+  id         String   @id @default(cuid())
+  clientName String   @map("client_name")
+  rating     Int
+  comment    String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("Feedback")
+}

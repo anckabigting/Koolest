@@ -161,6 +161,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const feedbackForm = document.getElementById('feedbackForm');
+
+if (feedbackForm) {
+  feedbackForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const feedbackData = {
+      clientName: document.getElementById('clientName').value,
+      rating: parseInt(document.getElementById('rating').value, 10),
+      comment: document.getElementById('comment').value,
+    };
+
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(feedbackData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        alert('Thank you for your feedback!');
+        feedbackForm.reset();
+      } else {
+        alert('Failed to send feedback: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err) {
+      console.error('Feedback submit error:', err);
+      alert('Could not submit feedback at this time.');
+    }
+  });
+}
   // 5. Escalation / Issue Form Submission
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
