@@ -1,0 +1,123 @@
+/* --- REPORT ISSUE PAGE OVERRIDES --- */
+
+body.report-page-body {
+  background-color: #0b3c37 !important; /* Dark teal theme matching contact section */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Section Wrapper */
+.report-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+/* Form Card Container */
+.report-card {
+  background-color: #0d4640; /* Slightly lighter dark teal card */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2.5rem;
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Back Link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f4c414; /* Yellow accent */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.back-link:hover {
+  transform: translateX(-3px);
+  opacity: 0.9;
+}
+
+/* Typography */
+.report-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.report-subtitle {
+  color: #a3b8b5;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+/* Labels and Inputs */
+.styled-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.styled-form label {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.optional-text {
+  color: #a3b8b5;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+/* Inputs & Select Elements */
+.styled-form .form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #082d29;
+  border: 1px solid #1c524c;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.styled-form .form-input:focus {
+  border-color: #f4c414;
+  box-shadow: 0 0 0 2px rgba(244, 196, 20, 0.2);
+}
+
+.styled-form .form-input::placeholder {
+  color: #5c7874;
+}
+
+.styled-form select.form-input {
+  cursor: pointer;
+}
+
+.styled-form select.form-input option {
+  background-color: #082d29;
+  color: #ffffff;
+}
+
+/* Submit Button */
+.btn-full {
+  width: 100%;
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+}

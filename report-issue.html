@@ -8,17 +8,16 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
-  <!-- 1. Main Global Stylesheet (Moves up one folder to root style.css) -->
-  <link rel="stylesheet" href="../style.css" />
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../src/assets/style.css" />
 
-  <!-- 2. Page Specific Stylesheet (In the same folder) -->
+  <!-- Page Specific Stylesheet -->
   <link rel="stylesheet" href="report-issue.css" />
 
   <!-- Page JS Script -->
   <script src="report-issue.js" defer></script>
-  
 </head>
-<body>
+<body class="report-page-body">
 
   <!-- ================= NAVBAR ================= -->
   <header class="navbar">
@@ -33,19 +32,18 @@
         <a href="../index.html#rate-us">Rate Us</a>
         <a href="../index.html#contact-section">Contact Us</a>
         <a href="../index.html#gallery">Gallery</a>
-        <a href="report-issue.html" class="nav-link nav-active">Report an Issue</a>
         <a href="../index.html#contact-section" class="btn-yellow">Book Now</a>
       </nav>
     </div>
   </header>
 
   <!-- ================= REPORT BUG FORM SECTION ================= -->
-  <main class="section-padding">
-    <div class="form-card">
+  <main class="report-section">
+    <div class="report-card">
       <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
       
-      <h2 class="section-title">Report a Website Issue</h2>
-      <p class="section-subtitle">Spotted a bug, broken link, or display issue on our site? Let us know so we can fix it right away!</p>
+      <h2 class="report-title">Report a Website Issue</h2>
+      <p class="report-subtitle">Spotted a bug, broken link, or display issue on our site? Let us know so we can fix it right away!</p>
 
       <form id="bugReportForm" class="styled-form">
         <!-- Name (Optional) -->
@@ -89,7 +87,7 @@
     <div class="footer-content">
       <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
       <div class="footer-links">
-        <a href="report-issue.html">Report a Problem</a>
+        <a href="../index.html">Back to Home</a>
       </div>
     </div>
   </footer>
