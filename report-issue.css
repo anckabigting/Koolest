@@ -143,7 +143,7 @@ body.report-page-body {
 }
 
 .styled-form label {
-  color: #ffffff;
+  color: #a3b8b5 !important;
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -177,12 +177,37 @@ body.report-page-body {
 }
 
 .styled-form select.form-input {
+  color: #a3b8b5;
   cursor: pointer;
+  appearance: none;          /* Hides default browser arrow (Chrome/Safari) */
+  -webkit-appearance: none;
+  -moz-appearance: none;     /* Hides default browser arrow (Firefox) */
+  
+  /* Custom SVG arrow colored in #a3b8b5 */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a3b8b5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.1rem;
+  padding-right: 2.5rem; /* Keeps text clear of the arrow */
 }
 
 .styled-form select.form-input option {
   background-color: #082d29;
   color: #ffffff;
+}
+
+/* Ensure textarea inherits the page font and styles */
+.styled-form .form-textarea,
+.styled-form .form-input {
+  font-family: inherit; /* Forces textarea to use the same font as input fields */
+  font-size: 0.95rem;
+}
+
+/* Optional: Keep placeholder styling completely consistent across both */
+.styled-form ::placeholder {
+  font-family: inherit;
+  color: #5c7874; /* Adjust color if needed */
+  opacity: 1;
 }
 
 /* Submit Button */
