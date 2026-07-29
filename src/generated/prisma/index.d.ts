@@ -1176,7 +1176,7 @@ export namespace Prisma {
     fullName: string | null
     serviceType: string
     notes: string | null
-    location: string
+    location: string | null
     status: $Enums.BookingStatus
     _count: BookingCountAggregateOutputType | null
     _min: BookingMinAggregateOutputType | null
@@ -1263,7 +1263,7 @@ export namespace Prisma {
       fullName: string | null
       serviceType: string
       notes: string | null
-      location: string
+      location: string | null
       status: $Enums.BookingStatus
     }, ExtArgs["result"]["booking"]>
     composites: {}
@@ -3258,7 +3258,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
     notes?: StringNullableFilter<"Booking"> | string | null
-    location?: StringFilter<"Booking"> | string
+    location?: StringNullableFilter<"Booking"> | string | null
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   }
 
@@ -3271,7 +3271,7 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
     notes?: SortOrderInput | SortOrder
-    location?: SortOrder
+    location?: SortOrderInput | SortOrder
     status?: SortOrder
   }
 
@@ -3287,7 +3287,7 @@ export namespace Prisma {
     fullName?: StringNullableFilter<"Booking"> | string | null
     serviceType?: StringFilter<"Booking"> | string
     notes?: StringNullableFilter<"Booking"> | string | null
-    location?: StringFilter<"Booking"> | string
+    location?: StringNullableFilter<"Booking"> | string | null
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   }, "id">
 
@@ -3300,7 +3300,7 @@ export namespace Prisma {
     fullName?: SortOrderInput | SortOrder
     serviceType?: SortOrder
     notes?: SortOrderInput | SortOrder
-    location?: SortOrder
+    location?: SortOrderInput | SortOrder
     status?: SortOrder
     _count?: BookingCountOrderByAggregateInput
     _max?: BookingMaxOrderByAggregateInput
@@ -3319,7 +3319,7 @@ export namespace Prisma {
     fullName?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     serviceType?: StringWithAggregatesFilter<"Booking"> | string
     notes?: StringNullableWithAggregatesFilter<"Booking"> | string | null
-    location?: StringWithAggregatesFilter<"Booking"> | string
+    location?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     status?: EnumBookingStatusWithAggregatesFilter<"Booking"> | $Enums.BookingStatus
   }
 
@@ -3386,7 +3386,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
-    location: string
+    location?: string | null
     status?: $Enums.BookingStatus
   }
 
@@ -3399,7 +3399,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
-    location: string
+    location?: string | null
     status?: $Enums.BookingStatus
   }
 
@@ -3412,7 +3412,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
@@ -3425,7 +3425,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
@@ -3438,7 +3438,7 @@ export namespace Prisma {
     fullName?: string | null
     serviceType: string
     notes?: string | null
-    location: string
+    location?: string | null
     status?: $Enums.BookingStatus
   }
 
@@ -3451,7 +3451,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
@@ -3464,7 +3464,7 @@ export namespace Prisma {
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     serviceType?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   }
 
