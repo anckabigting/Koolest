@@ -4,8 +4,11 @@ export const feedbackSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, "Please enter your name")
-    .max(100, "Name is too long"),
+    .min(2, "Full name must be at least 2 characters long")
+    .max(100, "Full name is too long")
+    .regex(
+    /^[A-Z][a-zA-Z'-]*(\s[A-Z][a-zA-Z'-]*)+$/,
+    "Please capitalize each name properly (e.g. Juan Dela Cruz)"),
 
   rating: z.coerce
     .number()
