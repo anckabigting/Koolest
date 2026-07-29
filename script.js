@@ -167,9 +167,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // 5. Feedback Form Submission & API Request
   const feedbackForm = document.getElementById("feedbackForm");
 
+  // Maps Zod field names to the actual input elements, so the tooltip
+  // anchors to whichever field actually failed (matches the booking form's pattern).
+  const feedbackFieldInputMap = {
+    name: () => document.getElementById("clientName"),
+    rating: () => feedbackForm?.querySelector('input[name="rating"]'),
+    message: () => document.getElementById("comment"),
+  };
+
   if (feedbackForm) {
     feedbackForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Clear any previous custom validity messages before a fresh attempt
+      Object.values(feedbackFieldInputMap).forEach((getEl) => {
+        const el = getEl();
+        if (el) el.setCustomValidity("");
+      });
 
       const ratingInput = feedbackForm.querySelector('input[name="rating"]:checked');
 
@@ -197,28 +211,45 @@ document.addEventListener("DOMContentLoaded", () => {
         showFeedbackSuccess();
       } catch (err) {
         console.error("Feedback API request failed:", err);
-        alert(`Something went wrong: ${err.message}`);
+        showFeedbackGenericError(`Something went wrong: ${err.message}`);
       }
     });
   }
 
+  // Shows the server's validation message as a native browser tooltip,
+  // anchored to the exact field that failed.
   function showFeedbackFieldError(data) {
-    let message = data?.error || "Failed to submit feedback. Please try again.";
-
     if (data?.details) {
       const firstField = Object.keys(data.details).find(
         (key) => key !== "_errors" && data.details[key]?._errors?.length
       );
-      if (firstField) {
-        message = data.details[firstField]._errors[0];
+      if (firstField && feedbackFieldInputMap[firstField]) {
+        const message = data.details[firstField]._errors[0];
+        const el = feedbackFieldInputMap[firstField]();
+        if (el) {
+          el.setCustomValidity(message);
+          el.reportValidity();
+          // Clear it on next interaction so the browser doesn't keep blocking submission
+          el.addEventListener(
+            el.type === "radio" ? "change" : "input",
+            () => el.setCustomValidity(""),
+            { once: true }
+          );
+          return;
+        }
       }
     }
+    showFeedbackGenericError(data?.error || "Failed to submit feedback. Please try again.");
+  }
 
-    const nameInput = document.getElementById("clientName");
-    if (nameInput) {
-      nameInput.setCustomValidity(message);
-      nameInput.reportValidity();
-      nameInput.addEventListener("input", () => nameInput.setCustomValidity(""), { once: true });
+  // Fallback for errors that aren't tied to a specific field — shown on the
+  // Name field since it's first in the form.
+  function showFeedbackGenericError(message) {
+    const el = document.getElementById("clientName");
+    if (el) {
+      el.setCustomValidity(message);
+      el.reportValidity();
+      el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
     } else {
       alert(message);
     }
