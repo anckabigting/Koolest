@@ -1113,6 +1113,13 @@ header {
   transform: scale(1.3);
 }
 
+.rating-error-text {
+    display: block;
+    color: var(--error-red);
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
 /* Button Styling */
 .btn-yellow {
   background-color: #f4c414; /* Yellow matching Book Now button */

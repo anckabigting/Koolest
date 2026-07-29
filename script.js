@@ -169,9 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Maps Zod field names to the actual input elements, so the tooltip
   // anchors to whichever field actually failed (matches the booking form's pattern).
+  // Note: "rating" is intentionally excluded — its radio inputs are CSS-hidden,
+  // so it's handled separately via showRatingError() instead of a native tooltip.
   const feedbackFieldInputMap = {
     name: () => document.getElementById("clientName"),
-    rating: () => feedbackForm?.querySelector('input[name="rating"]'),
     message: () => document.getElementById("comment"),
   };
 
@@ -184,6 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = getEl();
         if (el) el.setCustomValidity("");
       });
+      const ratingError = document.getElementById("ratingError");
+      if (ratingError) ratingError.style.display = "none";
 
       const ratingInput = feedbackForm.querySelector('input[name="rating"]:checked');
 
@@ -217,12 +220,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Shows the server's validation message as a native browser tooltip,
-  // anchored to the exact field that failed.
+  // anchored to the exact field that failed. The "rating" field is special-cased
+  // to a plain visible message instead, since its radio inputs are CSS-hidden
+  // (only the star labels are visible) and browsers cannot focus/anchor a
+  // native validation tooltip to a hidden form control.
   function showFeedbackFieldError(data) {
     if (data?.details) {
       const firstField = Object.keys(data.details).find(
         (key) => key !== "_errors" && data.details[key]?._errors?.length
       );
+
+      if (firstField === "rating") {
+        const message = data.details.rating._errors[0];
+        showRatingError(message);
+        return;
+      }
+
       if (firstField && feedbackFieldInputMap[firstField]) {
         const message = data.details[firstField]._errors[0];
         const el = feedbackFieldInputMap[firstField]();
@@ -230,16 +243,34 @@ document.addEventListener("DOMContentLoaded", () => {
           el.setCustomValidity(message);
           el.reportValidity();
           // Clear it on next interaction so the browser doesn't keep blocking submission
-          el.addEventListener(
-            el.type === "radio" ? "change" : "input",
-            () => el.setCustomValidity(""),
-            { once: true }
-          );
+          el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
           return;
         }
       }
     }
     showFeedbackGenericError(data?.error || "Failed to submit feedback. Please try again.");
+  }
+
+  function showRatingError(message) {
+    const errorEl = document.getElementById("ratingError");
+    if (!errorEl) {
+      showFeedbackGenericError(message);
+      return;
+    }
+    errorEl.textContent = message;
+    errorEl.style.display = "block";
+
+    // Clear it the moment any star is picked
+    const ratingInputs = feedbackForm.querySelectorAll('input[name="rating"]');
+    ratingInputs.forEach((input) => {
+      input.addEventListener(
+        "change",
+        () => {
+          errorEl.style.display = "none";
+        },
+        { once: true }
+      );
+    });
   }
 
   // Fallback for errors that aren't tied to a specific field — shown on the
