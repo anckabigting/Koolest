@@ -68,6 +68,7 @@ export async function sendStatusChangeEmail(booking) {
           <div style="background: #e6f7f6; border-radius: 12px; padding: 20px; margin: 20px 0;">
             <p style="margin: 0 0 8px 0; color: #3f8083; font-weight: 700; font-size: 13px; text-transform: uppercase;">Booking Details</p>
             <p style="margin: 4px 0; color: #2d3748; font-size: 14px;"><strong>Service:</strong> ${booking.serviceType}</p>
+            <p style="margin: 4px 0; color: #2d3748; font-size: 14px;"><strong>Location:</strong> ${booking.location || "Not specified"}</p>
             <p style="margin: 4px 0; color: #2d3748; font-size: 14px;"><strong>Scheduled Date:</strong> ${scheduleDate}</p>
             <p style="margin: 4px 0; color: #2d3748; font-size: 14px;"><strong>Status:</strong> ${booking.status}</p>
           </div>
