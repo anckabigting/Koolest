@@ -1077,8 +1077,8 @@ header {
   display: flex;
   flex-direction: row-reverse; /* Reverses order so CSS hover highlighting works left-to-right */
   justify-content: flex-end;
-  gap: 0.3rem;
-  margin-top: 0.25rem;
+  gap: 0.5rem;                  /* Space between each star */
+  margin: 0.25rem 0 1.25rem 0;
 }
 
 /* Hide default radio buttons */
@@ -1086,29 +1086,31 @@ header {
   display: none;
 }
 
-/* Base Star Styling */
+/* Base Star Styling (Controls size & default state) */
 .star-rating label {
-  font-size: 1.6rem;
-  color: #ccc !important; /* Default unselected star color */
+  font-size: 2.0rem !important; /* Increased star size (adjust to 2.5rem for even bigger stars) */
+  color: #ccc !important;        /* Default unselected star color */
   cursor: pointer;
-  transition: color 0.2s ease, transform 0.1s ease;
-  margin-bottom: 0 !important; /* Prevent parent label margin interference */
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.15s ease;
+  margin-bottom: 0 !important;   /* Prevents parent label margin interference */
 }
 
-/* Hover Effect: Turn hovered star and all previous stars yellow */
+/* Hover Effect: Turn hovered star and all prior stars yellow + slight scale up */
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-  color: #f4c414 !important; /* Matches your theme's yellow button color */
+  color: #f4c414 !important;    /* Koolest yellow */
+  transform: scale(1.15);
 }
 
-/* Selected State: Keep stars yellow when clicked/checked */
+/* Selected State: Keep stars yellow when checked */
 .star-rating input[type="radio"]:checked ~ label {
   color: #f4c414 !important;
 }
 
-/* Subtle bounce effect when clicking a star */
+/* Click feedback */
 .star-rating label:active {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 /* Button Styling */
