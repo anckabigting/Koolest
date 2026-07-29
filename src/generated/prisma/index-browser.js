@@ -135,9 +135,9 @@ exports.Prisma.BookingScalarFieldEnum = {
 
 exports.Prisma.FeedbackScalarFieldEnum = {
   id: 'id',
-  clientName: 'clientName',
+  name: 'name',
   rating: 'rating',
-  comment: 'comment',
+  message: 'message',
   createdAt: 'createdAt'
 };
 

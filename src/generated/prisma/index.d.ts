@@ -2091,25 +2091,25 @@ export namespace Prisma {
 
   export type FeedbackMinAggregateOutputType = {
     id: string | null
-    clientName: string | null
+    name: string | null
     rating: number | null
-    comment: string | null
+    message: string | null
     createdAt: Date | null
   }
 
   export type FeedbackMaxAggregateOutputType = {
     id: string | null
-    clientName: string | null
+    name: string | null
     rating: number | null
-    comment: string | null
+    message: string | null
     createdAt: Date | null
   }
 
   export type FeedbackCountAggregateOutputType = {
     id: number
-    clientName: number
+    name: number
     rating: number
-    comment: number
+    message: number
     createdAt: number
     _all: number
   }
@@ -2125,25 +2125,25 @@ export namespace Prisma {
 
   export type FeedbackMinAggregateInputType = {
     id?: true
-    clientName?: true
+    name?: true
     rating?: true
-    comment?: true
+    message?: true
     createdAt?: true
   }
 
   export type FeedbackMaxAggregateInputType = {
     id?: true
-    clientName?: true
+    name?: true
     rating?: true
-    comment?: true
+    message?: true
     createdAt?: true
   }
 
   export type FeedbackCountAggregateInputType = {
     id?: true
-    clientName?: true
+    name?: true
     rating?: true
-    comment?: true
+    message?: true
     createdAt?: true
     _all?: true
   }
@@ -2236,9 +2236,9 @@ export namespace Prisma {
 
   export type FeedbackGroupByOutputType = {
     id: string
-    clientName: string
+    name: string
     rating: number
-    comment: string
+    message: string
     createdAt: Date
     _count: FeedbackCountAggregateOutputType | null
     _avg: FeedbackAvgAggregateOutputType | null
@@ -2263,46 +2263,46 @@ export namespace Prisma {
 
   export type FeedbackSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientName?: boolean
+    name?: boolean
     rating?: boolean
-    comment?: boolean
+    message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedback"]>
 
   export type FeedbackSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientName?: boolean
+    name?: boolean
     rating?: boolean
-    comment?: boolean
+    message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedback"]>
 
   export type FeedbackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientName?: boolean
+    name?: boolean
     rating?: boolean
-    comment?: boolean
+    message?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["feedback"]>
 
   export type FeedbackSelectScalar = {
     id?: boolean
-    clientName?: boolean
+    name?: boolean
     rating?: boolean
-    comment?: boolean
+    message?: boolean
     createdAt?: boolean
   }
 
-  export type FeedbackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientName" | "rating" | "comment" | "createdAt", ExtArgs["result"]["feedback"]>
+  export type FeedbackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "rating" | "message" | "createdAt", ExtArgs["result"]["feedback"]>
 
   export type $FeedbackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Feedback"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      clientName: string
+      name: string
       rating: number
-      comment: string
+      message: string
       createdAt: Date
     }, ExtArgs["result"]["feedback"]>
     composites: {}
@@ -2728,9 +2728,9 @@ export namespace Prisma {
    */
   interface FeedbackFieldRefs {
     readonly id: FieldRef<"Feedback", 'String'>
-    readonly clientName: FieldRef<"Feedback", 'String'>
+    readonly name: FieldRef<"Feedback", 'String'>
     readonly rating: FieldRef<"Feedback", 'Int'>
-    readonly comment: FieldRef<"Feedback", 'String'>
+    readonly message: FieldRef<"Feedback", 'String'>
     readonly createdAt: FieldRef<"Feedback", 'DateTime'>
   }
     
@@ -3135,9 +3135,9 @@ export namespace Prisma {
 
   export const FeedbackScalarFieldEnum: {
     id: 'id',
-    clientName: 'clientName',
+    name: 'name',
     rating: 'rating',
-    comment: 'comment',
+    message: 'message',
     createdAt: 'createdAt'
   };
 
@@ -3328,17 +3328,17 @@ export namespace Prisma {
     OR?: FeedbackWhereInput[]
     NOT?: FeedbackWhereInput | FeedbackWhereInput[]
     id?: StringFilter<"Feedback"> | string
-    clientName?: StringFilter<"Feedback"> | string
+    name?: StringFilter<"Feedback"> | string
     rating?: IntFilter<"Feedback"> | number
-    comment?: StringFilter<"Feedback"> | string
+    message?: StringFilter<"Feedback"> | string
     createdAt?: DateTimeFilter<"Feedback"> | Date | string
   }
 
   export type FeedbackOrderByWithRelationInput = {
     id?: SortOrder
-    clientName?: SortOrder
+    name?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    message?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3347,17 +3347,17 @@ export namespace Prisma {
     AND?: FeedbackWhereInput | FeedbackWhereInput[]
     OR?: FeedbackWhereInput[]
     NOT?: FeedbackWhereInput | FeedbackWhereInput[]
-    clientName?: StringFilter<"Feedback"> | string
+    name?: StringFilter<"Feedback"> | string
     rating?: IntFilter<"Feedback"> | number
-    comment?: StringFilter<"Feedback"> | string
+    message?: StringFilter<"Feedback"> | string
     createdAt?: DateTimeFilter<"Feedback"> | Date | string
   }, "id">
 
   export type FeedbackOrderByWithAggregationInput = {
     id?: SortOrder
-    clientName?: SortOrder
+    name?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    message?: SortOrder
     createdAt?: SortOrder
     _count?: FeedbackCountOrderByAggregateInput
     _avg?: FeedbackAvgOrderByAggregateInput
@@ -3371,9 +3371,9 @@ export namespace Prisma {
     OR?: FeedbackScalarWhereWithAggregatesInput[]
     NOT?: FeedbackScalarWhereWithAggregatesInput | FeedbackScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Feedback"> | string
-    clientName?: StringWithAggregatesFilter<"Feedback"> | string
+    name?: StringWithAggregatesFilter<"Feedback"> | string
     rating?: IntWithAggregatesFilter<"Feedback"> | number
-    comment?: StringWithAggregatesFilter<"Feedback"> | string
+    message?: StringWithAggregatesFilter<"Feedback"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Feedback"> | Date | string
   }
 
@@ -3470,57 +3470,57 @@ export namespace Prisma {
 
   export type FeedbackCreateInput = {
     id?: string
-    clientName: string
+    name: string
     rating: number
-    comment: string
+    message: string
     createdAt?: Date | string
   }
 
   export type FeedbackUncheckedCreateInput = {
     id?: string
-    clientName: string
+    name: string
     rating: number
-    comment: string
+    message: string
     createdAt?: Date | string
   }
 
   export type FeedbackUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeedbackUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeedbackCreateManyInput = {
     id?: string
-    clientName: string
+    name: string
     rating: number
-    comment: string
+    message: string
     createdAt?: Date | string
   }
 
   export type FeedbackUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FeedbackUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3689,9 +3689,9 @@ export namespace Prisma {
 
   export type FeedbackCountOrderByAggregateInput = {
     id?: SortOrder
-    clientName?: SortOrder
+    name?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    message?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3701,17 +3701,17 @@ export namespace Prisma {
 
   export type FeedbackMaxOrderByAggregateInput = {
     id?: SortOrder
-    clientName?: SortOrder
+    name?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    message?: SortOrder
     createdAt?: SortOrder
   }
 
   export type FeedbackMinOrderByAggregateInput = {
     id?: SortOrder
-    clientName?: SortOrder
+    name?: SortOrder
     rating?: SortOrder
-    comment?: SortOrder
+    message?: SortOrder
     createdAt?: SortOrder
   }
 

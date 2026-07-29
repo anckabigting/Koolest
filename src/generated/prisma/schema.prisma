@@ -35,11 +35,11 @@ model Booking {
 }
 
 model Feedback {
-  id         String   @id @default(cuid())
-  clientName String   @map("client_name")
-  rating     Int
-  comment    String
-  createdAt  DateTime @default(now()) @map("created_at")
+  id        String   @id @default(cuid())
+  name      String
+  rating    Int
+  message   String
+  createdAt DateTime @default(now()) @map("createdAt")
 
   @@map("Feedback")
 }
