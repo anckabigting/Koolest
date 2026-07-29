@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koolest | Admin - Bookings</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
   <style>
     :root {
       --primary-aqua: #20b2aa;
@@ -169,6 +169,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Service</th>
+            <th>Location</th>
             <th>Schedule Date</th>
             <th>Status</th>
             <th>Booked On</th>
@@ -368,6 +369,7 @@
           <td>${escapeHtml(booking.email)}</td>
           <td>${escapeHtml(booking.phone)}</td>
           <td>${escapeHtml(booking.serviceType)}</td>
+          <td>${escapeHtml(booking.location || "-")}</td>
           <td>${scheduleDate}</td>
           <td>
             <select class="status-select" data-id="${booking.id}">
