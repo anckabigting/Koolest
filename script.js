@@ -47,6 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   revealElements.forEach((element) => revealObserver.observe(element));
 
+  // Restrict phone input to digits only, live as the user types
+  // (moved outside the submit handler so it only attaches once, not on every submit)
+  const phoneInput = document.getElementById("phone");
+  if (phoneInput) {
+    phoneInput.addEventListener("input", () => {
+      phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
+    });
+  }
+
   // 4. Booking Form Submission & API Request
   const bookingForm = document.getElementById("bookingForm");
   const bookingHeader = document.getElementById("bookingHeader");
@@ -81,14 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         bookingDate: document.getElementById("bookingDate")?.value || "",
         location: document.getElementById("location")?.value || "",
       };
-
-      // Restrict phone input to digits only, live as the user types
-      const phoneInput = document.getElementById("phone");
-      if (phoneInput) {
-        phoneInput.addEventListener("input", () => {
-          phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
-        });
-      }
 
       try {
         const response = await fetch("/api/bookings", {
@@ -163,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-// Feedback Form Submission & API Request
+  // 5. Feedback Form Submission & API Request
   const feedbackForm = document.getElementById("feedbackForm");
 
   if (feedbackForm) {
@@ -224,11 +225,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showFeedbackSuccess() {
-    feedbackForm.reset();
-    alert("Thank you for your feedback!");
+    const formWrapper = document.getElementById("feedbackFormWrapper");
+    const successMsg = document.getElementById("feedbackSuccess");
+
+    if (formWrapper) formWrapper.style.display = "none";
+    if (successMsg) successMsg.style.display = "block";
   }
 
-  // Escalation / Issue Form Submission
+  // 6. Escalation / Issue Form Submission
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
     issueForm.addEventListener("submit", function (e) {

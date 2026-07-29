@@ -1137,6 +1137,19 @@ header {
   margin-top: 0.5rem;
 }
 
+/* --- FEEDBACK SUCCESS BANNER (matches booking-section success style) --- */
+.success-message-banner {
+    background-color: var(--footer-bg);
+    color: var(--white);
+    padding: 32px 24px;
+    border-radius: 12px;
+    border-bottom: 8px solid var(--accent-yellow);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
 /* Gallery Styling */
 .gallery-grid {
   display: grid;
