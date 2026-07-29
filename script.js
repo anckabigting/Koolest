@@ -163,41 +163,72 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const feedbackForm = document.getElementById('feedbackForm');
+// Feedback Form Submission & API Request
+  const feedbackForm = document.getElementById("feedbackForm");
 
-if (feedbackForm) {
-  feedbackForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const feedbackData = {
-      clientName: document.getElementById('clientName').value,
-      rating: parseInt(document.getElementById('rating').value, 10),
-      comment: document.getElementById('comment').value,
-    };
+      const ratingInput = feedbackForm.querySelector('input[name="rating"]:checked');
 
-    try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(feedbackData),
-      });
+      const formData = {
+        name: document.getElementById("clientName")?.value || "",
+        rating: ratingInput?.value || "",
+        message: document.getElementById("comment")?.value || "",
+      };
 
-      const data = await response.json();
+      try {
+        const response = await fetch("/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
 
-      if (response.ok && data.success) {
-        alert('Thank you for your feedback!');
-        feedbackForm.reset();
-      } else {
-        alert('Failed to send feedback: ' + (data.error || 'Unknown error'));
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error("Feedback submission error:", data.details || data.error);
+          showFeedbackFieldError(data);
+          return;
+        }
+
+        showFeedbackSuccess();
+      } catch (err) {
+        console.error("Feedback API request failed:", err);
+        alert(`Something went wrong: ${err.message}`);
       }
-    } catch (err) {
-      console.error('Feedback submit error:', err);
-      alert('Could not submit feedback at this time.');
-    }
-  });
-}
+    });
+  }
 
-  // 5. Escalation / Issue Form Submission
+  function showFeedbackFieldError(data) {
+    let message = data?.error || "Failed to submit feedback. Please try again.";
+
+    if (data?.details) {
+      const firstField = Object.keys(data.details).find(
+        (key) => key !== "_errors" && data.details[key]?._errors?.length
+      );
+      if (firstField) {
+        message = data.details[firstField]._errors[0];
+      }
+    }
+
+    const nameInput = document.getElementById("clientName");
+    if (nameInput) {
+      nameInput.setCustomValidity(message);
+      nameInput.reportValidity();
+      nameInput.addEventListener("input", () => nameInput.setCustomValidity(""), { once: true });
+    } else {
+      alert(message);
+    }
+  }
+
+  function showFeedbackSuccess() {
+    feedbackForm.reset();
+    alert("Thank you for your feedback!");
+  }
+
+  // Escalation / Issue Form Submission
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
     issueForm.addEventListener("submit", function (e) {
