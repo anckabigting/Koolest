@@ -28,6 +28,7 @@ model Booking {
   fullName    String?       @map("fullName")
   serviceType String        @map("serviceType")
   notes       String?       @map("notes")
+  location    String        @map("location")
   status      BookingStatus @default(PENDING)
 
   @@map("Booking") // Ensures Prisma targets the exact "Booking" table name

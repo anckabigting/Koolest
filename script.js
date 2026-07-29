@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     phone: () => document.getElementById("phone"),
     serviceType: () => document.getElementById("service-type"),
     bookingDate: () => document.getElementById("bookingDate"),
+    location: () => document.getElementById("location"),
   };
 
   if (bookingForm) {
@@ -78,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         phone: document.getElementById("phone")?.value || "",
         serviceType: document.getElementById("service-type")?.value || "",
         bookingDate: document.getElementById("bookingDate")?.value || "",
+        location: document.getElementById("location")?.value || "",
       };
 
       // Restrict phone input to digits only, live as the user types

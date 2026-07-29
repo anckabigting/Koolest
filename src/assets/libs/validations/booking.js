@@ -30,5 +30,10 @@ export const bookingSchema = z.object({
     today.setHours(0, 0, 0, 0);
     return date >= today;
   }, "Booking date cannot be in the past"),
+  location: z
+  .string()
+  .trim()
+  .min(3, "Please enter a valid service location")
+  .max(200, "Location is too long"),
   notes: z.string().max(500, "Notes cannot exceed 500 characters").optional().or(z.literal("")),
 });

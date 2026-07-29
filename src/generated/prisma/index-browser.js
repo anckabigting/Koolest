@@ -129,6 +129,7 @@ exports.Prisma.BookingScalarFieldEnum = {
   fullName: 'fullName',
   serviceType: 'serviceType',
   notes: 'notes',
+  location: 'location',
   status: 'status'
 };
 

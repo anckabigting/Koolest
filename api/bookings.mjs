@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const { email, phone, bookingDate, fullName, serviceType } = validationResult.data;
+    const { email, phone, bookingDate, fullName, serviceType, location } = validationResult.data;
 
     const newBooking = await prisma.booking.create({
       data: {
@@ -52,6 +52,7 @@ export default async function handler(req, res) {
         bookingDate: new Date(bookingDate),
         fullName,
         serviceType,
+        location,
         
         // createdAt has @default(now()) — no need to set it manually
         // id has @default(cuid()) — no need to set it manually
