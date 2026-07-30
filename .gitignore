@@ -9,5 +9,7 @@ node_modules/
 # Frameworks and Builders
 .vercel
 /generated/prisma
+dist/
+build/
 
 
