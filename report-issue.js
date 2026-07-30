@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const bugForm = document.getElementById("bugReportForm");
+  const messageBanner = document.getElementById("issueMessageBanner");
 
   // Helper map from select values to Prisma ENUM keys
   const ISSUE_TYPE_MAP = {
@@ -10,9 +11,24 @@ document.addEventListener("DOMContentLoaded", () => {
     "other website bug": "OTHER_WEBSITE_BUG",
   };
 
+  // Helper function to display message banner
+  function showBanner(message, isSuccess = true) {
+    if (!messageBanner) return;
+
+    messageBanner.textContent = message;
+    messageBanner.className = `form-feedback-banner ${isSuccess ? "success" : "error"}`;
+    messageBanner.style.display = "block";
+
+    // Auto-scroll banner into view smoothly
+    messageBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
   if (bugForm) {
     bugForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Hide previous message if re-submitting
+      if (messageBanner) messageBanner.style.display = "none";
 
       const name = document.getElementById("reporterName")?.value || "";
       const email = document.getElementById("reporterEmail")?.value || "";
@@ -32,14 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
 
         if (response.ok && result.success) {
-          alert("Thank you! Your bug report has been submitted.");
+          showBanner("Bug Report Received! Thank you for helping us improve our site.", true);
           bugForm.reset();
         } else {
-          alert(`Error: ${result.error || "Failed to submit bug report."}`);
+          showBanner(result.error || "Failed to submit bug report. Please try again.", false);
         }
       } catch (err) {
         console.error("Submission failed:", err);
-        alert("An error occurred while submitting your report. Please try again.");
+        showBanner("An error occurred while submitting your report. Please check your connection.", false);
       }
     });
   }

@@ -1,74 +1,74 @@
 .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
 }
 
 /* Frosted Glass Header */
 .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
-    backdrop-filter: blur(12px); /* Frosted blur effect */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+  backdrop-filter: blur(12px); /* Frosted blur effect */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Logo Alignment */
 .brand-container {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .brand-logo {
-    width: 60px;
-    height: 100px;
-    object-fit: contain;
+  width: 60px;
+  height: 100px;
+  object-fit: contain;
 }
 
 .brand-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    font-family: var(--font-heading);
-    color: var(--dark-aqua, #0b4f48);
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  color: var(--dark-aqua, #0b4f48);
 }
 
 .logo {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    color: var(--dark-aqua);
-    text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--dark-aqua);
+  text-decoration: none;
 }
 .logo span {
-    color: var(--accent-yellow);
+  color: var(--accent-yellow);
 }
 .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 32px;
-    align-items: center;
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  align-items: center;
 }
 .nav-links a {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: color 0.2s;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
 }
 .nav-links a:hover {
-    color: var(--primary-aqua);
+  color: var(--primary-aqua);
 }
 
 /* Active Highlight State */
 .nav-links.nav-active {
-    color: #20b2aa; /* Highlight color (Teal / Aqua) */
+  color: #20b2aa; /* Highlight color (Teal / Aqua) */
 }
 
 /* --- REPORT ISSUE PAGE OVERRIDES --- */
@@ -218,4 +218,30 @@ body.report-page-body {
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
+}
+
+/* --- FEEDBACK BANNER STYLES --- */
+.form-feedback-banner {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+}
+
+/* Success Banner (Dark Teal background with bright yellow text) */
+.form-feedback-banner.success {
+  background-color: #082d29;
+  color: #f4c414;
+  border: 1px solid #1c524c;
+}
+
+/* Error Banner (Dark Red background with light pink text) */
+.form-feedback-banner.error {
+  background-color: #3a1518;
+  color: #ffb3b3;
+  border: 1px solid #e53e3e;
 }

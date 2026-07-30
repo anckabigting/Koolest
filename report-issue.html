@@ -5,19 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Report a Website Issue - Koolest AC Services</title>
 
+  <link rel="icon" type="image/png" href="koolest_logo.png">
 
-   <link rel="icon" type="image/png" href="koolest_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!--*STARS FOR RATING -->
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../src/assets/style.css" />
 
@@ -31,22 +26,20 @@
 
   <!-- ================= NAVBAR ================= -->
   <header class="navbar glass-nav">
-        <div class="brand-container">
-            <div class="container nav-container"></div>
-            <img src="koolest_logo.png" alt="Koolest Logo" class="brand-logo">
-            <span class="brand-title">Koolest</span>
-        </div>
-
-      
-      <nav class="nav-links">
-        <a href="../index.html#services">Services</a>
-        <a href="../index.html#testimonials">Reviews</a>
-        <a href="../index.html#rate-us">Rate Us</a>
-        <a href="../index.html#contact-us">Contact Us</a>
-        <a href="../index.html#gallery">Gallery</a>
-        <a href="../index.html#booking" class="btn-yellow">Book Now</a>
-      </nav>
+    <div class="brand-container">
+      <div class="container nav-container"></div>
+      <img src="koolest_logo.png" alt="Koolest Logo" class="brand-logo">
+      <span class="brand-title">Koolest</span>
     </div>
+
+    <nav class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#testimonials">Reviews</a>
+      <a href="../index.html#rate-us">Rate Us</a>
+      <a href="../index.html#contact-us">Contact Us</a>
+      <a href="../index.html#gallery">Gallery</a>
+      <a href="../index.html#booking" class="btn-yellow">Book Now</a>
+    </nav>
   </header>
 
   <!-- ================= REPORT BUG FORM SECTION ================= -->
@@ -56,6 +49,9 @@
       
       <h2 class="report-title">Report a Website Issue</h2>
       <p class="report-subtitle">Spotted a bug, broken link, or display issue on our site? Let us know so we can fix it right away!</p>
+
+      <!-- Dynamic Message Banner Container -->
+      <div id="issueMessageBanner" class="form-feedback-banner" style="display: none;"></div>
 
       <form id="bugReportForm" class="styled-form">
         <!-- Name (Optional) -->
@@ -75,11 +71,11 @@
           <label for="issueType">Type of Issue</label>
           <select id="issueType" class="form-input form-select" required>
             <option value="" disabled selected>Select issue category...</option>
-            <option value="broken-link">Broken Link or Button</option>
-            <option value="layout-display">Visual / Layout Glitch</option>
-            <option value="form-error">Form Submission Error</option>
-            <option value="mobile-issue">Mobile / Screen Display Problem</option>
-            <option value="other">Other Website Bug</option>
+            <option value="broken link or button">Broken Link or Button</option>
+            <option value="visual/layout glitch">Visual / Layout Glitch</option>
+            <option value="form submission error">Form Submission Error</option>
+            <option value="mobile/screen display problem">Mobile / Screen Display Problem</option>
+            <option value="other website bug">Other Website Bug</option>
           </select>
         </div>
 
