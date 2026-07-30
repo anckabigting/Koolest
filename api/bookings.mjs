@@ -45,17 +45,44 @@ export default async function handler(req, res) {
 
     const { email, phone, bookingDate, fullName, serviceType, location } = validationResult.data;
 
+    // 6. Booking Date Bounds Check
+    const targetDate = new Date(bookingDate);
+    const now = new Date();
+
+    // Reset today's date to midnight for clear day comparison
+    const minAllowedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); // Earliest: Tomorrow
+    const maxAllowedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 90); // Latest: 90 days out
+
+    if (isNaN(targetDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid date format provided.",
+      });
+    }
+
+    if (targetDate < minAllowedDate) {
+      return res.status(400).json({
+        success: false,
+        error: "Booking date must be at least 1 day in advance.",
+      });
+    }
+
+    if (targetDate > maxAllowedDate) {
+      return res.status(400).json({
+        success: false,
+        error: "Booking date cannot be more than 90 days in the future.",
+      });
+    }
+
+    // 7. Database Record Creation
     const newBooking = await prisma.booking.create({
       data: {
         email,
         phone,
-        bookingDate: new Date(bookingDate),
+        bookingDate: targetDate,
         fullName,
         serviceType,
         location,
-        
-        // createdAt has @default(now()) — no need to set it manually
-        // id has @default(cuid()) — no need to set it manually
       },
     });
 

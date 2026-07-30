@@ -20,10 +20,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 1. Set minimum booking date dynamically to today
   const dateInput = document.getElementById("bookingDate");
-  if (dateInput) {
-    const today = new Date().toISOString().split("T")[0];
-    dateInput.min = today;
-  }
+
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1); // Earliest allowed: Tomorrow
+
+  const maxDate = new Date(today);
+  maxDate.setDate(maxDate.getDate() + 60); // Latest allowed: 60 days from now
+
+  // Format to YYYY-MM-DD
+  dateInput.min = tomorrow.toISOString().split("T")[0];
+  dateInput.max = maxDate.toISOString().split("T")[0];
 
   // 2. Create cooling breeze particles
   initBreezeFloaterParticles();
