@@ -13,7 +13,6 @@ export default async function handler(req, res) {
       data: {
         name: validatedData.name || null,
         email: validatedData.email,
-        location: validatedData.location || null,
         issueType: validatedData.issueType,
         details: validatedData.details,
       },
