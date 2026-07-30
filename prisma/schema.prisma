@@ -24,7 +24,7 @@ model Booking {
   email       String    
   phone       String
   bookingDate DateTime @map("bookingDate")
-  createdAt   DateTime @default(now()) @map("createdAt")
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
   fullName    String?   @map("fullName")
   serviceType String   @map("serviceType")
   notes String? @map("notes")
@@ -39,7 +39,7 @@ model Feedback {
   name      String
   rating    Int
   message   String
-  createdAt DateTime @default(now()) @map("createdAt")
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
 
   @@map("Feedback")
 }
@@ -58,7 +58,7 @@ model IssueReport {
   email     String
   issueType IssueType
   details   String
-  createdAt DateTime  @default(now()) @map("createdAt")
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
 
   @@map("IssueReport")
 }

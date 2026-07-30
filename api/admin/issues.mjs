@@ -47,3 +47,14 @@ export default async function handler(req, res) {
     return res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 }
+
+const formattedIssues = issues.map((issue) => ({
+  ...issue,
+  createdAtFormatted: new Intl.DateTimeFormat("en-PH", {
+    timeZone: "Asia/Manila",
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(issue.createdAt)),
+}));
+
+return res.status(200).json({ success: true, data: formattedIssues });
