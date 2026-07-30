@@ -44,4 +44,23 @@ model Feedback {
   @@map("Feedback")
 }
 
+enum IssueType {
+  BROKEN_LINK_OR_BUTTON
+  VISUAL_LAYOUT_GLITCH
+  FORM_SUBMISSION_ERROR
+  MOBILE_SCREEN_DISPLAY
+  OTHER_WEBSITE_BUG
+}
+
+model IssueReport {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String
+  issueType IssueType
+  details   String
+  createdAt DateTime  @default(now()) @map("createdAt")
+
+  @@map("IssueReport")
+}
+
 

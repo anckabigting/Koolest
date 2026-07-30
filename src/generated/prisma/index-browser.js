@@ -141,6 +141,15 @@ exports.Prisma.FeedbackScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.IssueReportScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  issueType: 'issueType',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -162,9 +171,18 @@ exports.BookingStatus = exports.$Enums.BookingStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.IssueType = exports.$Enums.IssueType = {
+  BROKEN_LINK_OR_BUTTON: 'BROKEN_LINK_OR_BUTTON',
+  VISUAL_LAYOUT_GLITCH: 'VISUAL_LAYOUT_GLITCH',
+  FORM_SUBMISSION_ERROR: 'FORM_SUBMISSION_ERROR',
+  MOBILE_SCREEN_DISPLAY: 'MOBILE_SCREEN_DISPLAY',
+  OTHER_WEBSITE_BUG: 'OTHER_WEBSITE_BUG'
+};
+
 exports.Prisma.ModelName = {
   Booking: 'Booking',
-  Feedback: 'Feedback'
+  Feedback: 'Feedback',
+  IssueReport: 'IssueReport'
 };
 
 /**

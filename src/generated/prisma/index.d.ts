@@ -23,6 +23,11 @@ export type Booking = $Result.DefaultSelection<Prisma.$BookingPayload>
  * 
  */
 export type Feedback = $Result.DefaultSelection<Prisma.$FeedbackPayload>
+/**
+ * Model IssueReport
+ * 
+ */
+export type IssueReport = $Result.DefaultSelection<Prisma.$IssueReportPayload>
 
 /**
  * Enums
@@ -37,11 +42,26 @@ export namespace $Enums {
 
 export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
 
+
+export const IssueType: {
+  BROKEN_LINK_OR_BUTTON: 'BROKEN_LINK_OR_BUTTON',
+  VISUAL_LAYOUT_GLITCH: 'VISUAL_LAYOUT_GLITCH',
+  FORM_SUBMISSION_ERROR: 'FORM_SUBMISSION_ERROR',
+  MOBILE_SCREEN_DISPLAY: 'MOBILE_SCREEN_DISPLAY',
+  OTHER_WEBSITE_BUG: 'OTHER_WEBSITE_BUG'
+};
+
+export type IssueType = (typeof IssueType)[keyof typeof IssueType]
+
 }
 
 export type BookingStatus = $Enums.BookingStatus
 
 export const BookingStatus: typeof $Enums.BookingStatus
+
+export type IssueType = $Enums.IssueType
+
+export const IssueType: typeof $Enums.IssueType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +203,16 @@ export class PrismaClient<
     * ```
     */
   get feedback(): Prisma.FeedbackDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.issueReport`: Exposes CRUD operations for the **IssueReport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IssueReports
+    * const issueReports = await prisma.issueReport.findMany()
+    * ```
+    */
+  get issueReport(): Prisma.IssueReportDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -631,7 +661,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Booking: 'Booking',
-    Feedback: 'Feedback'
+    Feedback: 'Feedback',
+    IssueReport: 'IssueReport'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -647,7 +678,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "booking" | "feedback"
+      modelProps: "booking" | "feedback" | "issueReport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -799,6 +830,80 @@ export namespace Prisma {
           }
         }
       }
+      IssueReport: {
+        payload: Prisma.$IssueReportPayload<ExtArgs>
+        fields: Prisma.IssueReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IssueReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IssueReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          findFirst: {
+            args: Prisma.IssueReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IssueReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          findMany: {
+            args: Prisma.IssueReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>[]
+          }
+          create: {
+            args: Prisma.IssueReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          createMany: {
+            args: Prisma.IssueReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IssueReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>[]
+          }
+          delete: {
+            args: Prisma.IssueReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          update: {
+            args: Prisma.IssueReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.IssueReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IssueReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IssueReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.IssueReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IssueReportPayload>
+          }
+          aggregate: {
+            args: Prisma.IssueReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIssueReport>
+          }
+          groupBy: {
+            args: Prisma.IssueReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IssueReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IssueReportCountArgs<ExtArgs>
+            result: $Utils.Optional<IssueReportCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -924,6 +1029,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     booking?: BookingOmit
     feedback?: FeedbackOmit
+    issueReport?: IssueReportOmit
   }
 
   /* Types for Logging */
@@ -3104,6 +3210,1019 @@ export namespace Prisma {
 
 
   /**
+   * Model IssueReport
+   */
+
+  export type AggregateIssueReport = {
+    _count: IssueReportCountAggregateOutputType | null
+    _min: IssueReportMinAggregateOutputType | null
+    _max: IssueReportMaxAggregateOutputType | null
+  }
+
+  export type IssueReportMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    issueType: $Enums.IssueType | null
+    details: string | null
+    createdAt: Date | null
+  }
+
+  export type IssueReportMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    issueType: $Enums.IssueType | null
+    details: string | null
+    createdAt: Date | null
+  }
+
+  export type IssueReportCountAggregateOutputType = {
+    id: number
+    name: number
+    email: number
+    issueType: number
+    details: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type IssueReportMinAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    issueType?: true
+    details?: true
+    createdAt?: true
+  }
+
+  export type IssueReportMaxAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    issueType?: true
+    details?: true
+    createdAt?: true
+  }
+
+  export type IssueReportCountAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    issueType?: true
+    details?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type IssueReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IssueReport to aggregate.
+     */
+    where?: IssueReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IssueReports to fetch.
+     */
+    orderBy?: IssueReportOrderByWithRelationInput | IssueReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IssueReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IssueReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IssueReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IssueReports
+    **/
+    _count?: true | IssueReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IssueReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IssueReportMaxAggregateInputType
+  }
+
+  export type GetIssueReportAggregateType<T extends IssueReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateIssueReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIssueReport[P]>
+      : GetScalarType<T[P], AggregateIssueReport[P]>
+  }
+
+
+
+
+  export type IssueReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IssueReportWhereInput
+    orderBy?: IssueReportOrderByWithAggregationInput | IssueReportOrderByWithAggregationInput[]
+    by: IssueReportScalarFieldEnum[] | IssueReportScalarFieldEnum
+    having?: IssueReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IssueReportCountAggregateInputType | true
+    _min?: IssueReportMinAggregateInputType
+    _max?: IssueReportMaxAggregateInputType
+  }
+
+  export type IssueReportGroupByOutputType = {
+    id: string
+    name: string | null
+    email: string
+    issueType: $Enums.IssueType
+    details: string
+    createdAt: Date
+    _count: IssueReportCountAggregateOutputType | null
+    _min: IssueReportMinAggregateOutputType | null
+    _max: IssueReportMaxAggregateOutputType | null
+  }
+
+  type GetIssueReportGroupByPayload<T extends IssueReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IssueReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IssueReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IssueReportGroupByOutputType[P]>
+            : GetScalarType<T[P], IssueReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IssueReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    issueType?: boolean
+    details?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["issueReport"]>
+
+  export type IssueReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    issueType?: boolean
+    details?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["issueReport"]>
+
+  export type IssueReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    issueType?: boolean
+    details?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["issueReport"]>
+
+  export type IssueReportSelectScalar = {
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    issueType?: boolean
+    details?: boolean
+    createdAt?: boolean
+  }
+
+  export type IssueReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "issueType" | "details" | "createdAt", ExtArgs["result"]["issueReport"]>
+
+  export type $IssueReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IssueReport"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string | null
+      email: string
+      issueType: $Enums.IssueType
+      details: string
+      createdAt: Date
+    }, ExtArgs["result"]["issueReport"]>
+    composites: {}
+  }
+
+  type IssueReportGetPayload<S extends boolean | null | undefined | IssueReportDefaultArgs> = $Result.GetResult<Prisma.$IssueReportPayload, S>
+
+  type IssueReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IssueReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IssueReportCountAggregateInputType | true
+    }
+
+  export interface IssueReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IssueReport'], meta: { name: 'IssueReport' } }
+    /**
+     * Find zero or one IssueReport that matches the filter.
+     * @param {IssueReportFindUniqueArgs} args - Arguments to find a IssueReport
+     * @example
+     * // Get one IssueReport
+     * const issueReport = await prisma.issueReport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IssueReportFindUniqueArgs>(args: SelectSubset<T, IssueReportFindUniqueArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IssueReport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IssueReportFindUniqueOrThrowArgs} args - Arguments to find a IssueReport
+     * @example
+     * // Get one IssueReport
+     * const issueReport = await prisma.issueReport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IssueReportFindUniqueOrThrowArgs>(args: SelectSubset<T, IssueReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IssueReport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportFindFirstArgs} args - Arguments to find a IssueReport
+     * @example
+     * // Get one IssueReport
+     * const issueReport = await prisma.issueReport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IssueReportFindFirstArgs>(args?: SelectSubset<T, IssueReportFindFirstArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IssueReport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportFindFirstOrThrowArgs} args - Arguments to find a IssueReport
+     * @example
+     * // Get one IssueReport
+     * const issueReport = await prisma.issueReport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IssueReportFindFirstOrThrowArgs>(args?: SelectSubset<T, IssueReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IssueReports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IssueReports
+     * const issueReports = await prisma.issueReport.findMany()
+     * 
+     * // Get first 10 IssueReports
+     * const issueReports = await prisma.issueReport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const issueReportWithIdOnly = await prisma.issueReport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IssueReportFindManyArgs>(args?: SelectSubset<T, IssueReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IssueReport.
+     * @param {IssueReportCreateArgs} args - Arguments to create a IssueReport.
+     * @example
+     * // Create one IssueReport
+     * const IssueReport = await prisma.issueReport.create({
+     *   data: {
+     *     // ... data to create a IssueReport
+     *   }
+     * })
+     * 
+     */
+    create<T extends IssueReportCreateArgs>(args: SelectSubset<T, IssueReportCreateArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IssueReports.
+     * @param {IssueReportCreateManyArgs} args - Arguments to create many IssueReports.
+     * @example
+     * // Create many IssueReports
+     * const issueReport = await prisma.issueReport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IssueReportCreateManyArgs>(args?: SelectSubset<T, IssueReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IssueReports and returns the data saved in the database.
+     * @param {IssueReportCreateManyAndReturnArgs} args - Arguments to create many IssueReports.
+     * @example
+     * // Create many IssueReports
+     * const issueReport = await prisma.issueReport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IssueReports and only return the `id`
+     * const issueReportWithIdOnly = await prisma.issueReport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IssueReportCreateManyAndReturnArgs>(args?: SelectSubset<T, IssueReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IssueReport.
+     * @param {IssueReportDeleteArgs} args - Arguments to delete one IssueReport.
+     * @example
+     * // Delete one IssueReport
+     * const IssueReport = await prisma.issueReport.delete({
+     *   where: {
+     *     // ... filter to delete one IssueReport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IssueReportDeleteArgs>(args: SelectSubset<T, IssueReportDeleteArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IssueReport.
+     * @param {IssueReportUpdateArgs} args - Arguments to update one IssueReport.
+     * @example
+     * // Update one IssueReport
+     * const issueReport = await prisma.issueReport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IssueReportUpdateArgs>(args: SelectSubset<T, IssueReportUpdateArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IssueReports.
+     * @param {IssueReportDeleteManyArgs} args - Arguments to filter IssueReports to delete.
+     * @example
+     * // Delete a few IssueReports
+     * const { count } = await prisma.issueReport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IssueReportDeleteManyArgs>(args?: SelectSubset<T, IssueReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IssueReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IssueReports
+     * const issueReport = await prisma.issueReport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IssueReportUpdateManyArgs>(args: SelectSubset<T, IssueReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IssueReports and returns the data updated in the database.
+     * @param {IssueReportUpdateManyAndReturnArgs} args - Arguments to update many IssueReports.
+     * @example
+     * // Update many IssueReports
+     * const issueReport = await prisma.issueReport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IssueReports and only return the `id`
+     * const issueReportWithIdOnly = await prisma.issueReport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IssueReportUpdateManyAndReturnArgs>(args: SelectSubset<T, IssueReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IssueReport.
+     * @param {IssueReportUpsertArgs} args - Arguments to update or create a IssueReport.
+     * @example
+     * // Update or create a IssueReport
+     * const issueReport = await prisma.issueReport.upsert({
+     *   create: {
+     *     // ... data to create a IssueReport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IssueReport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IssueReportUpsertArgs>(args: SelectSubset<T, IssueReportUpsertArgs<ExtArgs>>): Prisma__IssueReportClient<$Result.GetResult<Prisma.$IssueReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IssueReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportCountArgs} args - Arguments to filter IssueReports to count.
+     * @example
+     * // Count the number of IssueReports
+     * const count = await prisma.issueReport.count({
+     *   where: {
+     *     // ... the filter for the IssueReports we want to count
+     *   }
+     * })
+    **/
+    count<T extends IssueReportCountArgs>(
+      args?: Subset<T, IssueReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IssueReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IssueReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IssueReportAggregateArgs>(args: Subset<T, IssueReportAggregateArgs>): Prisma.PrismaPromise<GetIssueReportAggregateType<T>>
+
+    /**
+     * Group by IssueReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IssueReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IssueReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IssueReportGroupByArgs['orderBy'] }
+        : { orderBy?: IssueReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IssueReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIssueReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IssueReport model
+   */
+  readonly fields: IssueReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IssueReport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IssueReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IssueReport model
+   */
+  interface IssueReportFieldRefs {
+    readonly id: FieldRef<"IssueReport", 'String'>
+    readonly name: FieldRef<"IssueReport", 'String'>
+    readonly email: FieldRef<"IssueReport", 'String'>
+    readonly issueType: FieldRef<"IssueReport", 'IssueType'>
+    readonly details: FieldRef<"IssueReport", 'String'>
+    readonly createdAt: FieldRef<"IssueReport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IssueReport findUnique
+   */
+  export type IssueReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter, which IssueReport to fetch.
+     */
+    where: IssueReportWhereUniqueInput
+  }
+
+  /**
+   * IssueReport findUniqueOrThrow
+   */
+  export type IssueReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter, which IssueReport to fetch.
+     */
+    where: IssueReportWhereUniqueInput
+  }
+
+  /**
+   * IssueReport findFirst
+   */
+  export type IssueReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter, which IssueReport to fetch.
+     */
+    where?: IssueReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IssueReports to fetch.
+     */
+    orderBy?: IssueReportOrderByWithRelationInput | IssueReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IssueReports.
+     */
+    cursor?: IssueReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IssueReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IssueReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IssueReports.
+     */
+    distinct?: IssueReportScalarFieldEnum | IssueReportScalarFieldEnum[]
+  }
+
+  /**
+   * IssueReport findFirstOrThrow
+   */
+  export type IssueReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter, which IssueReport to fetch.
+     */
+    where?: IssueReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IssueReports to fetch.
+     */
+    orderBy?: IssueReportOrderByWithRelationInput | IssueReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IssueReports.
+     */
+    cursor?: IssueReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IssueReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IssueReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IssueReports.
+     */
+    distinct?: IssueReportScalarFieldEnum | IssueReportScalarFieldEnum[]
+  }
+
+  /**
+   * IssueReport findMany
+   */
+  export type IssueReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter, which IssueReports to fetch.
+     */
+    where?: IssueReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IssueReports to fetch.
+     */
+    orderBy?: IssueReportOrderByWithRelationInput | IssueReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IssueReports.
+     */
+    cursor?: IssueReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IssueReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IssueReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IssueReports.
+     */
+    distinct?: IssueReportScalarFieldEnum | IssueReportScalarFieldEnum[]
+  }
+
+  /**
+   * IssueReport create
+   */
+  export type IssueReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * The data needed to create a IssueReport.
+     */
+    data: XOR<IssueReportCreateInput, IssueReportUncheckedCreateInput>
+  }
+
+  /**
+   * IssueReport createMany
+   */
+  export type IssueReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IssueReports.
+     */
+    data: IssueReportCreateManyInput | IssueReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IssueReport createManyAndReturn
+   */
+  export type IssueReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many IssueReports.
+     */
+    data: IssueReportCreateManyInput | IssueReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IssueReport update
+   */
+  export type IssueReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * The data needed to update a IssueReport.
+     */
+    data: XOR<IssueReportUpdateInput, IssueReportUncheckedUpdateInput>
+    /**
+     * Choose, which IssueReport to update.
+     */
+    where: IssueReportWhereUniqueInput
+  }
+
+  /**
+   * IssueReport updateMany
+   */
+  export type IssueReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IssueReports.
+     */
+    data: XOR<IssueReportUpdateManyMutationInput, IssueReportUncheckedUpdateManyInput>
+    /**
+     * Filter which IssueReports to update
+     */
+    where?: IssueReportWhereInput
+    /**
+     * Limit how many IssueReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IssueReport updateManyAndReturn
+   */
+  export type IssueReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * The data used to update IssueReports.
+     */
+    data: XOR<IssueReportUpdateManyMutationInput, IssueReportUncheckedUpdateManyInput>
+    /**
+     * Filter which IssueReports to update
+     */
+    where?: IssueReportWhereInput
+    /**
+     * Limit how many IssueReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IssueReport upsert
+   */
+  export type IssueReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * The filter to search for the IssueReport to update in case it exists.
+     */
+    where: IssueReportWhereUniqueInput
+    /**
+     * In case the IssueReport found by the `where` argument doesn't exist, create a new IssueReport with this data.
+     */
+    create: XOR<IssueReportCreateInput, IssueReportUncheckedCreateInput>
+    /**
+     * In case the IssueReport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IssueReportUpdateInput, IssueReportUncheckedUpdateInput>
+  }
+
+  /**
+   * IssueReport delete
+   */
+  export type IssueReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+    /**
+     * Filter which IssueReport to delete.
+     */
+    where: IssueReportWhereUniqueInput
+  }
+
+  /**
+   * IssueReport deleteMany
+   */
+  export type IssueReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IssueReports to delete
+     */
+    where?: IssueReportWhereInput
+    /**
+     * Limit how many IssueReports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IssueReport without action
+   */
+  export type IssueReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IssueReport
+     */
+    select?: IssueReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IssueReport
+     */
+    omit?: IssueReportOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3142,6 +4261,18 @@ export namespace Prisma {
   };
 
   export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+  export const IssueReportScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    issueType: 'issueType',
+    details: 'details',
+    createdAt: 'createdAt'
+  };
+
+  export type IssueReportScalarFieldEnum = (typeof IssueReportScalarFieldEnum)[keyof typeof IssueReportScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3226,6 +4357,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'IssueType'
+   */
+  export type EnumIssueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IssueType'>
+    
+
+
+  /**
+   * Reference to a field of type 'IssueType[]'
+   */
+  export type ListEnumIssueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IssueType[]'>
     
 
 
@@ -3377,6 +4522,63 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Feedback"> | Date | string
   }
 
+  export type IssueReportWhereInput = {
+    AND?: IssueReportWhereInput | IssueReportWhereInput[]
+    OR?: IssueReportWhereInput[]
+    NOT?: IssueReportWhereInput | IssueReportWhereInput[]
+    id?: StringFilter<"IssueReport"> | string
+    name?: StringNullableFilter<"IssueReport"> | string | null
+    email?: StringFilter<"IssueReport"> | string
+    issueType?: EnumIssueTypeFilter<"IssueReport"> | $Enums.IssueType
+    details?: StringFilter<"IssueReport"> | string
+    createdAt?: DateTimeFilter<"IssueReport"> | Date | string
+  }
+
+  export type IssueReportOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    email?: SortOrder
+    issueType?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IssueReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IssueReportWhereInput | IssueReportWhereInput[]
+    OR?: IssueReportWhereInput[]
+    NOT?: IssueReportWhereInput | IssueReportWhereInput[]
+    name?: StringNullableFilter<"IssueReport"> | string | null
+    email?: StringFilter<"IssueReport"> | string
+    issueType?: EnumIssueTypeFilter<"IssueReport"> | $Enums.IssueType
+    details?: StringFilter<"IssueReport"> | string
+    createdAt?: DateTimeFilter<"IssueReport"> | Date | string
+  }, "id">
+
+  export type IssueReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrderInput | SortOrder
+    email?: SortOrder
+    issueType?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+    _count?: IssueReportCountOrderByAggregateInput
+    _max?: IssueReportMaxOrderByAggregateInput
+    _min?: IssueReportMinOrderByAggregateInput
+  }
+
+  export type IssueReportScalarWhereWithAggregatesInput = {
+    AND?: IssueReportScalarWhereWithAggregatesInput | IssueReportScalarWhereWithAggregatesInput[]
+    OR?: IssueReportScalarWhereWithAggregatesInput[]
+    NOT?: IssueReportScalarWhereWithAggregatesInput | IssueReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IssueReport"> | string
+    name?: StringNullableWithAggregatesFilter<"IssueReport"> | string | null
+    email?: StringWithAggregatesFilter<"IssueReport"> | string
+    issueType?: EnumIssueTypeWithAggregatesFilter<"IssueReport"> | $Enums.IssueType
+    details?: StringWithAggregatesFilter<"IssueReport"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"IssueReport"> | Date | string
+  }
+
   export type BookingCreateInput = {
     id?: string
     email: string
@@ -3521,6 +4723,69 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueReportCreateInput = {
+    id?: string
+    name?: string | null
+    email: string
+    issueType: $Enums.IssueType
+    details: string
+    createdAt?: Date | string
+  }
+
+  export type IssueReportUncheckedCreateInput = {
+    id?: string
+    name?: string | null
+    email: string
+    issueType: $Enums.IssueType
+    details: string
+    createdAt?: Date | string
+  }
+
+  export type IssueReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueReportCreateManyInput = {
+    id?: string
+    name?: string | null
+    email: string
+    issueType: $Enums.IssueType
+    details: string
+    createdAt?: Date | string
+  }
+
+  export type IssueReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IssueReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    issueType?: EnumIssueTypeFieldUpdateOperationsInput | $Enums.IssueType
+    details?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3735,6 +5000,50 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type EnumIssueTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumIssueTypeFilter<$PrismaModel> | $Enums.IssueType
+  }
+
+  export type IssueReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    issueType?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IssueReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    issueType?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IssueReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    issueType?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumIssueTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel> | $Enums.IssueType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumIssueTypeFilter<$PrismaModel>
+    _max?: NestedEnumIssueTypeFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -3757,6 +5066,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type EnumIssueTypeFieldUpdateOperationsInput = {
+    set?: $Enums.IssueType
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3910,6 +5223,23 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumIssueTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumIssueTypeFilter<$PrismaModel> | $Enums.IssueType
+  }
+
+  export type NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.IssueType | EnumIssueTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.IssueType[] | ListEnumIssueTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumIssueTypeWithAggregatesFilter<$PrismaModel> | $Enums.IssueType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumIssueTypeFilter<$PrismaModel>
+    _max?: NestedEnumIssueTypeFilter<$PrismaModel>
   }
 
 
