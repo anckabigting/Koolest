@@ -286,10 +286,11 @@
                           <label for="location">Service Location</label>
                           <input 
                               type="text" 
-                              name="location" 
                               id="location" 
-                              class="form-control text-dark-form" 
-                              placeholder="e.g. Dasmariñas, Cavite" 
+                              name="location" 
+                              placeholder="Imus, Cavite" 
+                              pattern="^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$"
+                              title="Please capitalize each word (e.g., Dasmariñas, Cavite)"
                               required
                           >
                       </div>

@@ -21,16 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1. Set minimum booking date dynamically to today
   const dateInput = document.getElementById("bookingDate");
 
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1); // Earliest allowed: Tomorrow
+  if (dateInput) {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1); // Earliest allowed: Tomorrow
 
-  const maxDate = new Date(today);
-  maxDate.setDate(maxDate.getDate() + 60); // Latest allowed: 60 days from now
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + 60); // Latest allowed: 60 days from now
 
-  // Format to YYYY-MM-DD
-  dateInput.min = tomorrow.toISOString().split("T")[0];
-  dateInput.max = maxDate.toISOString().split("T")[0];
+    // Format to YYYY-MM-DD
+    dateInput.min = tomorrow.toISOString().split("T")[0];
+    dateInput.max = maxDate.toISOString().split("T")[0];
+  }
 
   // 2. Create cooling breeze particles
   initBreezeFloaterParticles();
@@ -55,11 +57,22 @@ document.addEventListener("DOMContentLoaded", () => {
   revealElements.forEach((element) => revealObserver.observe(element));
 
   // Restrict phone input to digits only, live as the user types
-  // (moved outside the submit handler so it only attaches once, not on every submit)
   const phoneInput = document.getElementById("phone");
   if (phoneInput) {
     phoneInput.addEventListener("input", () => {
       phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
+    });
+  }
+
+  // Handle Location Auto-Capitalization on Blur
+  const locationInput = document.getElementById("location");
+  if (locationInput) {
+    locationInput.addEventListener("blur", (e) => {
+      if (!e.target.value) return;
+      e.target.value = e.target.value
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
     });
   }
 
@@ -88,6 +101,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = getEl();
         if (el) el.setCustomValidity("");
       });
+
+      // Flexible validation regex that allows proper capitalization, accents (ñ), spaces, and commas
+      const strictCapitalizationRegex = /^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$/;
+
+      if (locationInput && !strictCapitalizationRegex.test(locationInput.value.trim())) {
+        locationInput.setCustomValidity("Please capitalize the location name properly (e.g. Dasmariñas, Cavite)");
+        locationInput.reportValidity();
+        locationInput.addEventListener("input", () => locationInput.setCustomValidity(""), { once: true });
+        return;
+      }
 
       const formData = {
         fullName: document.getElementById("fullName")?.value || "",
@@ -176,8 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Maps Zod field names to the actual input elements, so the tooltip
   // anchors to whichever field actually failed (matches the booking form's pattern).
-  // Note: "rating" is intentionally excluded — its radio inputs are CSS-hidden,
-  // so it's handled separately via showRatingError() instead of a native tooltip.
   const feedbackFieldInputMap = {
     name: () => document.getElementById("clientName"),
     message: () => document.getElementById("comment"),
@@ -226,11 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Shows the server's validation message as a native browser tooltip,
-  // anchored to the exact field that failed. The "rating" field is special-cased
-  // to a plain visible message instead, since its radio inputs are CSS-hidden
-  // (only the star labels are visible) and browsers cannot focus/anchor a
-  // native validation tooltip to a hidden form control.
   function showFeedbackFieldError(data) {
     if (data?.details) {
       const firstField = Object.keys(data.details).find(
@@ -249,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) {
           el.setCustomValidity(message);
           el.reportValidity();
-          // Clear it on next interaction so the browser doesn't keep blocking submission
           el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
           return;
         }
@@ -267,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
     errorEl.textContent = message;
     errorEl.style.display = "block";
 
-    // Clear it the moment any star is picked
     const ratingInputs = feedbackForm.querySelectorAll('input[name="rating"]');
     ratingInputs.forEach((input) => {
       input.addEventListener(
@@ -280,8 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Fallback for errors that aren't tied to a specific field — shown on the
-  // Name field since it's first in the form.
   function showFeedbackGenericError(message) {
     const el = document.getElementById("clientName");
     if (el) {
@@ -359,19 +371,19 @@ function showSlides() {
 
 const backToTopBtn = document.getElementById("backToTopBtn");
 
-// Show button when user scrolls down 300px
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.classList.add("show");
-  } else {
-    backToTopBtn.classList.remove("show");
-  }
-});
-
-// Smooth scroll to top when clicked
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+if (backToTopBtn) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
   });
-});
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+}
