@@ -845,6 +845,30 @@ header {
     padding: 48px;
     box-shadow: 0 12px 35px rgba(10, 92, 90, 0.08);
 }
+
+/* --- FIX: Standardize Booking Form Inputs & Selects --- */
+.booking-card select,
+#location {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid #b6dcd9 !important;
+    background-color: var(--white) !important;
+    color: var(--text-dark) !important;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.booking-card input:focus,
+.booking-card select:focus,
+#location:focus {
+    border-color: var(--dark-aqua) !important;
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.15);
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
