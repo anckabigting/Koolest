@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Koolest | Admin - Bookings</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../admin/admin.css" />
+
+  <!-- FullCalendar CSS & JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>    
+  <!-- Google Sign-In SDK with explicit onload callback -->
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer onload="initGoogleSignIn()"></script>
+</head>
+<body>
+
+  <div id="loginGate">
+    <div class="login-box">
+      <h1>Koolest Admin</h1>
+      <p>Sign in with your authorized Google account to view bookings.</p>
+      <div id="googleSignInBtn"></div>
+      <div class="login-error" id="loginError">This Google account is not authorized to access the admin dashboard.</div>
+      <div class="session-expired-msg" id="sessionExpiredMsg">Your session has expired. Please sign in again.</div>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div class="dash-header">
+      <h1>Bookings Dashboard</h1>
+      <div class="header-actions">
+        <span class="signed-in-as" id="signedInAs"></span>
+        <button id="refreshBtn">Refresh</button>
+        <button id="signOutBtn">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-wrap">
+      <div id="loadingState" class="loading">Loading bookings...</div>
+      <table id="bookingsTable" style="display: none;">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Service</th>
+            <th>Location</th>
+            <th>Schedule Date</th>
+            <th>Status</th>
+            <th>Booked On</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"></tbody>
+      </table>
+      <div id="emptyState" class="empty-state" style="display: none;">No bookings yet.</div>
+    </div>
+
+    <!-- Calendar View Section -->
+    <div class="calendar-card">
+      <h2>Booking Schedule Calendar</h2>
+      <div id="calendar"></div>
+    </div>
+  </div>
+
+  <!-- Modern Details Modal -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Booking Details</h3>
+        <button class="modal-close-btn" id="modalCloseX">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-row">
+          <span class="modal-label">Client Name</span>
+          <span class="modal-value" id="modalClientName">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Service Type</span>
+          <span class="modal-value" id="modalServiceType">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Scheduled Date</span>
+          <span class="modal-value" id="modalScheduleDate">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Location</span>
+          <span class="modal-value" id="modalLocation">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Phone Number</span>
+          <span class="modal-value" id="modalPhone">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Status</span>
+          <div>
+            <span class="status-pill" id="modalStatusPill">PENDING</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

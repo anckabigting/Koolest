@@ -1,0 +1,370 @@
+:root {
+  --primary-aqua: #20b2aa;
+  --dark-aqua: #3f8083;
+  --light-aqua: #e6f7f6;
+  --accent-yellow: #ffbd00;
+  --cream: #fffdf6;
+  --text-dark: #2d3748;
+  --error-red: #e53e3e;
+  --success-green: #2f9e5c;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+#loginGate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.login-box h1 {
+  font-size: 1.4rem;
+  color: var(--dark-aqua);
+  margin-bottom: 8px;
+}
+
+.login-box p {
+  color: #667;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+#googleSignInBtn {
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.login-error {
+  color: var(--error-red);
+  font-size: 0.85rem;
+  margin-top: 16px;
+  display: none;
+}
+
+.session-expired-msg {
+  color: var(--dark-aqua);
+  font-size: 0.85rem;
+  margin-top: 16px;
+  display: none;
+}
+
+#dashboard { 
+  display: none; 
+  padding: 32px 24px; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dash-header h1 { 
+  color: var(--dark-aqua); 
+  font-size: 1.6rem; 
+}
+
+.dash-header .header-actions { 
+  display: flex; 
+  gap: 10px; 
+  align-items: center; 
+}
+
+.dash-header button {
+  background: var(--light-aqua);
+  color: var(--dark-aqua);
+  border: 1px solid var(--primary-aqua);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.signed-in-as {
+  font-size: 0.8rem;
+  color: #667;
+}
+
+.table-wrap {
+  background: #fff;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 32px;
+}
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  font-size: 0.9rem; 
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+th {
+  background: var(--light-aqua);
+  color: var(--dark-aqua);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+tr:hover td { 
+  background: #fafdfd; 
+}
+
+select.status-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.loading, .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #889;
+}
+
+.save-indicator {
+  font-size: 0.75rem;
+  color: var(--success-green);
+  margin-left: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.save-indicator.show { 
+  opacity: 1; 
+}
+
+/* Calendar Section Styling */
+.calendar-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 32px;
+}
+
+.calendar-card h2 {
+  color: var(--dark-aqua);
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+
+#calendar {
+  max-width: 100%;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.15rem;
+  color: var(--dark-aqua);
+  font-weight: 700;
+}
+
+.fc .fc-button-primary {
+  background-color: var(--dark-aqua);
+  border-color: var(--dark-aqua);
+  color: #fff;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: var(--primary-aqua);
+  border-color: var(--primary-aqua);
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
+.fc-event {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 0.8rem;
+}
+
+/* Modern Detail Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(45, 55, 72, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(12px);
+  transition: transform 0.25s ease;
+  overflow: hidden;
+}
+
+.modal-overlay.open .modal-card {
+  transform: translateY(0);
+}
+
+.modal-header {
+  background: var(--light-aqua);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(32, 178, 170, 0.2);
+}
+
+.modal-header h3 {
+  color: var(--dark-aqua);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--dark-aqua);
+  cursor: pointer;
+  line-height: 1;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(63, 128, 131, 0.1);
+}
+
+.modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #edf2f7;
+}
+
+.modal-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #718096;
+}
+
+.modal-value {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.status-pill.PENDING { background: var(--light-aqua); color: var(--dark-aqua); }
+.status-pill.CONFIRMED { background: #e6f4ea; color: var(--success-green); }
+.status-pill.COMPLETED { background: #edf2f7; color: #4a5568; }
+.status-pill.CANCELLED { background: #feebc8; color: #c05621; }
+
+.modal-footer {
+  padding: 16px 24px;
+  background: #fafdfd;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #edf2f7;
+}
+
+.modal-footer button {
+  background: var(--dark-aqua);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-footer button:hover {
+  background: var(--primary-aqua);
+}
