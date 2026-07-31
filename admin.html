@@ -9,7 +9,8 @@
   
   <!-- FullCalendar CSS & JS -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>    
-  <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
+  <!-- Google Sign-In SDK with explicit onload callback -->
+  <script src="https://accounts.google.com/gsi/client?hl=en" async defer onload="initGoogleSignIn()"></script>
   <style>
     :root {
       --primary-aqua: #20b2aa;
@@ -58,6 +59,7 @@
     #googleSignInBtn {
       display: flex;
       justify-content: center;
+      min-height: 40px;
     }
     .login-error {
       color: var(--error-red);
@@ -264,16 +266,28 @@
       unlockDashboard();
     }
 
-    window.onload = () => {
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleSignIn,
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("googleSignInBtn"),
-        { theme: "outline", size: "large", text: "signin_with" }
-      );
-    };
+    /* Reliable Google Sign-In Initialization */
+    function initGoogleSignIn() {
+      if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleSignIn,
+        });
+        const btnContainer = document.getElementById("googleSignInBtn");
+        if (btnContainer) {
+          btnContainer.innerHTML = ""; // Clear existing button before re-rendering
+          google.accounts.id.renderButton(
+            btnContainer,
+            { theme: "outline", size: "large", text: "signin_with" }
+          );
+        }
+      }
+    }
+
+    // Fallback trigger if the DOM loads after the script or script fires before DOM
+    document.addEventListener("DOMContentLoaded", () => {
+      initGoogleSignIn();
+    });
 
     async function handleGoogleSignIn(response) {
       idToken = response.credential;
@@ -348,11 +362,14 @@
         expiryTimer = null;
       }
       stopInactivityTracking();
-      google.accounts.id.disableAutoSelect();
+      if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+      }
       dashboard.style.display = "none";
       loginGate.style.display = "flex";
       loginError.style.display = "none";
       sessionExpiredMsg.style.display = "block";
+      initGoogleSignIn(); // Re-render button when returning to login screen
     }
 
     refreshBtn.addEventListener("click", () => loadBookings());
@@ -364,11 +381,14 @@
         expiryTimer = null;
       }
       stopInactivityTracking();
-      google.accounts.id.disableAutoSelect();
+      if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+      }
       dashboard.style.display = "none";
       loginGate.style.display = "flex";
       loginError.style.display = "none";
       sessionExpiredMsg.style.display = "none";
+      initGoogleSignIn(); // Re-render button on sign-out
     });
 
     async function loadBookings(isLoginAttempt = false) {
