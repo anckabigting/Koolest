@@ -6,6 +6,9 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Koolest | Admin - Bookings</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FullCalendar CSS & JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>    
   <script src="https://accounts.google.com/gsi/client?hl=en" async defer></script>
   <style>
     :root {
@@ -99,6 +102,7 @@
       border-radius: 12px;
       overflow-x: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 32px;
     }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     th, td {
@@ -138,6 +142,47 @@
       transition: opacity 0.3s;
     }
     .save-indicator.show { opacity: 1; }
+
+    /* Calendar Section Styling */
+    .calendar-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 32px;
+    }
+    .calendar-card h2 {
+      color: var(--dark-aqua);
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+    }
+    #calendar {
+      max-width: 100%;
+    }
+    .fc .fc-toolbar-title {
+      font-size: 1.15rem;
+      color: var(--dark-aqua);
+      font-weight: 700;
+    }
+    .fc .fc-button-primary {
+      background-color: var(--dark-aqua);
+      border-color: var(--dark-aqua);
+      color: #fff;
+    }
+    .fc .fc-button-primary:hover {
+      background-color: var(--primary-aqua);
+      border-color: var(--primary-aqua);
+    }
+    .fc .fc-button-primary:disabled {
+      background-color: #ccc;
+      border-color: #ccc;
+    }
+    .fc-event {
+      cursor: pointer;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.8rem;
+    }
   </style>
 </head>
 <body>
@@ -161,6 +206,8 @@
         <button id="signOutBtn">Sign Out</button>
       </div>
     </div>
+
+    <!-- Table Section -->
     <div class="table-wrap">
       <div id="loadingState" class="loading">Loading bookings...</div>
       <table id="bookingsTable" style="display: none;">
@@ -180,6 +227,12 @@
       </table>
       <div id="emptyState" class="empty-state" style="display: none;">No bookings yet.</div>
     </div>
+
+    <!-- Calendar View Section -->
+    <div class="calendar-card">
+      <h2>Booking Schedule Calendar</h2>
+      <div id="calendar"></div>
+    </div>
   </div>
 
   <script>
@@ -190,6 +243,8 @@
     let idToken = null;
     let expiryTimer = null;
     let inactivityTimer = null;
+    let calendarInstance = null;
+    let rawBookingsData = [];
 
     const loginGate = document.getElementById("loginGate");
     const dashboard = document.getElementById("dashboard");
@@ -238,19 +293,18 @@
       dashboard.style.display = "block";
       loginError.style.display = "none";
       sessionExpiredMsg.style.display = "none";
+      initCalendar();
       loadBookings();
       try {
         const payload = JSON.parse(atob(idToken.split(".")[1]));
         signedInAs.textContent = `Signed in as ${payload.email}`;
         scheduleExpiryCheck(payload.exp);
       } catch (e) {
-        // ignore decode issues, non-critical display text
+        // ignore decode issues
       }
       startInactivityTracking();
     }
 
-    // Proactively signs the admin out the moment the Google ID token's own
-    // expiry time passes, rather than waiting for the next API call to fail.
     function scheduleExpiryCheck(expUnixSeconds) {
       if (expiryTimer) clearTimeout(expiryTimer);
       const msUntilExpiry = expUnixSeconds * 1000 - Date.now();
@@ -262,8 +316,6 @@
       expiryTimer = setTimeout(expireSession, msUntilExpiry);
     }
 
-    // Signs the admin out after a period of no mouse/keyboard/scroll activity,
-    // independent of the Google token's own expiry.
     const ACTIVITY_EVENTS = ["mousemove", "mousedown", "keydown", "scroll", "touchstart"];
 
     function startInactivityTracking() {
@@ -339,7 +391,9 @@
         const data = await res.json();
         if (!data.success) throw new Error(data.error || "Failed to load bookings.");
 
-        renderBookings(data.data);
+        rawBookingsData = data.data;
+        renderBookings(rawBookingsData);
+        updateCalendarEvents(rawBookingsData);
         return true;
       } catch (err) {
         console.error("Failed to load bookings:", err);
@@ -418,10 +472,75 @@
           indicator.classList.add("show");
           setTimeout(() => indicator.classList.remove("show"), 1500);
         }
+
+        // Update local memory & calendar view in real time
+        const target = rawBookingsData.find((b) => b.id === id);
+        if (target) {
+          target.status = status;
+          updateCalendarEvents(rawBookingsData);
+        }
       } catch (err) {
         console.error("Status update failed:", err);
         alert(`Failed to update status: ${err.message}`);
       }
+    }
+
+    /* Initialize Calendar View */
+    function initCalendar() {
+      if (calendarInstance) return;
+      const calendarEl = document.getElementById("calendar");
+      calendarInstance = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek"
+        },
+        events: [],
+        eventClick: function(info) {
+          const props = info.event.extendedProps;
+          alert(
+            `Client: ${info.event.title}\n` +
+            `Service: ${props.service}\n` +
+            `Location: ${props.location}\n` +
+            `Status: ${props.status}\n` +
+            `Phone: ${props.phone}`
+          );
+        }
+      });
+      calendarInstance.render();
+    }
+
+    /* Transform Bookings into Calendar Events */
+    function updateCalendarEvents(bookings) {
+      if (!calendarInstance) return;
+
+      const events = bookings
+        .filter((b) => b.status !== "CANCELLED")
+        .map((b) => {
+          let color = "#3f8083"; // Dark Aqua (PENDING)
+          if (b.status === "CONFIRMED") color = "#2f9e5c"; // Green
+          if (b.status === "COMPLETED") color = "#888888"; // Gray
+
+          const dateStr = new Date(b.bookingDate).toISOString().split("T")[0];
+
+          return {
+            id: b.id,
+            title: `${b.fullName || 'Client'} (${b.serviceType})`,
+            start: dateStr,
+            backgroundColor: color,
+            borderColor: color,
+            extendedProps: {
+              service: b.serviceType,
+              location: b.location || "N/A",
+              status: b.status,
+              phone: b.phone
+            }
+          };
+        });
+
+      calendarInstance.removeAllEvents();
+      calendarInstance.addEventSource(events);
     }
 
     function escapeHtml(str) {
