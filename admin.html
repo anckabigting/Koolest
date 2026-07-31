@@ -185,6 +185,137 @@
       padding: 2px 4px;
       font-size: 0.8rem;
     }
+
+    /* Modern Detail Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(45, 55, 72, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(12px);
+      transition: transform 0.25s ease;
+      overflow: hidden;
+    }
+    .modal-overlay.open .modal-card {
+      transform: translateY(0);
+    }
+    .modal-header {
+      background: var(--light-aqua);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(32, 178, 170, 0.2);
+    }
+    .modal-header h3 {
+      color: var(--dark-aqua);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--dark-aqua);
+      cursor: pointer;
+      line-height: 1;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close-btn:hover {
+      background: rgba(63, 128, 131, 0.1);
+    }
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: flex-column;
+      gap: 16px;
+    }
+    .modal-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #edf2f7;
+    }
+    .modal-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .modal-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: #718096;
+    }
+    .modal-value {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+    .status-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+    .status-pill.PENDING { background: var(--light-aqua); color: var(--dark-aqua); }
+    .status-pill.CONFIRMED { background: #e6f4ea; color: var(--success-green); }
+    .status-pill.COMPLETED { background: #edf2f7; color: #4a5568; }
+    .status-pill.CANCELLED { background: #feebc8; color: #c05621; }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background: #fafdfd;
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid #edf2f7;
+    }
+    .modal-footer button {
+      background: var(--dark-aqua);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-footer button:hover {
+      background: var(--primary-aqua);
+    }
   </style>
 </head>
 <body>
@@ -237,6 +368,47 @@
     </div>
   </div>
 
+  <!-- Modern Details Modal -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Booking Details</h3>
+        <button class="modal-close-btn" id="modalCloseX">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-row">
+          <span class="modal-label">Client Name</span>
+          <span class="modal-value" id="modalClientName">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Service Type</span>
+          <span class="modal-value" id="modalServiceType">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Scheduled Date</span>
+          <span class="modal-value" id="modalScheduleDate">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Location</span>
+          <span class="modal-value" id="modalLocation">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Phone Number</span>
+          <span class="modal-value" id="modalPhone">-</span>
+        </div>
+        <div class="modal-row">
+          <span class="modal-label">Status</span>
+          <div>
+            <span class="status-pill" id="modalStatusPill">PENDING</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const GOOGLE_CLIENT_ID = "1027962690032-67mdn9rnofps2peorjbbqljhi9llpr78.apps.googleusercontent.com";
 
@@ -259,6 +431,17 @@
     const bookingsTable = document.getElementById("bookingsTable");
     const bookingsBody = document.getElementById("bookingsBody");
     const emptyState = document.getElementById("emptyState");
+
+    // Modal DOM Elements
+    const detailsModal = document.getElementById("detailsModal");
+    const modalCloseX = document.getElementById("modalCloseX");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalClientName = document.getElementById("modalClientName");
+    const modalServiceType = document.getElementById("modalServiceType");
+    const modalScheduleDate = document.getElementById("modalScheduleDate");
+    const modalLocation = document.getElementById("modalLocation");
+    const modalPhone = document.getElementById("modalPhone");
+    const modalStatusPill = document.getElementById("modalStatusPill");
 
     const savedToken = sessionStorage.getItem("koolest_admin_id_token");
     if (savedToken) {
@@ -287,7 +470,38 @@
     // Fallback trigger if the DOM loads after the script or script fires before DOM
     document.addEventListener("DOMContentLoaded", () => {
       initGoogleSignIn();
+      setupModalListeners();
     });
+
+    function setupModalListeners() {
+      modalCloseX.addEventListener("click", closeModal);
+      modalCloseBtn.addEventListener("click", closeModal);
+      detailsModal.addEventListener("click", (e) => {
+        if (e.target === detailsModal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && detailsModal.classList.contains("open")) {
+          closeModal();
+        }
+      });
+    }
+
+    function openModal(data) {
+      modalClientName.textContent = data.clientName || "N/A";
+      modalServiceType.textContent = data.service || "N/A";
+      modalScheduleDate.textContent = data.scheduleDate || "N/A";
+      modalLocation.textContent = data.location || "N/A";
+      modalPhone.textContent = data.phone || "N/A";
+
+      modalStatusPill.textContent = data.status || "PENDING";
+      modalStatusPill.className = `status-pill ${data.status || 'PENDING'}`;
+
+      detailsModal.classList.add("open");
+    }
+
+    function closeModal() {
+      detailsModal.classList.remove("open");
+    }
 
     async function handleGoogleSignIn(response) {
       idToken = response.credential;
@@ -369,7 +583,7 @@
       loginGate.style.display = "flex";
       loginError.style.display = "none";
       sessionExpiredMsg.style.display = "block";
-      initGoogleSignIn(); // Re-render button when returning to login screen
+      initGoogleSignIn();
     }
 
     refreshBtn.addEventListener("click", () => loadBookings());
@@ -388,7 +602,7 @@
       loginGate.style.display = "flex";
       loginError.style.display = "none";
       sessionExpiredMsg.style.display = "none";
-      initGoogleSignIn(); // Re-render button on sign-out
+      initGoogleSignIn();
     });
 
     async function loadBookings(isLoginAttempt = false) {
@@ -519,13 +733,20 @@
         events: [],
         eventClick: function(info) {
           const props = info.event.extendedProps;
-          alert(
-            `Client: ${info.event.title}\n` +
-            `Service: ${props.service}\n` +
-            `Location: ${props.location}\n` +
-            `Status: ${props.status}\n` +
-            `Phone: ${props.phone}`
-          );
+          const formattedDate = new Date(info.event.startStr).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+
+          openModal({
+            clientName: props.clientName,
+            service: props.service,
+            scheduleDate: formattedDate,
+            location: props.location,
+            status: props.status,
+            phone: props.phone
+          });
         }
       });
       calendarInstance.render();
@@ -551,6 +772,7 @@
             backgroundColor: color,
             borderColor: color,
             extendedProps: {
+              clientName: b.fullName || "Client",
               service: b.serviceType,
               location: b.location || "N/A",
               status: b.status,
