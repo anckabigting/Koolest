@@ -2,7 +2,7 @@
   --primary-aqua: #20b2aa;
   --dark-aqua: #3f8083;
   --light-aqua: #e6f7f6;
-  --accent-yellow: #ffbd00;
+  --yellow: #ffd86e;
   --cream: #fffdf6;
   --text-dark: #2d3748;
   --error-red: #e53e3e;
@@ -122,7 +122,7 @@ body {
 
 /* --- TABLE: redesigned to fit without horizontal scroll --- */
 .table-wrap {
-  background: var(--accent-yellow);
+  background: var(--yellow);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 32px;
