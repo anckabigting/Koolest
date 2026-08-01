@@ -102,10 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) el.setCustomValidity("");
       });
 
-      // Flexible validation regex that allows proper capitalization, accents (ñ), spaces, and commas
-      const strictCapitalizationRegex = /^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$/;
+      // Clean up trailing/leading spaces automatically first
+      if (locationInput) {
+        locationInput.value = locationInput.value.trim();
+      }
 
-      if (locationInput && !strictCapitalizationRegex.test(locationInput.value.trim())) {
+      // Updated regex: allows optional trailing spaces and flexible city/province formats
+      const strictCapitalizationRegex = /^[A-Z\u00C0-\u024F][a-zA-Z\u00C0-\u024F\s,.'-]*\s*$/;
+
+      if (locationInput && locationInput.value && !strictCapitalizationRegex.test(locationInput.value)) {
         locationInput.setCustomValidity("Please capitalize the location name properly (e.g. Dasmariñas, Cavite)");
         locationInput.reportValidity();
         locationInput.addEventListener("input", () => locationInput.setCustomValidity(""), { once: true });
