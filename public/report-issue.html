@@ -1,143 +1,129 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Report a Website Issue - Koolest AC Services</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report an Issue | Koolest AC Services</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../public/assets/koolest_logo.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/koolest_logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brandDark: '#0d413f',
-            brandPrimary: '#145c58',
-            brandLight: '#e6f7f6',
-            brandAccent: '#f4c414',
-            brandAccentHover: '#dcae0b',
-          },
-          fontFamily: {
-            heading: ['Righteous', 'cursive'],
-            body: ['Plus Jakarta Sans', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Page JS Script -->
-  <script src="../public/report-issue.js" defer></script>
+    <!-- Tailwind CSS Output (relative to public folder) -->
+    <link rel="stylesheet" href="output.css">
 </head>
-<body class="report-page-body bg-[#082b2a] font-body text-slate-100 min-h-full flex flex-col antialiased selection:bg-brandAccent selection:text-brandDark">
+<body class="bg-slate-50 font-body text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-[#38bdf8] selection:text-[#082b2a]">
 
-  <!-- ================= NAVBAR ================= -->
-  <header class="navbar sticky top-0 z-50 bg-[#0d413f]/95 backdrop-blur-md border-b border-white/10 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      
-      <div class="brand-container flex items-center gap-3">
-        <div class="container nav-container hidden"></div>
-        <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="brand-logo h-12 w-auto object-contain">
-        <span class="brand-title font-heading text-2xl text-white tracking-wide">Koolest</span>
-      </div>
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 bg-[#0d413f] border-b border-white/10 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <a href="../index.html" class="flex items-center gap-3 transition-transform hover:scale-105">
+                <img src="assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
+                <span class="font-heading text-2xl text-white tracking-wide">Koolest</span>
+            </a>
 
-      <nav class="nav-links hidden md:flex items-center gap-8 font-semibold text-sm text-slate-200">
-        <a href="../index.html#services" class="hover:text-brandAccent transition-colors">Services</a>
-        <a href="../index.html#testimonials" class="hover:text-brandAccent transition-colors">Reviews</a>
-        <a href="../index.html#rate-us" class="hover:text-brandAccent transition-colors">Rate Us</a>
-        <a href="../index.html#contact-us" class="hover:text-brandAccent transition-colors">Contact Us</a>
-        <a href="../index.html#gallery" class="hover:text-brandAccent transition-colors">Gallery</a>
-        <a href="../index.html#booking" class="btn-yellow bg-brandAccent text-brandDark hover:bg-brandAccentHover font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm">Book Now</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ================= REPORT BUG FORM SECTION ================= -->
-  <main class="report-section flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="report-card bg-[#0d413f] border border-white/10 rounded-3xl p-6 sm:p-10 max-w-xl w-full shadow-2xl space-y-6">
-      
-      <a href="../index.html" class="back-link inline-flex items-center gap-2 text-brandAccent hover:text-brandAccentHover font-bold text-sm transition-transform hover:-translate-x-1">
-        <i class="fa-solid fa-arrow-left"></i> Back to Home
-      </a>
-
-      <div class="space-y-2">
-        <h1 class="report-title font-heading text-3xl sm:text-4xl text-white">Report a Website Issue</h1>
-        <p class="report-subtitle text-slate-300 text-sm sm:text-base leading-relaxed">
-          Spotted a bug, broken link, or display issue on our site? Let us know so we can fix it right away!
-        </p>
-      </div>
-
-      <!-- Dynamic Message Banner Container (Styled dynamically by JS or default classes) -->
-      <div id="issueMessageBanner" class="form-feedback-banner rounded-xl p-4 text-center text-sm font-semibold leading-relaxed border shadow-inner hidden"></div>
-
-      <form id="bugReportForm" class="styled-form space-y-5">
-        
-        <!-- Name (Optional) -->
-        <div class="form-group space-y-2">
-          <label for="reporterName" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
-            Your Name <span class="optional-text font-normal text-slate-400 capitalize">(Optional)</span>
-          </label>
-          <input type="text" id="reporterName" class="form-input w-full px-4 py-3 rounded-xl bg-[#082b2a] border border-white/15 text-white placeholder-slate-500 focus:border-brandAccent focus:ring-2 focus:ring-brandAccent/20 outline-none text-sm font-body transition-all" placeholder="e.g. Jane Doe" />
+            <!-- Back to Home Link -->
+            <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-[#38bdf8] hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Back to Main Site
+            </a>
         </div>
+    </header>
 
-        <!-- Email for Follow-up -->
-        <div class="form-group space-y-2">
-          <label for="reporterEmail" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Email Address</label>
-          <input type="email" id="reporterEmail" class="form-input w-full px-4 py-3 rounded-xl bg-[#082b2a] border border-white/15 text-white placeholder-slate-500 focus:border-brandAccent focus:ring-2 focus:ring-brandAccent/20 outline-none text-sm font-body transition-all" placeholder="e.g. jane@example.com" required />
-        </div>
+    <!-- MAIN REPORT FORM SECTION -->
+    <main class="py-12 sm:py-20 flex-grow">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Card Container -->
+            <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-xl space-y-8">
+                
+                <!-- Header Text -->
+                <div class="space-y-3 text-center sm:text-left">
+                    <div class="inline-flex items-center gap-2 bg-rose-50 text-rose-600 border border-rose-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-bug"></i> Bug & Feedback Portal
+                    </div>
+                    <h1 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">Report a Website Issue</h1>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Spotted a bug, broken link, or display glitch on our site? Let us know below so we can fix it right away!
+                    </p>
+                </div>
 
-        <!-- Issue Category -->
-        <div class="form-group space-y-2">
-          <label for="issueType" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Type of Issue</label>
-          <div class="relative">
-            <select id="issueType" class="form-input form-select w-full px-4 py-3 rounded-xl bg-[#082b2a] border border-white/15 text-slate-300 focus:text-white focus:border-brandAccent focus:ring-2 focus:ring-brandAccent/20 outline-none text-sm font-body appearance-none cursor-pointer pr-10 transition-all" required>
-              <option value="" disabled selected class="bg-[#082b2a] text-slate-400">Select issue category...</option>
-              <option value="broken link or button" class="bg-[#082b2a] text-white">Broken Link or Button</option>
-              <option value="visual/layout glitch" class="bg-[#082b2a] text-white">Visual / Layout Glitch</option>
-              <option value="form submission error" class="bg-[#082b2a] text-white">Form Submission Error</option>
-              <option value="mobile/screen display problem" class="bg-[#082b2a] text-white">Mobile / Screen Display Problem</option>
-              <option value="other website bug" class="bg-[#082b2a] text-white">Other Website Bug</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-              <i class="fa-solid fa-chevron-down text-xs"></i>
+                <!-- Form -->
+                <form id="reportForm" class="space-y-6">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div class="space-y-2">
+                            <label for="reporterName" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Your Name <span class="text-slate-400 font-normal">(Optional)</span></label>
+                            <input type="text" id="reporterName" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="Jane Doe">
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="space-y-2">
+                            <label for="reporterEmail" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Email Address</label>
+                            <input type="email" id="reporterEmail" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="jane@example.com">
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="space-y-2">
+                        <label for="issueCategory" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Type of Issue</label>
+                        <select id="issueCategory" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm bg-white transition-all">
+                            <option value="" disabled selected>Select issue category...</option>
+                            <option value="layout">Layout / Formatting Glitch</option>
+                            <option value="broken-link">Broken Link or Button</option>
+                            <option value="booking-form">Booking Form Error</option>
+                            <option value="slow-loading">Slow Loading / Performance</option>
+                            <option value="other">Other Issue</option>
+                        </select>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="space-y-2">
+                        <label for="issueDescription" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Describe the Issue</label>
+                        <textarea id="issueDescription" rows="5" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm resize-none transition-all" placeholder="Please describe what happened (e.g. 'The Book Now button didn't respond on mobile')..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-4 rounded-xl text-sm transition-all shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Bug Report
+                    </button>
+                </form>
+
+                <!-- Success Confirmation Box -->
+                <div id="reportSuccess" class="hidden bg-[#0d413f] text-white p-8 rounded-2xl text-center space-y-3">
+                    <i class="fa-solid fa-circle-check text-[#38bdf8] text-4xl"></i>
+                    <h3 class="text-2xl font-heading text-[#38bdf8]">Thank You!</h3>
+                    <p class="text-slate-200 text-sm">Your issue report has been sent. We'll take a look and get it resolved right away.</p>
+                    <div class="pt-2">
+                        <a href="../index.html" class="inline-block bg-[#38bdf8] text-[#082b2a] font-bold px-6 py-2.5 rounded-xl text-xs hover:bg-[#0284c7] transition-all">Return Home</a>
+                    </div>
+                </div>
+
             </div>
-          </div>
+
         </div>
+    </main>
 
-        <!-- Issue Description -->
-        <div class="form-group space-y-2">
-          <label for="issueDetails" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Describe the Bug</label>
-          <textarea id="issueDetails" class="form-input form-textarea w-full px-4 py-3 rounded-xl bg-[#082b2a] border border-white/15 text-white placeholder-slate-500 focus:border-brandAccent focus:ring-2 focus:ring-brandAccent/20 outline-none text-sm font-body resize-none transition-all" rows="4" placeholder="Please describe what happened (e.g. 'The Book Now button didn't respond on mobile')..." required></textarea>
-        </div>
+    <!-- FOOTER -->
+    <footer class="bg-[#082b2a] border-t border-white/10 text-slate-400 py-6 text-center text-xs">
+        <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
+    </footer>
 
-        <button type="submit" class="btn-yellow btn-full w-full bg-brandAccent hover:bg-brandAccentHover text-brandDark font-bold py-3.5 rounded-xl text-base shadow-md transition-all pt-3.5 mt-2">
-          Submit Bug Report
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="site-footer bg-[#051c1b] border-t border-white/10 text-slate-400 py-6 text-center text-xs">
-    <div class="footer-content max-w-7xl mx-auto px-4 space-y-2">
-      <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="../index.html" class="underline hover:text-brandAccent">Back to Home</a>
-      </div>
-    </div>
-  </footer>
-
+    <!-- Minimal script for feedback submission -->
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.classList.add('hidden');
+            document.getElementById('reportSuccess').classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
