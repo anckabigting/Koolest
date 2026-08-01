@@ -1636,6 +1636,10 @@ video {
   color: rgb(8 43 42 / var(--tw-text-opacity, 1));
 }
 
+.empty\:hidden:empty {
+  display: none;
+}
+
 .hover\:-translate-x-1:hover {
   --tw-translate-x: -0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
