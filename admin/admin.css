@@ -6,7 +6,7 @@
   --cream: #fffdf6;
   --text-dark: #2d3748;
   --error-red: #e53e3e;
-  --success-green: #2f9e5c;
+  --success-green: #277b48;
 }
 
 * { 
@@ -277,7 +277,7 @@ select.status-select {
 }
 
 .fc .fc-col-header-cell {
-  background: var(--light-aqua);
+  background: var(--accent-yellow);
   color: var(--dark-aqua);
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -338,6 +338,35 @@ select.status-select {
   background-color: rgba(255, 189, 0, 0.14) !important;
 }
 
+/* --- FULLCALENDAR "TODAY" BUTTON CUSTOMIZATION --- */
+.fc .fc-today-button {
+  background-color: var(--dark-aqua) !important;
+  border-color: var(--dark-aqua) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+  padding: 6px 14px !important;
+  text-transform: capitalize;
+  opacity: 1 !important;
+  transition: all 0.2s ease;
+}
+
+/* Hover State */
+.fc .fc-today-button:hover:not(:disabled) {
+  background-color: var(--primary-aqua) !important;
+  border-color: var(--primary-aqua) !important;
+  color: #ffffff !important;
+  cursor: pointer;
+}
+
+/* Active/Disabled State (When on current month) */
+.fc .fc-today-button:disabled {
+  background-color: rgba(32, 178, 170, 0.25) !important;
+  border-color: rgba(32, 178, 170, 0.3) !important;
+  color: var(--dark-aqua) !important;
+  cursor: default;
+}
+
 /* --- Modern Detail Modal Styles (unchanged) --- */
 .modal-overlay {
   position: fixed;
@@ -378,7 +407,7 @@ select.status-select {
 }
 
 .modal-header {
-  background: var(--light-aqua);
+  background: var(--accent-yellow);
   padding: 20px 24px;
   display: flex;
   justify-content: space-between;
