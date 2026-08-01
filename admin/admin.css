@@ -292,13 +292,29 @@ select.status-select {
   padding: 4px 6px;
 }
 
+/* --- Event Chips: Clean text-only look --- */
 .fc-event {
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 1px 4px;
-  font-size: 0.68rem;
+  background: transparent !important;
   border: none !important;
-  margin-bottom: 1px;
+  padding: 1px 2px !important;
+  margin-bottom: 2px !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+/* Ensure the inner text and dot stay dark and readable against any tile color */
+.fc-event .fc-event-main,
+.fc-event-title,
+.fc-event-time {
+  color: var(--dark-aqua) !important;
+  font-weight: 600 !important;
+  font-size: 0.72rem !important;
+}
+
+/* Subtle background highlight on hover so you still know it's clickable */
+.fc-event:hover {
+  background-color: rgba(28, 60, 62, 0.08) !important;
+  border-radius: 4px;
 }
 
 /* Whole-tile highlight classes, applied via JS based on that day's dominant status */
@@ -407,7 +423,7 @@ select.status-select {
 }
 
 .modal-header {
-  background: var(--accent-yellow);
+  background: var(--accent-yellow) !important;
   padding: 20px 24px;
   display: flex;
   justify-content: space-between;
