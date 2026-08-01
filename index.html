@@ -32,7 +32,7 @@
 
     <!-- NAVBAR -->
     <header class="sticky top-0 z-50 bg-[#0d413f]/95 backdrop-blur-md border-b border-white/10 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
             
             <a href="#" class="flex items-center gap-3 transition-transform hover:scale-105">
                 <img src="public/assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
@@ -40,13 +40,13 @@
             </a>
 
             <!-- Mobile Hamburger Button -->
-            <button class="hamburger lg:hidden text-white focus:outline-none p-2" id="hamburger-btn" aria-label="Toggle Navigation">
+            <button class="hamburger lg:hidden text-white focus:outline-none p-2 z-50 cursor-pointer" id="hamburger-btn" aria-label="Toggle Navigation">
                 <i class="fa-solid fa-bars text-2xl"></i>
             </button>
 
             <!-- Navigation Links -->
-            <nav>
-                <ul class="nav-links hidden lg:flex items-center gap-8 font-semibold text-sm text-slate-200" id="nav-menu">
+            <nav class="w-full lg:w-auto">
+                <ul id="nav-menu" class="nav-links hidden absolute lg:relative top-20 left-0 lg:top-0 w-full lg:w-auto bg-[#0d413f] lg:bg-transparent p-6 lg:p-0 flex flex-col lg:flex-row items-center gap-6 lg:gap-8 font-semibold text-sm text-slate-200 border-b border-white/10 lg:border-none shadow-xl lg:shadow-none transition-all">
                     <li><a href="#services" class="hover:text-[#38bdf8] transition-colors">Services</a></li>
                     <li><a href="#testimonials" class="hover:text-[#38bdf8] transition-colors">Reviews</a></li>
                     <li><a href="#rate-us" class="hover:text-[#38bdf8] transition-colors">Rate Us</a></li>
@@ -57,8 +57,8 @@
                             Report an Issue
                         </a>
                     </li>
-                    <li>
-                        <a href="#booking" class="bg-[#38bdf8] text-[#082b2a] hover:bg-[#0284c7] font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md hover:scale-105">
+                    <li class="w-full lg:w-auto text-center">
+                        <a href="#booking" class="inline-block w-full lg:w-auto bg-[#38bdf8] text-[#082b2a] hover:bg-[#0284c7] font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md">
                             Book Now
                         </a>
                     </li>
