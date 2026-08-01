@@ -1,4 +1,4 @@
-// Hamburger Mobile Nav
+// Hamburger Mobile Nav & Page Interactions
 document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.getElementById("hamburger-btn") || document.querySelector(".hamburger");
   const navLinks = document.querySelector(".nav-links");
@@ -18,23 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 1. Set minimum booking date dynamically to today
+  // 1. Set dynamic booking date limits (Earliest: Tomorrow, Latest: +60 Days)
   const dateInput = document.getElementById("bookingDate");
-
   if (dateInput) {
     const today = new Date();
     const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1); // Earliest allowed: Tomorrow
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const maxDate = new Date(today);
-    maxDate.setDate(maxDate.getDate() + 60); // Latest allowed: 60 days from now
+    maxDate.setDate(maxDate.getDate() + 60);
 
-    // Format to YYYY-MM-DD
     dateInput.min = tomorrow.toISOString().split("T")[0];
     dateInput.max = maxDate.toISOString().split("T")[0];
   }
 
-  // 2. Create cooling breeze particles
+  // 2. Initialize particle effects
   initBreezeFloaterParticles();
 
   // 3. Repeatable Scroll Reveal Animation
@@ -56,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   revealElements.forEach((element) => revealObserver.observe(element));
 
-  // Restrict phone input to digits only, live as the user types
+  // 4. Input constraints & formatters
   const phoneInput = document.getElementById("phone");
   if (phoneInput) {
     phoneInput.addEventListener("input", () => {
@@ -64,25 +62,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Handle Location Auto-Capitalization on Blur
   const locationInput = document.getElementById("location");
   if (locationInput) {
     locationInput.addEventListener("blur", (e) => {
       if (!e.target.value) return;
       e.target.value = e.target.value
         .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(" ");
     });
   }
 
-  // 4. Booking Form Submission & API Request
+  // 5. Booking Form Submission
   const bookingForm = document.getElementById("bookingForm");
-  const bookingHeader = document.getElementById("bookingHeader");
-  const successMsg = document.getElementById("bookingSuccess");
-
-  // Maps Zod field names (from the API's validation error object) to the
-  // actual input elements, so we can anchor the native tooltip to the right field.
   const fieldInputMap = {
     fullName: () => document.getElementById("fullName"),
     email: () => document.getElementById("email"),
@@ -96,18 +88,15 @@ document.addEventListener("DOMContentLoaded", () => {
     bookingForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Clear any previous custom validity messages before a fresh attempt
       Object.values(fieldInputMap).forEach((getEl) => {
         const el = getEl();
         if (el) el.setCustomValidity("");
       });
 
-      // Clean up trailing/leading spaces automatically first
       if (locationInput) {
         locationInput.value = locationInput.value.trim();
       }
 
-      // Updated regex: allows optional trailing spaces and flexible city/province formats
       const strictCapitalizationRegex = /^[A-Z\u00C0-\u024F][a-zA-Z\u00C0-\u024F\s,.'-]*\s*$/;
 
       if (locationInput && locationInput.value && !strictCapitalizationRegex.test(locationInput.value)) {
@@ -129,9 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const response = await fetch("/api/bookings", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
 
@@ -151,8 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Shows the server's validation message as a native browser tooltip,
-  // anchored to the exact field that failed (matches built-in HTML5 validation UI).
   function showFieldError(data) {
     if (data?.details) {
       const firstField = Object.keys(data.details).find(
@@ -164,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) {
           el.setCustomValidity(message);
           el.reportValidity();
-          // Clear it on next input so the browser doesn't keep blocking submission
           el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
           return;
         }
@@ -173,8 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showGenericError(data?.error || "Failed to submit booking. Please try again.");
   }
 
-  // Fallback for errors that aren't tied to a specific field (e.g. rate limiting,
-  // server errors) — shown on the Full Name field since it's first in the form.
   function showGenericError(message) {
     const el = document.getElementById("fullName");
     if (el) {
@@ -190,20 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
     const successMsg = document.getElementById("bookingSuccess");
 
-    // Hide the entire light-blue card container
     if (bookingCard) bookingCard.style.display = "none";
-
-    // Show only the standalone teal success banner
-    if (successMsg) {
-      successMsg.style.display = "block";
-    }
+    if (successMsg) successMsg.style.display = "block";
   }
 
-  // 5. Feedback Form Submission & API Request
+  // 6. Feedback Form Submission
   const feedbackForm = document.getElementById("feedbackForm");
-
-  // Maps Zod field names to the actual input elements, so the tooltip
-  // anchors to whichever field actually failed (matches the booking form's pattern).
   const feedbackFieldInputMap = {
     name: () => document.getElementById("clientName"),
     message: () => document.getElementById("comment"),
@@ -213,11 +187,11 @@ document.addEventListener("DOMContentLoaded", () => {
     feedbackForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Clear any previous custom validity messages before a fresh attempt
       Object.values(feedbackFieldInputMap).forEach((getEl) => {
         const el = getEl();
         if (el) el.setCustomValidity("");
       });
+
       const ratingError = document.getElementById("ratingError");
       if (ratingError) ratingError.style.display = "none";
 
@@ -259,8 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       if (firstField === "rating") {
-        const message = data.details.rating._errors[0];
-        showRatingError(message);
+        showRatingError(data.details.rating._errors[0]);
         return;
       }
 
@@ -318,19 +291,38 @@ document.addEventListener("DOMContentLoaded", () => {
     if (successMsg) successMsg.style.display = "block";
   }
 
-  // 6. Escalation / Issue Form Submission
+  // 7. Issue Form
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
-    issueForm.addEventListener("submit", function (e) {
+    issueForm.addEventListener("submit", (e) => {
       e.preventDefault();
       issueForm.style.display = "none";
       const formSuccess = document.getElementById("formSuccess");
       if (formSuccess) formSuccess.style.display = "block";
     });
   }
+
+  // 8. Back to Top Button
+  const backToTopBtn = document.getElementById("backToTopBtn");
+  if (backToTopBtn) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add("show");
+      } else {
+        backToTopBtn.classList.remove("show");
+      }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // 9. Initialize Slideshow safely
+  initSlideshow();
 });
 
-// Helper: Simulates floating breeze elements
+// Helper: Particle animation generator
 function initBreezeFloaterParticles() {
   const container = document.getElementById("breeze-container");
   if (!container) return;
@@ -354,10 +346,10 @@ function initBreezeFloaterParticles() {
 
 // Slideshow Controller
 let slideIndex = 0;
-showSlides();
 
-function showSlides() {
-  let slides = document.getElementsByClassName("slide");
+function initSlideshow() {
+  const slides = document.getElementsByClassName("slide");
+  if (slides.length === 0) return;
 
   for (let i = 0; i < slides.length; i++) {
     slides[i].style.display = "none";
@@ -368,27 +360,6 @@ function showSlides() {
     slideIndex = 1;
   }
 
-  if (slides.length > 0) {
-    slides[slideIndex - 1].style.display = "block";
-  }
-  setTimeout(showSlides, 3000);
-}
-
-const backToTopBtn = document.getElementById("backToTopBtn");
-
-if (backToTopBtn) {
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.classList.add("show");
-    } else {
-      backToTopBtn.classList.remove("show");
-    }
-  });
-
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(initSlideshow, 3000);
 }

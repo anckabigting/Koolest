@@ -16,8 +16,8 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Typed.js for Typewriter Animation -->
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <!-- Typed.js for Typewriter Animation (with defer so it loads in sequence) -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js" defer></script>
 
     <!-- Compiled Tailwind CSS Output -->
     <link rel="stylesheet" href="public/output.css">
@@ -256,7 +256,7 @@
                             <h3 class="font-heading text-xl text-[#0d413f]">Washing Machine</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">Specialized maintenance, drum cleaning, motor repair, and setup for automatic washing machines.</p>
                         </div>
-                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-center font-bold py-2.5 rounded-xl text-sm transition-colors">Book Now</a>
                     </div>
                 </div>
 
@@ -563,27 +563,5 @@
     <button id="backToTopBtn" title="Go to top" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-[#38bdf8] text-[#082b2a] rounded-full shadow-lg items-center justify-center font-bold text-lg hover:bg-[#0284c7] transition-all hidden hover:scale-110 active:scale-90">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
-
-    <!-- INITIALIZE TYPED.JS -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const typedElement = document.getElementById('typed-text');
-            if (typedElement && typeof Typed !== 'undefined') {
-                new Typed('#typed-text', {
-                    strings: [
-                        'Cooling &amp; Appliances.',
-                        'Air Conditioners.',
-                        'Washing Machines.'
-                    ],
-                    typeSpeed: 50,
-                    backSpeed: 30,
-                    backDelay: 1800,
-                    loop: true,
-                    showCursor: true,
-                    cursorChar: '|'
-                });
-            }
-        });
-    </script>
 </body>
 </html>
