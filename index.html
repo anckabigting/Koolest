@@ -326,12 +326,17 @@
                             </div>
                         </div>
 
-                        <!-- Privacy Consent Checkbox -->
-                        <div class="flex items-center justify-center gap-2.5 my-4 text-xs text-slate-600">
-                            <input type="checkbox" id="privacyConsent" required class="mt-0.5 w-4 h-4 text-[#38bdf8] rounded border-slate-300 focus:ring-[#38bdf8] cursor-pointer" />
+                        <!-- Privacy Consent Checkbox (Centered with visible input) -->
+                        <div class="flex items-center justify-center gap-2 my-4 text-xs text-slate-600 text-center">
+                            <input 
+                                type="checkbox" 
+                                id="privacyConsent" 
+                                required 
+                                class="w-4 h-4 shrink-0 rounded border-slate-300 text-[#38bdf8] focus:ring-[#38bdf8] cursor-pointer"
+                            />
                             <label for="privacyConsent" class="cursor-pointer select-none">
                                 I agree to the processing of my details for scheduling services in accordance with the 
-                                <button type="button" id="openPrivacyModal" class="text-[#0d413f] underline font-bold hover:text-[#145c58] focus:outline-none">
+                                <button type="button" id="openPrivacyModal" class="text-[#0d413f] underline font-bold hover:text-[#145c58] focus:outline-none inline">
                                     Privacy Policy
                                 </button>.
                             </label>
