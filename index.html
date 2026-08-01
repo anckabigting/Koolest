@@ -74,9 +74,7 @@
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left animate-fade-in">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight min-h-[2.4em] sm:min-h-[2em]">
                     Expert Care For Your <br class="hidden sm:inline">
-                    <span class="inline-block text-[#38bdf8] font-heading">
-                        <span id="typed-text"></span>
-                    </span>
+                    <span id="typed-text" class="text-[#38bdf8] font-heading"></span>
                 </h1>
                 <p class="text-slate-200 text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
                     Reliable, fast, and high-quality air conditioning and washing machine services tailored for your home and business.
@@ -569,7 +567,8 @@
     <!-- INITIALIZE TYPED.JS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('typed-text')) {
+            const typedElement = document.getElementById('typed-text');
+            if (typedElement && typeof Typed !== 'undefined') {
                 new Typed('#typed-text', {
                     strings: [
                         'Cooling &amp; Appliances.',
