@@ -8,7 +8,11 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="public/assets/koolest_logo.png">
     
-    <!-- Google Fonts -->
+    <!-- Preload critical stylesheet to eliminate FOUC layout glitch -->
+    <link rel="preload" href="public/output.css" as="style">
+    <link rel="stylesheet" href="public/output.css">
+
+    <!-- Preconnect to Google Fonts for faster font rendering -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
@@ -327,11 +331,12 @@
                         </div>
 
                         <!-- PRIVACY CONSENT CHECKBOX -->
-                        <div class="flex items-center justify-center gap-2.5 my-4 text-xs text-slate-600 text-center">
+                        <div class="flex items-center justify-center gap-2 my-4 text-xs text-slate-600 text-center min-h-[20px]">
                             <input 
                                 type="checkbox" 
                                 id="privacyConsent" 
                                 required 
+                                style="width: 16px; height: 16px; min-width: 16px; vertical-align: middle;"
                                 class="w-4 h-4 shrink-0 rounded border-slate-300 text-[#0d413f] focus:ring-[#38bdf8] cursor-pointer accent-[#0d413f]"
                             />
                             <label for="privacyConsent" class="cursor-pointer select-none">
