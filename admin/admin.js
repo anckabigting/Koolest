@@ -62,33 +62,45 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupModalListeners() {
-  modalCloseX.addEventListener("click", closeModal);
-  modalCloseBtn.addEventListener("click", closeModal);
-  detailsModal.addEventListener("click", (e) => {
-    if (e.target === detailsModal) closeModal();
-  });
+  if (modalCloseX) {
+    modalCloseX.addEventListener("click", closeModal);
+  }
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeModal);
+  }
+  if (detailsModal) {
+    detailsModal.addEventListener("click", (e) => {
+      if (e.target === detailsModal) closeModal();
+    });
+  }
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && detailsModal.classList.contains("open")) {
+    if (e.key === "Escape" && detailsModal && detailsModal.classList.contains("open")) {
       closeModal();
     }
   });
 }
 
 function openModal(data) {
-  modalClientName.textContent = data.clientName || "N/A";
-  modalServiceType.textContent = data.service || "N/A";
-  modalScheduleDate.textContent = data.scheduleDate || "N/A";
-  modalLocation.textContent = data.location || "N/A";
-  modalPhone.textContent = data.phone || "N/A";
+  if (!detailsModal) return;
 
-  modalStatusPill.textContent = data.status || "PENDING";
-  modalStatusPill.className = `status-pill ${data.status || 'PENDING'}`;
+  if (modalClientName) modalClientName.textContent = data.clientName || "N/A";
+  if (modalServiceType) modalServiceType.textContent = data.service || "N/A";
+  if (modalScheduleDate) modalScheduleDate.textContent = data.scheduleDate || "N/A";
+  if (modalLocation) modalLocation.textContent = data.location || "N/A";
+  if (modalPhone) modalPhone.textContent = data.phone || "N/A";
+
+  if (modalStatusPill) {
+    modalStatusPill.textContent = data.status || "PENDING";
+    modalStatusPill.className = `status-pill ${data.status || 'PENDING'}`;
+  }
 
   detailsModal.classList.add("open");
 }
 
 function closeModal() {
-  detailsModal.classList.remove("open");
+  if (detailsModal) {
+    detailsModal.classList.remove("open");
+  }
 }
 
 async function handleGoogleSignIn(response) {
@@ -174,24 +186,26 @@ function expireSession() {
   initGoogleSignIn();
 }
 
-refreshBtn.addEventListener("click", () => loadBookings());
-signOutBtn.addEventListener("click", () => {
-  sessionStorage.removeItem("koolest_admin_id_token");
-  idToken = null;
-  if (expiryTimer) {
-    clearTimeout(expiryTimer);
-    expiryTimer = null;
-  }
-  stopInactivityTracking();
-  if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
-    google.accounts.id.disableAutoSelect();
-  }
-  dashboard.style.display = "none";
-  loginGate.style.display = "flex";
-  loginError.style.display = "none";
-  sessionExpiredMsg.style.display = "none";
-  initGoogleSignIn();
-});
+if (refreshBtn) refreshBtn.addEventListener("click", () => loadBookings());
+if (signOutBtn) {
+  signOutBtn.addEventListener("click", () => {
+    sessionStorage.removeItem("koolest_admin_id_token");
+    idToken = null;
+    if (expiryTimer) {
+      clearTimeout(expiryTimer);
+      expiryTimer = null;
+    }
+    stopInactivityTracking();
+    if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+      google.accounts.id.disableAutoSelect();
+    }
+    dashboard.style.display = "none";
+    loginGate.style.display = "flex";
+    loginError.style.display = "none";
+    sessionExpiredMsg.style.display = "none";
+    initGoogleSignIn();
+  });
+}
 
 async function loadBookings(isLoginAttempt = false) {
   loadingState.style.display = "block";
@@ -224,9 +238,6 @@ async function loadBookings(isLoginAttempt = false) {
   }
 }
 
-// Keeps everything in its existing relative order, but moves COMPLETED
-// bookings to the bottom of the list — so finishing a job clears it out
-// of the "active" view without losing the record.
 function sortWithCompletedLast(bookings) {
   const active = bookings.filter((b) => b.status !== "COMPLETED");
   const completed = bookings.filter((b) => b.status === "COMPLETED");
@@ -303,8 +314,6 @@ async function updateStatus(select) {
     const data = await res.json();
     if (!data.success) throw new Error(data.error || "Update failed.");
 
-    // Update local memory, then re-render both the table (so completed rows
-    // sort to the bottom and get highlighted) and the calendar view.
     const target = rawBookingsData.find((b) => b.id === id);
     if (target) {
       target.status = status;
@@ -327,6 +336,8 @@ async function updateStatus(select) {
 function initCalendar() {
   if (calendarInstance) return;
   const calendarEl = document.getElementById("calendar");
+  if (!calendarEl) return;
+
   calendarInstance = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     headerToolbar: {
@@ -335,15 +346,18 @@ function initCalendar() {
       right: "dayGridMonth,timeGridWeek"
     },
     height: "auto",
-    dayMaxEvents: 2, // keeps each day cell compact; overflow shows a "+N more" link
+    dayMaxEvents: 2,
     events: [],
-    // Fires on every render AND every navigation (prev/next/today/view switch) —
-    // more reliable than dayCellDidMount, which can skip recycled DOM cells.
     datesSet: function () {
       markPastDays();
       highlightDayTiles(rawBookingsData.filter((b) => b.status !== "CANCELLED"));
     },
     eventClick: function(info) {
+      if (info.jsEvent) {
+        info.jsEvent.preventDefault();
+        info.jsEvent.stopPropagation();
+      }
+
       const props = info.event.extendedProps;
       const formattedDate = new Date(info.event.startStr).toLocaleDateString(undefined, {
         year: 'numeric',
@@ -364,11 +378,8 @@ function initCalendar() {
   calendarInstance.render();
 }
 
-// Marks every day cell before today as "past" using a plain string comparison
-// on the cell's own data-date attribute (YYYY-MM-DD sorts correctly as a
-// string), avoiding timezone/Date-object edge cases entirely.
 function markPastDays() {
-  const todayStr = new Date().toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
+  const todayStr = new Date().toLocaleDateString("en-CA");
   document.querySelectorAll(".fc-daygrid-day[data-date]").forEach((cell) => {
     const cellDate = cell.getAttribute("data-date");
     if (cellDate < todayStr) {
@@ -379,16 +390,15 @@ function markPastDays() {
   });
 }
 
-/* Transform Bookings into Calendar Events */
 function updateCalendarEvents(bookings) {
   if (!calendarInstance) return;
 
   const visibleBookings = bookings.filter((b) => b.status !== "CANCELLED");
 
   const events = visibleBookings.map((b) => {
-    let color = "#3f8083"; // Dark Aqua (PENDING)
-    if (b.status === "CONFIRMED") color = "#2f9e5c"; // Green
-    if (b.status === "COMPLETED") color = "#888888"; // Gray
+    let color = "#3f8083";
+    if (b.status === "CONFIRMED") color = "#2f9e5c";
+    if (b.status === "COMPLETED") color = "#888888";
 
     const dateStr = new Date(b.bookingDate).toISOString().split("T")[0];
 
@@ -412,15 +422,10 @@ function updateCalendarEvents(bookings) {
   calendarInstance.removeAllEvents();
   calendarInstance.addEventSource(events);
 
-  // Whole-tile coloring happens after events are in the DOM
   requestAnimationFrame(() => highlightDayTiles(visibleBookings));
 }
 
-// Colors the entire day cell (not just the event chip) based on that day's
-// dominant status: CONFIRMED takes priority (green), then PENDING (aqua),
-// then COMPLETED (gray) if every booking that day is done.
 function highlightDayTiles(bookings) {
-  // Clear previous status classes first, keep the "past" class intact
   document.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
     cell.classList.remove("day-tile-pending", "day-tile-confirmed", "day-tile-completed");
   });
