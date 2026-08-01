@@ -75,7 +75,7 @@ body {
 #dashboard { 
   display: none; 
   padding: 32px 24px; 
-  max-width: 1200px; 
+  max-width: 1300px; 
   margin: 0 auto; 
 }
 
@@ -107,6 +107,12 @@ body {
   padding: 8px 16px;
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dash-header button:hover {
+  background: var(--primary-aqua);
+  color: #fff;
 }
 
 .signed-in-as {
@@ -114,32 +120,47 @@ body {
   color: #667;
 }
 
+/* --- TABLE: redesigned to fit without horizontal scroll --- */
 .table-wrap {
   background: #fff;
   border-radius: 12px;
-  overflow-x: auto;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 32px;
+  overflow: hidden; /* no scrollbar — content is sized to fit instead */
 }
 
 table { 
   width: 100%; 
   border-collapse: collapse; 
-  font-size: 0.9rem; 
+  font-size: 0.82rem;
+  table-layout: fixed;
 }
 
 th, td {
-  padding: 14px 16px;
+  padding: 10px 12px;
   text-align: left;
   border-bottom: 1px solid #eee;
-  white-space: nowrap;
+  white-space: normal;       /* allow wrapping instead of forcing overflow */
+  overflow-wrap: break-word;
+  word-break: break-word;
+  vertical-align: middle;
 }
+
+/* Proportional column widths, summing to 100% */
+th:nth-child(1), td:nth-child(1) { width: 13%; } /* Full Name */
+th:nth-child(2), td:nth-child(2) { width: 15%; } /* Email */
+th:nth-child(3), td:nth-child(3) { width: 10%; } /* Phone */
+th:nth-child(4), td:nth-child(4) { width: 12%; } /* Service */
+th:nth-child(5), td:nth-child(5) { width: 15%; } /* Location */
+th:nth-child(6), td:nth-child(6) { width: 10%; } /* Schedule Date */
+th:nth-child(7), td:nth-child(7) { width: 15%; } /* Status */
+th:nth-child(8), td:nth-child(8) { width: 10%; } /* Booked On */
 
 th {
   background: var(--light-aqua);
   color: var(--dark-aqua);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
@@ -148,12 +169,24 @@ tr:hover td {
   background: #fafdfd; 
 }
 
+/* Completed bookings: sorted to the bottom (via JS) and highlighted green */
+tr.row-completed td {
+  background: rgba(47, 158, 92, 0.08);
+}
+tr.row-completed:hover td {
+  background: rgba(47, 158, 92, 0.14);
+}
+tr.row-completed td:first-child {
+  border-left: 3px solid var(--success-green);
+}
+
 select.status-select {
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   cursor: pointer;
+  max-width: 100%;
 }
 
 .loading, .empty-state {
@@ -163,38 +196,50 @@ select.status-select {
 }
 
 .save-indicator {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--success-green);
-  margin-left: 8px;
+  margin-left: 6px;
   opacity: 0;
   transition: opacity 0.3s;
+  display: block;
 }
 
 .save-indicator.show { 
   opacity: 1; 
 }
 
-/* Calendar Section Styling */
+/* --- CALENDAR: modernized, compact, full-tile status coloring --- */
 .calendar-card {
   background: #fff;
   border-radius: 12px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 32px;
 }
 
 .calendar-card h2 {
   color: var(--dark-aqua);
-  font-size: 1.25rem;
-  margin-bottom: 20px;
+  font-size: 1.15rem;
+  margin-bottom: 14px;
 }
 
 #calendar {
   max-width: 100%;
 }
 
+.fc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+}
+
+.fc .fc-toolbar {
+  margin-bottom: 10px !important;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .fc .fc-toolbar-title {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--dark-aqua);
   font-weight: 700;
 }
@@ -203,6 +248,10 @@ select.status-select {
   background-color: var(--dark-aqua);
   border-color: var(--dark-aqua);
   color: #fff;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  text-transform: capitalize;
+  box-shadow: none !important;
 }
 
 .fc .fc-button-primary:hover {
@@ -215,14 +264,81 @@ select.status-select {
   border-color: #ccc;
 }
 
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+  color: var(--dark-aqua);
+}
+
+/* Compact grid so a full month fits on screen without scrolling */
+.fc .fc-daygrid-day-frame {
+  min-height: 68px;
+  padding: 2px;
+}
+
+.fc .fc-col-header-cell {
+  background: var(--light-aqua);
+  color: var(--dark-aqua);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 6px 0;
+}
+
+.fc .fc-daygrid-day-number {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  padding: 4px 6px;
+}
+
 .fc-event {
   cursor: pointer;
   border-radius: 4px;
-  padding: 2px 4px;
-  font-size: 0.8rem;
+  padding: 1px 4px;
+  font-size: 0.68rem;
+  border: none !important;
+  margin-bottom: 1px;
 }
 
-/* Modern Detail Modal Styles */
+/* Whole-tile highlight classes, applied via JS based on that day's dominant status */
+.fc-daygrid-day.day-tile-pending {
+  background-color: rgba(63, 128, 131, 0.10) !important;
+}
+
+.fc-daygrid-day.day-tile-confirmed {
+  background-color: rgba(47, 158, 92, 0.16) !important;
+}
+
+.fc-daygrid-day.day-tile-completed {
+  background-color: rgba(136, 136, 136, 0.12) !important;
+}
+
+/* Past dates: muted/darker, takes priority visually via border treatment */
+.fc-daygrid-day.day-tile-past {
+  background-color: #ececec !important;
+}
+
+.fc-daygrid-day.day-tile-past .fc-daygrid-day-number {
+  color: #a0a0a0;
+}
+
+/* If a past day also has a status color, blend a subtle border to keep both cues visible */
+.fc-daygrid-day.day-tile-past.day-tile-confirmed {
+  background-color: rgba(47, 158, 92, 0.10) !important;
+  border: 1px solid rgba(47, 158, 92, 0.35) !important;
+}
+
+.fc-daygrid-day.day-tile-past.day-tile-pending {
+  background-color: rgba(63, 128, 131, 0.07) !important;
+  border: 1px solid rgba(63, 128, 131, 0.3) !important;
+}
+
+.fc-day-today {
+  background-color: rgba(255, 189, 0, 0.14) !important;
+}
+
+/* --- Modern Detail Modal Styles (unchanged) --- */
 .modal-overlay {
   position: fixed;
   top: 0;

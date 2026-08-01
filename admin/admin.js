@@ -224,6 +224,15 @@ async function loadBookings(isLoginAttempt = false) {
   }
 }
 
+// Keeps everything in its existing relative order, but moves COMPLETED
+// bookings to the bottom of the list — so finishing a job clears it out
+// of the "active" view without losing the record.
+function sortWithCompletedLast(bookings) {
+  const active = bookings.filter((b) => b.status !== "COMPLETED");
+  const completed = bookings.filter((b) => b.status === "COMPLETED");
+  return [...active, ...completed];
+}
+
 function renderBookings(bookings) {
   loadingState.style.display = "none";
 
@@ -232,11 +241,16 @@ function renderBookings(bookings) {
     return;
   }
 
+  const sorted = sortWithCompletedLast(bookings);
+
   bookingsTable.style.display = "table";
   bookingsBody.innerHTML = "";
 
-  bookings.forEach((booking) => {
+  sorted.forEach((booking) => {
     const row = document.createElement("tr");
+    if (booking.status === "COMPLETED") {
+      row.classList.add("row-completed");
+    }
 
     const scheduleDate = new Date(booking.bookingDate).toLocaleDateString();
     const bookedOn = new Date(booking.createdAt).toLocaleDateString();
@@ -289,17 +303,19 @@ async function updateStatus(select) {
     const data = await res.json();
     if (!data.success) throw new Error(data.error || "Update failed.");
 
-    const indicator = document.getElementById(`save-${id}`);
-    if (indicator) {
-      indicator.classList.add("show");
-      setTimeout(() => indicator.classList.remove("show"), 1500);
-    }
-
-    // Update local memory & calendar view in real time
+    // Update local memory, then re-render both the table (so completed rows
+    // sort to the bottom and get highlighted) and the calendar view.
     const target = rawBookingsData.find((b) => b.id === id);
     if (target) {
       target.status = status;
+      renderBookings(rawBookingsData);
       updateCalendarEvents(rawBookingsData);
+
+      const indicator = document.getElementById(`save-${id}`);
+      if (indicator) {
+        indicator.classList.add("show");
+        setTimeout(() => indicator.classList.remove("show"), 1500);
+      }
     }
   } catch (err) {
     console.error("Status update failed:", err);
@@ -318,7 +334,17 @@ function initCalendar() {
       center: "title",
       right: "dayGridMonth,timeGridWeek"
     },
+    height: "auto",
+    dayMaxEvents: 2, // keeps each day cell compact; overflow shows a "+N more" link
     events: [],
+    dayCellDidMount: function (arg) {
+      // Mark past dates so they render muted/darker, independent of booking status
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (arg.date < today) {
+        arg.el.classList.add("day-tile-past");
+      }
+    },
     eventClick: function(info) {
       const props = info.event.extendedProps;
       const formattedDate = new Date(info.event.startStr).toLocaleDateString(undefined, {
@@ -344,33 +370,66 @@ function initCalendar() {
 function updateCalendarEvents(bookings) {
   if (!calendarInstance) return;
 
-  const events = bookings
-    .filter((b) => b.status !== "CANCELLED")
-    .map((b) => {
-      let color = "#3f8083"; // Dark Aqua (PENDING)
-      if (b.status === "CONFIRMED") color = "#2f9e5c"; // Green
-      if (b.status === "COMPLETED") color = "#888888"; // Gray
+  const visibleBookings = bookings.filter((b) => b.status !== "CANCELLED");
 
-      const dateStr = new Date(b.bookingDate).toISOString().split("T")[0];
+  const events = visibleBookings.map((b) => {
+    let color = "#3f8083"; // Dark Aqua (PENDING)
+    if (b.status === "CONFIRMED") color = "#2f9e5c"; // Green
+    if (b.status === "COMPLETED") color = "#888888"; // Gray
 
-      return {
-        id: b.id,
-        title: `${b.fullName || 'Client'} (${b.serviceType})`,
-        start: dateStr,
-        backgroundColor: color,
-        borderColor: color,
-        extendedProps: {
-          clientName: b.fullName || "Client",
-          service: b.serviceType,
-          location: b.location || "N/A",
-          status: b.status,
-          phone: b.phone
-        }
-      };
-    });
+    const dateStr = new Date(b.bookingDate).toISOString().split("T")[0];
+
+    return {
+      id: b.id,
+      title: `${b.fullName || 'Client'} (${b.serviceType})`,
+      start: dateStr,
+      backgroundColor: color,
+      borderColor: color,
+      extendedProps: {
+        clientName: b.fullName || "Client",
+        service: b.serviceType,
+        location: b.location || "N/A",
+        status: b.status,
+        phone: b.phone,
+        dateStr,
+      }
+    };
+  });
 
   calendarInstance.removeAllEvents();
   calendarInstance.addEventSource(events);
+
+  // Whole-tile coloring happens after events are in the DOM
+  requestAnimationFrame(() => highlightDayTiles(visibleBookings));
+}
+
+// Colors the entire day cell (not just the event chip) based on that day's
+// dominant status: CONFIRMED takes priority (green), then PENDING (aqua),
+// then COMPLETED (gray) if every booking that day is done.
+function highlightDayTiles(bookings) {
+  // Clear previous status classes first, keep the "past" class intact
+  document.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
+    cell.classList.remove("day-tile-pending", "day-tile-confirmed", "day-tile-completed");
+  });
+
+  const byDate = {};
+  bookings.forEach((b) => {
+    const dateStr = new Date(b.bookingDate).toISOString().split("T")[0];
+    if (!byDate[dateStr]) byDate[dateStr] = [];
+    byDate[dateStr].push(b.status);
+  });
+
+  Object.entries(byDate).forEach(([dateStr, statuses]) => {
+    let cssClass = "day-tile-pending";
+    if (statuses.includes("CONFIRMED")) {
+      cssClass = "day-tile-confirmed";
+    } else if (statuses.every((s) => s === "COMPLETED")) {
+      cssClass = "day-tile-completed";
+    }
+
+    const cell = document.querySelector(`.fc-daygrid-day[data-date="${dateStr}"]`);
+    if (cell) cell.classList.add(cssClass);
+  });
 }
 
 function escapeHtml(str) {
