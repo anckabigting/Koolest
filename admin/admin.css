@@ -117,12 +117,12 @@ body {
 
 .signed-in-as {
   font-size: 0.8rem;
-  color: #667;
+  color: #ffff;
 }
 
 /* --- TABLE: redesigned to fit without horizontal scroll --- */
 .table-wrap {
-  background: #fff;
+  background: var(--accent-yellow);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 32px;
