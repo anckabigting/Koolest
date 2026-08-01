@@ -18,7 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 1. Set dynamic booking date limits (Earliest: Tomorrow, Latest: +60 Days)
+  // 1. Initialize Typed.js Animation
+  if (document.getElementById("typed-text") && typeof Typed !== "undefined") {
+    new Typed("#typed-text", {
+      strings: [
+        "Air Conditioner.",
+        "Washing Machine.",
+        "Home Appliances."
+      ],
+      typeSpeed: 70,
+      backSpeed: 40,
+      backDelay: 1800,
+      loop: true,
+      showCursor: true,
+      cursorChar: "|"
+    });
+  }
+
+  // 2. Set dynamic booking date limits (Earliest: Tomorrow, Latest: +60 Days)
   const dateInput = document.getElementById("bookingDate");
   if (dateInput) {
     const today = new Date();
@@ -32,10 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dateInput.max = maxDate.toISOString().split("T")[0];
   }
 
-  // 2. Initialize particle effects
+  // 3. Initialize particle effects
   initBreezeFloaterParticles();
 
-  // 3. Repeatable Scroll Reveal Animation
+  // 4. Repeatable Scroll Reveal Animation
   const revealElements = document.querySelectorAll(".reveal");
   const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -54,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   revealElements.forEach((element) => revealObserver.observe(element));
 
-  // 4. Input constraints & formatters
+  // 5. Input constraints & formatters
   const phoneInput = document.getElementById("phone");
   if (phoneInput) {
     phoneInput.addEventListener("input", () => {
@@ -73,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. Booking Form Submission
+  // 6. Booking Form Submission
   const bookingForm = document.getElementById("bookingForm");
   const fieldInputMap = {
     fullName: () => document.getElementById("fullName"),
@@ -176,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (successMsg) successMsg.style.display = "block";
   }
 
-  // 6. Feedback Form Submission
+  // 7. Feedback Form Submission
   const feedbackForm = document.getElementById("feedbackForm");
   const feedbackFieldInputMap = {
     name: () => document.getElementById("clientName"),
@@ -291,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (successMsg) successMsg.style.display = "block";
   }
 
-  // 7. Issue Form
+  // 8. Issue Form
   const issueForm = document.getElementById("issueForm");
   if (issueForm) {
     issueForm.addEventListener("submit", (e) => {
@@ -302,14 +319,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 8. Back to Top Button
+  // 9. Back to Top Button
   const backToTopBtn = document.getElementById("backToTopBtn");
   if (backToTopBtn) {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 300) {
-        backToTopBtn.classList.add("show");
+        backToTopBtn.classList.remove("hidden");
+        backToTopBtn.classList.add("flex");
       } else {
-        backToTopBtn.classList.remove("show");
+        backToTopBtn.classList.add("hidden");
+        backToTopBtn.classList.remove("flex");
       }
     });
 
@@ -318,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 9. Initialize Slideshow safely
+  // 10. Initialize Slideshow safely
   initSlideshow();
 });
 
