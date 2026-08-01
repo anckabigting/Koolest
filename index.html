@@ -6,7 +6,7 @@
     <title>Koolest | Aircon Cleaning & Services</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../public/assets/koolest_logo.png">
+    <link rel="icon" type="image/png" href="assets/koolest_logo.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,59 +19,14 @@
     <!-- Typed.js for Typewriter Animation -->
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandDark: '#0d413f',
-                        brandPrimary: '#145c58',
-                        brandLight: '#e6f7f6',
-                        brandAccent: '#f4c414',
-                        brandAccentHover: '#dcae0b',
-                    },
-                    fontFamily: {
-                        heading: ['Righteous', 'cursive'],
-                        body: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(12px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        },
-                        breezeParticle: {
-                            '0%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
-                            '20%': { opacity: '0.4' },
-                            '80%': { opacity: '0.4' },
-                            '100%': { transform: 'translateY(-100px) translateX(20px)', opacity: '0' },
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'float': 'float 4s ease-in-out infinite',
-                        'breeze': 'breezeParticle 6s ease-in-out infinite',
-                        'marquee': 'marquee 25s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
-    
+    <!-- Compiled Tailwind CSS Output -->
+    <link rel="stylesheet" href="/output.css">
+
     <script src="script.js" defer></script>
 </head>
 <body class="bg-slate-50 font-body text-slate-800 antialiased selection:bg-brandAccent selection:text-brandDark">
 
-    <!-- Target container for JavaScript particles or legacy injection -->
+    <!-- Target container for JavaScript particles -->
     <div id="breeze-container" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
     <iframe name="hidden_iframe" id="hidden_iframe" class="hidden"></iframe>
 
@@ -80,7 +35,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <a href="#" class="flex items-center gap-3 transition-transform hover:scale-105">
-                <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
+                <img src="assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
                 <span class="font-heading text-2xl text-white tracking-wide">Koolest</span>
             </a>
 
@@ -98,7 +53,7 @@
                     <li><a href="#contact-us" class="hover:text-brandAccent transition-colors">Contact Us</a></li>
                     <li><a href="#gallery" class="hover:text-brandAccent transition-colors">Gallery</a></li>
                     <li>
-                        <a href="../public/report-issue.html" class="text-rose-400 hover:text-rose-300 font-bold transition-colors">
+                        <a href="report-issue.html" class="text-rose-400 hover:text-rose-300 font-bold transition-colors">
                             Report an Issue
                         </a>
                     </li>
@@ -188,7 +143,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning1.jpg" alt="Installation" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning1.jpg" alt="Installation" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -200,7 +155,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning2.jpg" alt="Regular Cleaning" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning2.jpg" alt="Regular Cleaning" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -212,7 +167,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning3.jpg" alt="Full Down Cleaning" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning3.jpg" alt="Full Down Cleaning" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -224,7 +179,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning1.jpg" alt="Dismantling" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning1.jpg" alt="Dismantling" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -236,7 +191,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning2.jpg" alt="Relocation" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning2.jpg" alt="Relocation" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -248,7 +203,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning3.jpg" alt="Troubleshooting" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning3.jpg" alt="Troubleshooting" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -260,7 +215,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning1.jpg" alt="Repair" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning1.jpg" alt="Repair" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -272,7 +227,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning2.jpg" alt="Charging Refrigerant" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning2.jpg" alt="Charging Refrigerant" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -284,7 +239,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning3.jpg" alt="Repiping & Reinsulation" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning3.jpg" alt="Repiping & Reinsulation" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
@@ -296,7 +251,7 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
-                    <img src="../src/assets/cleaning1.jpg" alt="Washing Machine Service" class="w-full h-48 object-cover bg-slate-100">
+                    <img src="assets/cleaning1.jpg" alt="Washing Machine Service" class="w-full h-48 object-cover bg-slate-100">
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div class="space-y-2">
                             <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Appliance</span>
@@ -326,18 +281,18 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label for="fullName" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Full Name</label>
-                                <input type="text" name="fullName" id="fullName" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="Jane Doe" required>
+                                <input type="text" name="fullName" id="fullName" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="Jane Doe" required autocomplete="name">
                             </div>
                             <div class="space-y-2">
                                 <label for="email" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Email Address</label>
-                                <input type="email" name="email" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="jane@example.com" required>
+                                <input type="email" name="email" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="jane@example.com" required autocomplete="email">
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label for="phone" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Contact Number</label>
-                                <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="09171234567" pattern="[0-9]{11}" minlength="11" maxlength="11" inputmode="numeric" title="Please enter exactly 11 digits (e.g. 09171234567)" required>
+                                <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="09171234567" pattern="[0-9]{11}" minlength="11" maxlength="11" inputmode="numeric" title="Please enter exactly 11 digits (e.g. 09171234567)" required autocomplete="tel">
                             </div>
 
                             <div class="space-y-2">
@@ -369,7 +324,7 @@
                             </div>
                             <div class="space-y-2">
                                 <label for="location" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Service Location</label>
-                                <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" pattern="^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$" title="Please capitalize each word (e.g., Dasmariñas, Cavite)" required>
+                                <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" required>
                             </div>
                         </div>
             
@@ -443,8 +398,6 @@
                     </div>
 
                     <!-- DUPLICATED SET FOR SEAMLESS LOOP -->
-
-                    <!-- Card 1 Duplicate -->
                     <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
                         <div class="space-y-3">
                             <div class="text-brandAccent text-lg">★★★★★</div>
@@ -457,7 +410,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 Duplicate -->
                     <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
                         <div class="space-y-3">
                             <div class="text-brandAccent text-lg">★★★★★</div>
@@ -470,7 +422,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 Duplicate -->
                     <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
                         <div class="space-y-3">
                             <div class="text-brandAccent text-lg">★★★★★</div>
@@ -554,17 +505,17 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                    <img src="assets/images/team-1.jpg" alt="On-site Maintenance" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <img src="assets/team-1.jpg" alt="On-site Maintenance" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
                     <div class="p-4 text-center font-bold text-[#0d413f] text-sm">On-site Maintenance</div>
                 </div>
 
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                    <img src="assets/images/team-2.jpg" alt="Quality Inspection" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <img src="assets/team-2.jpg" alt="Quality Inspection" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
                     <div class="p-4 text-center font-bold text-[#0d413f] text-sm">Quality Inspection</div>
                 </div>
 
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                    <img src="assets/images/team-3.jpg" alt="Installation Service" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <img src="assets/team-3.jpg" alt="Installation Service" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
                     <div class="p-4 text-center font-bold text-[#0d413f] text-sm">Installation Service</div>
                 </div>
             </div>
@@ -605,7 +556,7 @@
         <div class="max-w-7xl mx-auto px-4 space-y-2">
             <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
             <div>
-                <a href="../public/report-issue.html" class="underline hover:text-brandAccent transition-colors">Report a Problem</a>
+                <a href="report-issue.html" class="underline hover:text-brandAccent transition-colors">Report a Problem</a>
             </div>
         </div>
     </footer>
@@ -625,9 +576,9 @@
                         'Air Conditioners.',
                         'Washing Machines.'
                     ],
-                    typeSpeed: 50,      // Slightly faster typing prevents micro-stutter
-                    backSpeed: 30,      // Smooth deletion speed
-                    backDelay: 1800,    // Pause duration before erasing
+                    typeSpeed: 50,
+                    backSpeed: 30,
+                    backDelay: 1800,
                     loop: true,
                     showCursor: true,
                     cursorChar: '|'
