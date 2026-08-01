@@ -16,7 +16,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Tailwind CSS Output (relative to public folder) -->
+    <!-- Tailwind CSS Output -->
     <link rel="stylesheet" href="output.css">
 </head>
 <body class="bg-slate-50 font-body text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-[#38bdf8] selection:text-[#082b2a]">
@@ -24,13 +24,11 @@
     <!-- NAVBAR -->
     <header class="sticky top-0 z-50 bg-[#0d413f] border-b border-white/10 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
             <a href="../index.html" class="flex items-center gap-3 transition-transform hover:scale-105">
                 <img src="assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
                 <span class="font-heading text-2xl text-white tracking-wide">Koolest</span>
             </a>
 
-            <!-- Back to Home Link -->
             <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-[#38bdf8] hover:text-white transition-colors">
                 <i class="fa-solid fa-arrow-left"></i> Back to Main Site
             </a>
@@ -41,10 +39,8 @@
     <main class="py-12 sm:py-20 flex-grow">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Card Container -->
             <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-xl space-y-8">
                 
-                <!-- Header Text -->
                 <div class="space-y-3 text-center sm:text-left">
                     <div class="inline-flex items-center gap-2 bg-rose-50 text-rose-600 border border-rose-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                         <i class="fa-solid fa-bug"></i> Bug & Feedback Portal
@@ -55,8 +51,11 @@
                     </p>
                 </div>
 
-                <!-- Form -->
-                <form id="reportForm" class="space-y-6">
+                <!-- Error / Feedback Banner -->
+                <div id="issueMessageBanner" class="hidden p-4 rounded-xl text-sm font-semibold border"></div>
+
+                <!-- Form ID updated to match bugReportForm -->
+                <form id="bugReportForm" class="space-y-6">
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <!-- Full Name -->
@@ -72,27 +71,27 @@
                         </div>
                     </div>
 
-                    <!-- Category -->
+                    <!-- Category (ID matched to issueType, options matched to map) -->
                     <div class="space-y-2">
-                        <label for="issueCategory" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Type of Issue</label>
-                        <select id="issueCategory" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm bg-white transition-all">
+                        <label for="issueType" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Type of Issue</label>
+                        <select id="issueType" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm bg-white transition-all">
                             <option value="" disabled selected>Select issue category...</option>
-                            <option value="layout">Layout / Formatting Glitch</option>
-                            <option value="broken-link">Broken Link or Button</option>
-                            <option value="booking-form">Booking Form Error</option>
-                            <option value="slow-loading">Slow Loading / Performance</option>
-                            <option value="other">Other Issue</option>
+                            <option value="broken link or button">Broken Link or Button</option>
+                            <option value="visual/layout glitch">Visual / Layout Glitch</option>
+                            <option value="form submission error">Form Submission Error</option>
+                            <option value="mobile/screen display problem">Mobile / Screen Display Problem</option>
+                            <option value="other website bug">Other Website Bug</option>
                         </select>
                     </div>
 
-                    <!-- Description -->
+                    <!-- Description (ID matched to issueDetails) -->
                     <div class="space-y-2">
-                        <label for="issueDescription" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Describe the Issue</label>
-                        <textarea id="issueDescription" rows="5" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm resize-none transition-all" placeholder="Please describe what happened (e.g. 'The Book Now button didn't respond on mobile')..."></textarea>
+                        <label for="issueDetails" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Describe the Issue</label>
+                        <textarea id="issueDetails" rows="5" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm resize-none transition-all" placeholder="Please describe what happened..."></textarea>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-4 rounded-xl text-sm transition-all shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
+                    <button type="submit" id="submitBtn" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-4 rounded-xl text-sm transition-all shadow-md hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
                         <i class="fa-solid fa-paper-plane"></i> Submit Bug Report
                     </button>
                 </form>
@@ -117,13 +116,7 @@
         <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
     </footer>
 
-    <!-- Minimal script for feedback submission -->
-    <script>
-        document.getElementById('reportForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.classList.add('hidden');
-            document.getElementById('reportSuccess').classList.remove('hidden');
-        });
-    </script>
+    <!-- Linked External Script -->
+    <script src="report-issue.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const bugForm = document.getElementById("bugReportForm");
+  const reportSuccess = document.getElementById("reportSuccess");
   const messageBanner = document.getElementById("issueMessageBanner");
 
   // Helper map from select values to Prisma ENUM keys
@@ -11,15 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     "other website bug": "OTHER_WEBSITE_BUG",
   };
 
-  // Helper function to display message banner
   function showBanner(message, isSuccess = true) {
     if (!messageBanner) return;
 
     messageBanner.textContent = message;
-    messageBanner.className = `form-feedback-banner ${isSuccess ? "success" : "error"}`;
-    messageBanner.style.display = "block";
-
-    // Auto-scroll banner into view smoothly
+    if (isSuccess) {
+      messageBanner.className = "p-4 rounded-xl text-sm font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200";
+    } else {
+      messageBanner.className = "p-4 rounded-xl text-sm font-semibold border bg-rose-50 text-rose-700 border-rose-200";
+    }
+    messageBanner.classList.remove("hidden");
     messageBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -27,8 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bugForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Hide previous message if re-submitting
-      if (messageBanner) messageBanner.style.display = "none";
+      if (messageBanner) messageBanner.classList.add("hidden");
 
       const name = document.getElementById("reporterName")?.value || "";
       const email = document.getElementById("reporterEmail")?.value || "";
@@ -48,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
 
         if (response.ok && result.success) {
-          showBanner("Bug Report Received! Thank you for helping us improve our site.", true);
-          bugForm.reset();
+          bugForm.classList.add("hidden");
+          if (reportSuccess) reportSuccess.classList.remove("hidden");
         } else {
           showBanner(result.error || "Failed to submit bug report. Please try again.", false);
         }
