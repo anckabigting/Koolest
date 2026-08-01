@@ -382,3 +382,42 @@ function initSlideshow() {
   slides[slideIndex - 1].style.display = "block";
   setTimeout(initSlideshow, 3000);
 }
+
+// Privacy Policy (DPA) Modal Logic
+const privacyModal = document.getElementById('privacyModal');
+const openPrivacyBtn = document.getElementById('openPrivacyModal');
+const closePrivacyBtn = document.getElementById('closePrivacyModal');
+const acceptPrivacyBtn = document.getElementById('acceptPrivacyBtn');
+
+// Function to open modal
+const openModal = () => {
+    privacyModal.classList.remove('hidden');
+    privacyModal.classList.add('flex');
+    document.body.classList.add('overflow-hidden'); // Prevents background scrolling
+};
+
+// Function to close modal
+const closeModal = () => {
+    privacyModal.classList.add('hidden');
+    privacyModal.classList.remove('flex');
+    document.body.classList.remove('overflow-hidden');
+};
+
+// Event Listeners
+openPrivacyBtn?.addEventListener('click', openModal);
+closePrivacyBtn?.addEventListener('click', closeModal);
+acceptPrivacyBtn?.addEventListener('click', closeModal);
+
+// Close modal when clicking on the dark backdrop
+privacyModal?.addEventListener('click', (e) => {
+    if (e.target === privacyModal) {
+        closeModal();
+    }
+});
+
+// Close modal on 'Escape' key press
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !privacyModal.classList.contains('hidden')) {
+        closeModal();
+    }
+});

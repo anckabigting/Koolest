@@ -16,7 +16,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Typed.js for Typewriter Animation (with defer so it loads in sequence) -->
+    <!-- Typed.js for Typewriter Animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
 
     <!-- Compiled Tailwind CSS Output -->
@@ -256,7 +256,7 @@
                             <h3 class="font-heading text-xl text-[#0d413f]">Washing Machine</h3>
                             <p class="text-slate-600 text-sm leading-relaxed">Specialized maintenance, drum cleaning, motor repair, and setup for automatic washing machines.</p>
                         </div>
-                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-center font-bold py-2.5 rounded-xl text-sm transition-colors">Book Now</a>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-center text-white font-bold py-2.5 rounded-xl text-sm transition-colors">Book Now</a>
                     </div>
                 </div>
 
@@ -324,6 +324,17 @@
                                 <label for="location" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Service Location</label>
                                 <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" required>
                             </div>
+                        </div>
+
+                        <!-- Privacy Consent Checkbox -->
+                        <div class="flex items-center justify-center gap-2.5 my-4 text-xs text-slate-600">
+                            <input type="checkbox" id="privacyConsent" required class="mt-0.5 w-4 h-4 text-[#38bdf8] rounded border-slate-300 focus:ring-[#38bdf8] cursor-pointer" />
+                            <label for="privacyConsent" class="cursor-pointer select-none">
+                                I agree to the processing of my details for scheduling services in accordance with the 
+                                <button type="button" id="openPrivacyModal" class="text-[#0d413f] underline font-bold hover:text-[#145c58] focus:outline-none">
+                                    Privacy Policy
+                                </button>.
+                            </label>
                         </div>
             
                         <button type="submit" class="w-full bg-[#38bdf8] hover:bg-[#0284c7] text-[#082b2a] font-bold py-4 rounded-xl text-base shadow-md transition-all hover:scale-[1.01] active:scale-[0.99]">
@@ -558,6 +569,71 @@
             </div>
         </div>
     </footer>
+
+    <!-- PRIVACY POLICY MODAL OVERLAY -->
+    <div id="privacyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300">
+        <div class="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform transition-all">
+            
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-[#0d413f] text-white">
+                <div class="flex items-center gap-2.5">
+                    <div class="p-2 bg-[#38bdf8]/20 text-[#38bdf8] rounded-lg">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                    <h3 class="text-xl font-heading tracking-wide">Privacy Policy</h3>
+                </div>
+                <button id="closePrivacyModal" type="button" class="p-1.5 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Scrollable Body -->
+            <div class="p-6 overflow-y-auto space-y-5 text-slate-600 text-sm leading-relaxed">
+                <p class="text-xs text-slate-400 font-medium">Effective Date: August 2026</p>
+                
+                <p>Your privacy is important to us. This policy outlines how Koolest AC Services collects, uses, and protects your personal information when scheduling service appointments or submitting feedback.</p>
+
+                <div class="space-y-2">
+                    <h4 class="text-base font-bold text-[#0d413f]">1. Information We Collect</h4>
+                    <p>When booking a service or submitting feedback, we collect limited personal details:</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li><strong class="text-slate-800">Full Name</strong> (for client identification)</li>
+                        <li><strong class="text-slate-800">Contact Details</strong> (Email and Phone number for appointment confirmation and status updates)</li>
+                        <li><strong class="text-slate-800">Service Location</strong> (Address/City for technician dispatching)</li>
+                        <li><strong class="text-slate-800">Feedback & Ratings</strong> (Optional comments submitted by clients)</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-base font-bold text-[#0d413f]">2. How We Use Your Information</h4>
+                    <p>We use the collected details strictly for essential operational purposes:</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li>Scheduling, confirming, and updating your service appointments.</li>
+                        <li>Direct contact regarding technician arrival times or service details.</li>
+                        <li>Improving overall customer service and platform reliability.</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-base font-bold text-[#0d413f]">3. Data Protection & Sharing</h4>
+                    <p><strong class="text-slate-800">We do not sell, rent, or trade your personal information.</strong> Data is only accessed by authorized personnel to carry out requested service calls and is stored securely using cloud infrastructure.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-base font-bold text-[#0d413f]">4. Your Rights</h4>
+                    <p>Under the Philippine Data Privacy Act of 2012, you have the right to request access to, correction of, or removal of your personal records at any time by contacting our support team.</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-center px-6 py-4 border-t border-slate-100 bg-slate-50">
+                <button id="acceptPrivacyBtn" type="button" class="px-6 py-2.5 bg-[#38bdf8] hover:bg-[#0284c7] text-[#082b2a] font-bold text-sm rounded-xl shadow-sm transition-all focus:ring-2 focus:ring-[#38bdf8] focus:outline-none">
+                    I Understand
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <!-- BACK TO TOP BUTTON -->
     <button id="backToTopBtn" title="Go to top" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-[#38bdf8] text-[#082b2a] rounded-full shadow-lg items-center justify-center font-bold text-lg hover:bg-[#0284c7] transition-all hidden hover:scale-110 active:scale-90">
