@@ -89,7 +89,7 @@ body {
 }
 
 .dash-header h1 { 
-  color: var(--dark-aqua); 
+  color: var(--accent-yellow); 
   font-size: 1.6rem; 
 }
 
@@ -157,7 +157,7 @@ th:nth-child(7), td:nth-child(7) { width: 15%; } /* Status */
 th:nth-child(8), td:nth-child(8) { width: 10%; } /* Booked On */
 
 th {
-  background: var(--light-aqua);
+  background: var(--accent-yellow);
   color: var(--dark-aqua);
   font-weight: 700;
   font-size: 0.72rem;
@@ -165,8 +165,19 @@ th {
   letter-spacing: 0.4px;
 }
 
+/* --- Extra side padding for outer columns --- */
+th:first-child,
+td:first-child {
+  padding-left: 24px !important; /* Increases margin on the left edge */
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 24px !important; /* Increases margin on the right edge */
+}
+
 tr:hover td { 
-  background: #fafdfd; 
+  background: var(--light-aqua); 
 }
 
 /* Completed bookings: sorted to the bottom (via JS) and highlighted green */
