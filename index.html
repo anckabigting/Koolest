@@ -332,7 +332,7 @@
                     </form>
                 </div>
 
-                <!-- Success Banner (UPDATED: Added empty:hidden and confirmed display toggling) -->
+                <!-- Success Banner -->
                 <div id="bookingSuccess" class="hidden empty:hidden bg-[#0d413f] text-white p-8 rounded-2xl text-center space-y-3 font-medium animate-fade-in">
                     <i class="fa-solid fa-circle-check text-[#38bdf8] text-4xl mb-2"></i>
                     <h3 class="text-2xl font-heading text-[#38bdf8]">Booking Request Received!</h3>
@@ -455,21 +455,21 @@
 
                         <div class="space-y-2">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Rating</label>
-                            <div class="star-rating flex flex-row-reverse justify-end gap-2 text-2xl text-slate-300">
-                                <input type="radio" id="star5" name="rating" value="5" class="hidden" />
-                                <label for="star5" class="cursor-pointer hover:text-[#38bdf8] transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                            <div class="star-rating group flex flex-row-reverse justify-end gap-2 text-2xl text-slate-300">
+                                <input type="radio" id="star5" name="rating" value="5" class="peer/5 hidden" />
+                                <label for="star5" class="cursor-pointer transition-all duration-150 hover:scale-125 peer-checked/5:text-[#38bdf8] group-hover:peer-hover/5:text-[#38bdf8] hover:text-[#38bdf8]"><i class="fa-solid fa-star"></i></label>
 
-                                <input type="radio" id="star4" name="rating" value="4" class="hidden" />
-                                <label for="star4" class="cursor-pointer hover:text-[#38bdf8] transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" class="peer/4 hidden" />
+                                <label for="star4" class="cursor-pointer transition-all duration-150 hover:scale-125 peer-checked/4:text-[#38bdf8] peer-checked/5:text-[#38bdf8] group-hover:peer-hover/4:text-[#38bdf8] group-hover:peer-hover/5:text-[#38bdf8] hover:text-[#38bdf8]"><i class="fa-solid fa-star"></i></label>
 
-                                <input type="radio" id="star3" name="rating" value="3" class="hidden" />
-                                <label for="star3" class="cursor-pointer hover:text-[#38bdf8] transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" class="peer/3 hidden" />
+                                <label for="star3" class="cursor-pointer transition-all duration-150 hover:scale-125 peer-checked/3:text-[#38bdf8] peer-checked/4:text-[#38bdf8] peer-checked/5:text-[#38bdf8] group-hover:peer-hover/3:text-[#38bdf8] group-hover:peer-hover/4:text-[#38bdf8] group-hover:peer-hover/5:text-[#38bdf8] hover:text-[#38bdf8]"><i class="fa-solid fa-star"></i></label>
 
-                                <input type="radio" id="star2" name="rating" value="2" class="hidden" />
-                                <label for="star2" class="cursor-pointer hover:text-[#38bdf8] transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" class="peer/2 hidden" />
+                                <label for="star2" class="cursor-pointer transition-all duration-150 hover:scale-125 peer-checked/2:text-[#38bdf8] peer-checked/3:text-[#38bdf8] peer-checked/4:text-[#38bdf8] peer-checked/5:text-[#38bdf8] group-hover:peer-hover/2:text-[#38bdf8] group-hover:peer-hover/3:text-[#38bdf8] group-hover:peer-hover/4:text-[#38bdf8] group-hover:peer-hover/5:text-[#38bdf8] hover:text-[#38bdf8]"><i class="fa-solid fa-star"></i></label>
 
-                                <input type="radio" id="star1" name="rating" value="1" class="hidden" />
-                                <label for="star1" class="cursor-pointer hover:text-[#38bdf8] transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" class="peer/1 hidden" />
+                                <label for="star1" class="cursor-pointer transition-all duration-150 hover:scale-125 peer-checked/1:text-[#38bdf8] peer-checked/2:text-[#38bdf8] peer-checked/3:text-[#38bdf8] peer-checked/4:text-[#38bdf8] peer-checked/5:text-[#38bdf8] group-hover:peer-hover/1:text-[#38bdf8] group-hover:peer-hover/2:text-[#38bdf8] group-hover:peer-hover/3:text-[#38bdf8] group-hover:peer-hover/4:text-[#38bdf8] group-hover:peer-hover/5:text-[#38bdf8] hover:text-[#38bdf8]"><i class="fa-solid fa-star"></i></label>
                             </div>
                             <span id="ratingError" class="hidden text-rose-500 text-xs"></span>
                         </div>
