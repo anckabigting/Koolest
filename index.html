@@ -1,503 +1,639 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koolest | Aircon Cleaning & Services</title>
 
-    <!-- FAVICON (Tab Icon) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="../public/assets/koolest_logo.png">
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Typed.js for Typewriter Animation -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#0d413f',
+                        brandPrimary: '#145c58',
+                        brandLight: '#e6f7f6',
+                        brandAccent: '#f4c414',
+                        brandAccentHover: '#dcae0b',
+                    },
+                    fontFamily: {
+                        heading: ['Righteous', 'cursive'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(12px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        breezeParticle: {
+                            '0%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
+                            '20%': { opacity: '0.4' },
+                            '80%': { opacity: '0.4' },
+                            '100%': { transform: 'translateY(-100px) translateX(20px)', opacity: '0' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'float': 'float 4s ease-in-out infinite',
+                        'breeze': 'breezeParticle 6s ease-in-out infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
     
-    <!--*STARS FOR RATING -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
-    
 </head>
-<body>
-<!-- Target container for JavaScript -->
-    <div id="breeze-container"></div>
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<body class="bg-slate-50 font-body text-slate-800 antialiased selection:bg-brandAccent selection:text-brandDark">
 
+    <!-- Target container for JavaScript particles or legacy injection -->
+    <div id="breeze-container" class="absolute inset-0 pointer-events-none overflow-hidden z-10"></div>
+    <iframe name="hidden_iframe" id="hidden_iframe" class="hidden"></iframe>
 
-<header class="navbar glass-nav">
-        <div class="brand-container">
-            <div class="container nav-container"></div>
-            <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="brand-logo">
-            <span class="brand-title">Koolest</span>
-        </div>
-
-        <!-- Hamburger Icon Button -->
-        <button class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    <!-- Navigation Links -->
-        <ul class="nav-links" id="nav-menu">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="#rate-us">Rate Us</a></li>
-                <li><a href="#contact-us">Contact Us</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="../public/report-issue.html" style="color: var(--error-red); font-weight: 700;">Report an Issue</a></li>
-                <li><a href="#booking" class="btn btn-yellow" style="padding: 10px 20px;">Book Now</a></li>
-            </ul>
-</header>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-<!-- BUBBLES CONTAINER -->
-        <div class="bubbles-container">
-            <span class="bubble" style="--x: 10%; --size: 35px; --delay: 0s; --duration: 8s;"></span>
-            <span class="bubble" style="--x: 25%; --size: 20px; --delay: 2s; --duration: 6s;"></span>
-            <span class="bubble" style="--x: 40%; --size: 50px; --delay: 4s; --duration: 11s;"></span>
-            <span class="bubble" style="--x: 55%; --size: 28px; --delay: 1s; --duration: 7s;"></span>
-            <span class="bubble" style="--x: 70%; --size: 42px; --delay: 3s; --duration: 9s;"></span>
-            <span class="bubble" style="--x: 85%; --size: 22px; --delay: 5s; --duration: 6.5s;"></span>
-            <span class="bubble" style="--x: 92%; --size: 38px; --delay: 0.5s; --duration: 10s;"></span>
-    </div>
-
-        <div class="container hero-grid">
-            <div class="hero-text">
-                <h1><span style="--i:2;" data-text="Expert Care For Your">Expert Care For Your</span> 
-                    <span style="--i:1" data-text="Cooling & Appliances.">Cooling & Appliances.</span></h1>
-                <p class="reveal">Reliable, fast, and high-quality air conditioning and washing machine services tailored for your home and business.</p>
-                <a href="#booking" class="reveal btn btn-yellow">Book Now</a>
-                <div class="reveal hero-badges">
-                    <div class="reveal badge">Fast Response</div>
-                    <div class="reveal badge">100% Mess-Free Guarantee</div>
-                </div>
-            </div>
-    </section>
-
-    <!-- Services Section Updated with Official List -->
-    <section id="services" class="services-section">
-        <div class="container">
-            <h2 class="reveal section-title">What We Offer</h2>
-            <p class="reveal section-subtitle">Professional care, transparent pricing, and zero shortcuts for your cooling and home appliance systems.</p>
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 bg-[#0d413f]/95 backdrop-blur-md border-b border-white/10 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <div class="reveal efficiency-banner">
-                <div class="reveal efficiency-text">
-                    <h3 class="reveal">Is your aircon running a fever?</h3>
-                    <p class="reveal">Clogged cooling coils force your compressor to run double-time. Routine maintenance directly drops electricity usage.</p>
+            <a href="#" class="flex items-center gap-3 transition-transform hover:scale-105">
+                <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="h-12 w-auto object-contain">
+                <span class="font-heading text-2xl text-white tracking-wide">Koolest</span>
+            </a>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger lg:hidden text-white focus:outline-none p-2" id="hamburger-btn" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav>
+                <ul class="nav-links hidden lg:flex items-center gap-8 font-semibold text-sm text-slate-200" id="nav-menu">
+                    <li><a href="#services" class="hover:text-brandAccent transition-colors">Services</a></li>
+                    <li><a href="#testimonials" class="hover:text-brandAccent transition-colors">Reviews</a></li>
+                    <li><a href="#rate-us" class="hover:text-brandAccent transition-colors">Rate Us</a></li>
+                    <li><a href="#contact-us" class="hover:text-brandAccent transition-colors">Contact Us</a></li>
+                    <li><a href="#gallery" class="hover:text-brandAccent transition-colors">Gallery</a></li>
+                    <li>
+                        <a href="../public/report-issue.html" class="text-rose-400 hover:text-rose-300 font-bold transition-colors">
+                            Report an Issue
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#booking" class="bg-brandAccent text-brandDark hover:bg-brandAccentHover font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md hover:scale-105">
+                            Book Now
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-gradient-to-b from-[#0d413f] to-[#135350] text-white py-20 lg:py-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20">
+            
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left animate-fade-in">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight min-h-[2.4em] sm:min-h-[2em]">
+                    Expert Care For Your <br class="hidden sm:inline">
+                    <span class="inline-block text-brandAccent font-heading">
+                        <span id="typed-text"></span>
+                    </span>
+                </h1>
+                <p class="text-slate-200 text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                    Reliable, fast, and high-quality air conditioning and washing machine services tailored for your home and business.
+                </p>
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#booking" class="w-full sm:w-auto inline-flex items-center justify-center bg-brandAccent text-brandDark hover:bg-brandAccentHover font-bold text-lg px-8 py-4 rounded-xl shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        Book Now
+                    </a>
                 </div>
-                <a href="#booking" class="reveal btn btn-yellow">Save on Bills</a>
+                <div class="pt-6 flex flex-wrap justify-center lg:justify-start gap-3">
+                    <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full text-xs font-semibold tracking-wide text-brandLight transition-transform hover:scale-105">
+                        <i class="fa-solid fa-check text-brandAccent"></i> Fast Response
+                    </span>
+                    <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full text-xs font-semibold tracking-wide text-brandLight transition-transform hover:scale-105">
+                        <i class="fa-solid fa-check text-brandAccent"></i> 100% Mess-Free Guarantee
+                    </span>
+                </div>
             </div>
 
-            <div class="services-grid">
-      <!-- Card 1 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning1.jpg" alt="Installation" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Installation</h3>
-          <p>Professional installation of window, split-type, or package air conditioning systems according to factory standards.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning2.jpg" alt="Regular Cleaning" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Regular Cleaning</h3>
-          <p>Routine filter washing, coil inspection, and general cleaning to maintain fresh air flow and energy efficiency.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning3.jpg" alt="Full Down Cleaning" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Full Down Cleaning</h3>
-          <p>Complete breakdown and chemical wash of internal components for deeply clogged or heavily soiled units.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning1.jpg" alt="Dismantling" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Dismantling</h3>
-          <p>Safe uninstallation and removal of old or misplaced aircon units without damaging surrounding structures.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning2.jpg" alt="Relocation" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Relocation</h3>
-          <p>Complete unmounting, transfer, and setup of existing units to new locations or rooms seamlessly.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning3.jpg" alt="Troubleshooting" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Troubleshooting</h3>
-          <p>Expert diagnostic checks for unusual noise, water leaks, cooling failures, or electrical irregularities.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 7 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning1.jpg" alt="Repair" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Repair</h3>
-          <p>Targeted component replacement and restoration for failed motors, capacitors, circuit boards, or fans.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 8 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning2.jpg" alt="Charging Refrigerant" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Charging Refrigerant</h3>
-          <p>Freon leak checking, pressure testing, and precision gas refilling to restore optimal cooling power.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 9 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning3.jpg" alt="Repiping & Reinsulation" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Aircon</span>
-          <h3>Repiping & Reinsulation</h3>
-          <p>Replacing worn-out copper tubing insulation and drainage lines to prevent water drops and energy loss.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
-
-      <!-- Card 10 -->
-      <div class="service-card reveal">
-        <img src="../src/assets/cleaning1.jpg" alt="Washing Machine Service" class="service-img" />
-        <div class="reveal service-content">
-          <span class="service-tag">Appliance</span>
-          <h3>Washing Machine Service</h3>
-          <p>Specialized maintenance, drum cleaning, motor repair, and setup for automatic washing machines.</p>
-          <a href="#booking" class="btn btn-yellow btn-large">Book Now</a>
-        </div>
-      </div>
+            <!-- Hero Feature Card -->
+            <div class="lg:col-span-5 bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm text-center lg:text-left space-y-4 shadow-2xl animate-float">
+                <div class="w-12 h-12 bg-brandAccent/20 text-brandAccent rounded-2xl flex items-center justify-center mx-auto lg:mx-0 text-xl font-bold">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Save on Electricity Bills</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Clogged cooling coils force your compressor to run double-time. Routine maintenance directly restores cooling performance and lowers power consumption.
+                </p>
+                <div class="pt-2">
+                    <a href="#booking" class="text-brandAccent hover:underline font-bold text-sm inline-flex items-center gap-2 group">
+                        Schedule Maintenance <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+            </div>
 
         </div>
     </section>
 
-    <!-- Booking Section -->
-<section id="booking" class="reveal booking-section">
-    <div class="reveal container">
-        <div class="booking-card">
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             
-            <!-- Everything inside this div will be hidden on submit -->
-            <div id="bookingFormWrapper">
-                <h2 class="section-title" style="color: var(--dark-aqua);">Schedule Your Appointment</h2>
-                <p class="section-subtitle">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h2 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">What We Offer</h2>
+                <p class="text-slate-600 text-base sm:text-lg">
+                    Professional care, transparent pricing, and zero shortcuts for your cooling and home appliance systems.
+                </p>
+            </div>
+
+            <!-- Efficiency Banner -->
+            <div class="bg-[#0d413f] text-white rounded-2xl p-8 sm:p-10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-[#145c58] transition-all hover:shadow-2xl">
+                <div class="space-y-2 text-center md:text-left">
+                    <h3 class="font-heading text-2xl sm:text-3xl text-brandAccent">Is your aircon running a fever?</h3>
+                    <p class="text-slate-200 text-sm sm:text-base max-w-2xl">
+                        Clogged cooling coils force your compressor to run double-time. Routine maintenance directly drops electricity usage.
+                    </p>
+                </div>
+                <a href="#booking" class="bg-brandAccent text-brandDark hover:bg-brandAccentHover font-bold px-6 py-3.5 rounded-xl whitespace-nowrap transition-all shadow-md shrink-0 hover:scale-105">
+                    Save on Bills
+                </a>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 
-                <form id="bookingForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input 
-                            type="text" 
-                            name="fullName" 
-                            id="fullName" 
-                            class="form-control text-dark-form" 
-                            placeholder="Jane Doe" 
-                            required>
-
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning1.jpg" alt="Installation" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Installation</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Professional installation of window, split-type, or package air conditioning systems according to factory standards.</p>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" id="email" class="form-control text-dark-form" placeholder="jane@example.com" required>
-                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Contact Number</label>
-                            <input 
-                                type="tel" 
-                                name="phone" 
-                                id="phone" 
-                                class="form-control text-dark-form" 
-                                placeholder="09171234567" 
-                                pattern="[0-9]{11}"
-                                minlength="11"
-                                maxlength="11"
-                                inputmode="numeric"
-                                title="Please enter exactly 11 digits (e.g. 09171234567)" 
-                                required
-                            >
-                        </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="service-type">Select Service</label>
-                            <select id="service-type" name="service" class="form-control text-dark-form" required>
-                                <option value="" disabled selected>Choose a service...</option>
-                                
-                                <optgroup label="Air Conditioning Services">
-                                    <option value="installation">Installation</option>
-                                    <option value="regular-cleaning">Regular Cleaning</option>
-                                    <option value="full-down-cleaning">Full Down Cleaning</option>
-                                    <option value="dismantling">Dismantling</option>
-                                    <option value="relocation">Relocation</option>
-                                    <option value="troubleshooting">Troubleshooting</option>
-                                    <option value="repair">Repair</option>
-                                    <option value="charging-refrigerant">Charging Refrigerant</option>
-                                    <option value="repiping-reinsulation">Repiping & Reinsulation</option>
-                                </optgroup>
-
-                                <optgroup label="Appliance Services">
-                                    <option value="washing-machine">Automatic Washing Machine</option>
-                                </optgroup>
-                            </select>        
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning2.jpg" alt="Regular Cleaning" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Regular Cleaning</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Routine filter washing, coil inspection, and general cleaning to maintain fresh air flow and energy efficiency.</p>
                         </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
                     </div>
+                </div>
 
-                    <div class="form-row">
-                      <div class="form-group">
-                          <label for="bookingDate">Preferred Schedule Date</label>
-                          <input type="date" name="bookingDate" id="bookingDate" class="form-control text-dark-form" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="location">Service Location</label>
-                          <input 
-                              type="text" 
-                              id="location" 
-                              name="location" 
-                              placeholder="Imus, Cavite" 
-                              class="form-control text-dark-form"
-                              pattern="^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$"
-                              title="Please capitalize each word (e.g., Dasmariñas, Cavite)"
-                              required
-                          >
-                      </div>
-                  </div>
-        
-                    
-                    <button type="submit" class="btn btn-yellow btn-large">Secure My Schedule Slot</button>
-                </form>
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning3.jpg" alt="Full Down Cleaning" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Full Down Cleaning</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Complete breakdown and chemical wash of internal components for deeply clogged or heavily soiled units.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning1.jpg" alt="Dismantling" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Dismantling</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Safe uninstallation and removal of old or misplaced aircon units without damaging surrounding structures.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning2.jpg" alt="Relocation" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Relocation</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Complete unmounting, transfer, and setup of existing units to new locations or rooms seamlessly.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning3.jpg" alt="Troubleshooting" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Troubleshooting</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Expert diagnostic checks for unusual noise, water leaks, cooling failures, or electrical irregularities.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning1.jpg" alt="Repair" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Repair</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Targeted component replacement and restoration for failed motors, capacitors, circuit boards, or fans.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning2.jpg" alt="Charging Refrigerant" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Charging Refrigerant</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Freon leak checking, pressure testing, and precision gas refilling to restore optimal cooling power.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning3.jpg" alt="Repiping & Reinsulation" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Aircon</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Repiping & Reinsulation</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Replacing worn-out copper tubing insulation and drainage lines to prevent water drops and energy loss.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-brandPrimary/30 flex flex-col">
+                    <img src="../src/assets/cleaning1.jpg" alt="Washing Machine Service" class="w-full h-48 object-cover bg-slate-100">
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="inline-block bg-brandLight text-[#0d413f] font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-md">Appliance</span>
+                            <h3 class="font-heading text-xl text-[#0d413f]">Washing Machine</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">Specialized maintenance, drum cleaning, motor repair, and setup for automatic washing machines.</p>
+                        </div>
+                        <a href="#booking" class="w-full bg-[#0d413f] hover:bg-[#145c58] text-white font-bold py-2.5 rounded-xl text-center text-sm transition-colors">Book Now</a>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <!-- Success banner sits inside booking-card, hidden by default -->
-            <div id="bookingSuccess" class="success-message-booking" style="display: none;">
-                Booking Request Received! We've saved your slot. Our customer concierge will text or call you shortly to confirm.
-            </div>
-    </div>
-</section>
+    </section>
 
-    <section id="testimonials" class="reveal testimonials-section">
-        <div class="container" style="text-align: center; margin-bottom: 40px;">
-        <h2 class="reveal section-title">What Our Clients Say</h2>
-        <p class="reveal section-subtitle">Real experiences from homeowners and businesses across Cavite and Metro Manila.</p>
-    </div>
-    <div class="testimonials-marquee-container">
-        <div class="testimonials-track">
+    <!-- BOOKING SECTION -->
+    <section id="booking" class="py-20 bg-[#0d413f] border-b-8 border-brandAccent">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="booking-card bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100">
+                
+                <div id="bookingFormWrapper" class="space-y-8">
+                    <div class="text-center space-y-2">
+                        <h2 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">Schedule Your Appointment</h2>
+                        <p class="text-slate-600 text-sm sm:text-base">No obligations. Fill out the quick details below and secure your slots directly in our team schedule!</p>
+                    </div>
+                    
+                    <form id="bookingForm" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="fullName" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Full Name</label>
+                                <input type="text" name="fullName" id="fullName" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="email" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Email Address</label>
+                                <input type="email" name="email" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="jane@example.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="phone" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Contact Number</label>
+                                <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" placeholder="09171234567" pattern="[0-9]{11}" minlength="11" maxlength="11" inputmode="numeric" title="Please enter exactly 11 digits (e.g. 09171234567)" required>
+                            </div>
 
-              <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Thanks, Koolest for cleaning my TCL 2.5 hp split type aircon.
-                    Excellent service as always! Super lamig na ng aircon namin.
-                    Until next time, God Bless!"</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Ma'am M.</span>
-                    <span class="client-role">The Villas at Dasmariñas Highlands</span>
-                </div>
-            </div>
+                            <div class="space-y-2">
+                                <label for="service-type" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Select Service</label>
+                                <select id="service-type" name="service" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm bg-white transition-all" required>
+                                    <option value="" disabled selected>Choose a service...</option>
+                                    <optgroup label="Air Conditioning Services">
+                                        <option value="installation">Installation</option>
+                                        <option value="regular-cleaning">Regular Cleaning</option>
+                                        <option value="full-down-cleaning">Full Down Cleaning</option>
+                                        <option value="dismantling">Dismantling</option>
+                                        <option value="relocation">Relocation</option>
+                                        <option value="troubleshooting">Troubleshooting</option>
+                                        <option value="repair">Repair</option>
+                                        <option value="charging-refrigerant">Charging Refrigerant</option>
+                                        <option value="repiping-reinsulation">Repiping & Reinsulation</option>
+                                    </optgroup>
+                                    <optgroup label="Appliance Services">
+                                        <option value="washing-machine">Automatic Washing Machine</option>
+                                    </optgroup>
+                                </select>        
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="bookingDate" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Preferred Schedule Date</label>
+                                <input type="date" name="bookingDate" id="bookingDate" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label for="location" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Service Location</label>
+                                <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" pattern="^([A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)(,\s*[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*(\s+[A-Z\u00C0-\u024F][a-z\u00C0-\u024F]*)*)*$" title="Please capitalize each word (e.g., Dasmariñas, Cavite)" required>
+                            </div>
+                        </div>
             
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"I have been using Koolest team at regular intervals to clean my AC unit, and I am consitently satisifed with their work.
-                    They are always incredibly friendly and take time to do a very detailed and thorough cleaning every single time. On top of the
-                    excellent quality of their work, their service is highly affordable. I highly recommend them to anyone looking for reliable and
-                    top-notch AC maintenance!"</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Sir P.</span>
-                    <span class="client-role">(The Villas at Dasmariñas Highlands)</span>
+                        <button type="submit" class="w-full bg-brandAccent hover:bg-brandAccentHover text-brandDark font-bold py-4 rounded-xl text-base shadow-md transition-all hover:scale-[1.01] active:scale-[0.99]">
+                            Secure My Schedule Slot
+                        </button>
+                    </form>
                 </div>
+
+                <!-- Success Banner -->
+                <div id="bookingSuccess" class="hidden bg-[#0d413f] text-white p-8 rounded-2xl text-center space-y-3 font-medium animate-fade-in">
+                    <i class="fa-solid fa-circle-check text-brandAccent text-4xl mb-2"></i>
+                    <h3 class="text-2xl font-heading text-brandAccent">Booking Request Received!</h3>
+                    <p class="text-slate-200">We've saved your slot. Our customer concierge will text or call you shortly to confirm.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION (INFINITE SCROLLING MARQUEE) -->
+    <section id="testimonials" class="py-20 bg-slate-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">What Our Clients Say</h2>
+                <p class="text-slate-600">Real experiences from homeowners and businesses across Cavite and Metro Manila.</p>
             </div>
 
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Thanks Koolest. Quality service! Sa uulitin."</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Sir J.</span>
-                    <span class="client-role">(Valle Verde)</span>
+            <!-- Infinite Scrolling Wrapper -->
+            <div class="relative w-full overflow-hidden group [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+                <div class="flex w-max gap-8 animate-marquee group-hover:[animation-play-state:paused]">
+                    
+                    <!-- Card 1 -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"Thanks, Koolest for cleaning my TCL 2.5 hp split type aircon. Excellent service as always! Super lamig na ng aircon namin. Until next time, God Bless!"</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Ma'am M.</span>
+                            <span class="text-slate-400">• Dasmariñas Highlands</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"I have been using Koolest team at regular intervals to clean my AC unit, and I am consistently satisfied with their work. Friendly and thorough!"</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Sir P.</span>
+                            <span class="text-slate-400">• Dasmariñas Highlands</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"Super professional. They brought protective sheets and left zero mess on my cream walls. Best service team in town."</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Sarah M.</span>
+                            <span class="text-slate-400">• Condo Owner</span>
+                        </div>
+                    </div>
+
+                    <!-- DUPLICATED SET FOR SEAMLESS LOOP -->
+
+                    <!-- Card 1 Duplicate -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"Thanks, Koolest for cleaning my TCL 2.5 hp split type aircon. Excellent service as always! Super lamig na ng aircon namin. Until next time, God Bless!"</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Ma'am M.</span>
+                            <span class="text-slate-400">• Dasmariñas Highlands</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 Duplicate -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"I have been using Koolest team at regular intervals to clean my AC unit, and I am consistently satisfied with their work. Friendly and thorough!"</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Sir P.</span>
+                            <span class="text-slate-400">• Dasmariñas Highlands</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 Duplicate -->
+                    <div class="w-[320px] sm:w-[380px] bg-white p-8 rounded-2xl border-t-4 border-brandAccent border-x border-slate-200 border-b shadow-sm space-y-4 flex flex-col justify-between shrink-0 transition-transform duration-300 hover:scale-105" aria-hidden="true">
+                        <div class="space-y-3">
+                            <div class="text-brandAccent text-lg">★★★★★</div>
+                            <p class="text-slate-600 text-sm italic leading-relaxed">"Super professional. They brought protective sheets and left zero mess on my cream walls. Best service team in town."</p>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+                            <span class="font-bold text-[#0d413f]">Sarah M.</span>
+                            <span class="text-slate-400">• Condo Owner</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Set 2 (DUPLICATED FOR SEAMLESS LOOP) -->
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Super professional. They brought protective sheets and left zero mess on my cream walls. Best service team in town."</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Sarah M.</span>
-                    <span class="client-role">(Condo Owner)</span>
+    <!-- FEEDBACK SECTION -->
+    <section id="rate-us" class="py-20 bg-slate-50">
+        <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md">
+                <div id="feedbackFormWrapper" class="space-y-6">
+                    <div class="text-center space-y-2">
+                        <h2 class="font-heading text-3xl text-[#0d413f]">Share Your Koolest Experience</h2>
+                        <p class="text-slate-600 text-sm">Tell us how your fresh, clean air is feeling!</p>
+                    </div>
+
+                    <form id="feedbackForm" class="space-y-5">
+                        <div class="space-y-2">
+                            <label for="clientName" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Your Name</label>
+                            <input type="text" id="clientName" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] outline-none text-sm transition-all" placeholder="e.g. Jane Doe" required />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Rating</label>
+                            <div class="star-rating flex flex-row-reverse justify-end gap-2 text-2xl text-slate-300">
+                                <input type="radio" id="star5" name="rating" value="5" class="hidden" />
+                                <label for="star5" class="cursor-pointer hover:text-brandAccent transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+
+                                <input type="radio" id="star4" name="rating" value="4" class="hidden" />
+                                <label for="star4" class="cursor-pointer hover:text-brandAccent transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+
+                                <input type="radio" id="star3" name="rating" value="3" class="hidden" />
+                                <label for="star3" class="cursor-pointer hover:text-brandAccent transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+
+                                <input type="radio" id="star2" name="rating" value="2" class="hidden" />
+                                <label for="star2" class="cursor-pointer hover:text-brandAccent transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+
+                                <input type="radio" id="star1" name="rating" value="1" class="hidden" />
+                                <label for="star1" class="cursor-pointer hover:text-brandAccent transition-all duration-150 hover:scale-125"><i class="fa-solid fa-star"></i></label>
+                            </div>
+                            <span id="ratingError" class="hidden text-rose-500 text-xs"></span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="comment" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Your Feedback</label>
+                            <textarea id="comment" rows="4" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] outline-none text-sm resize-none transition-all" placeholder="Tell us about your experience..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brandAccent hover:bg-brandAccentHover text-brandDark font-bold py-3.5 rounded-xl text-sm transition-all shadow hover:scale-[1.01] active:scale-[0.99]">
+                            Submit Feedback
+                        </button>
+                    </form>
+                </div>
+
+                <div id="feedbackSuccess" class="hidden bg-[#0d413f] text-white p-8 rounded-2xl text-center space-y-2 animate-fade-in">
+                    <h3 class="font-heading text-xl text-brandAccent">Thank you!</h3>
+                    <p class="text-slate-200 text-sm">We're thrilled to hear from you and appreciate you taking the time to share your experience.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Thank you Koolest, reliable and good service sa inyo. More customers and God bless!
-"</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Sir V.</span>
-                    <span class="client-role">(Citta Italia)</span>
-                </div>
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            <div class="text-center space-y-2">
+                <h2 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">Our Team in Action</h2>
+                <p class="text-slate-600">Take a look at our team delivering quality service on the job.</p>
             </div>
 
-            <div class="testimonial-card">
-                <div class="stars">★★★★★</div>
-                <p>"Thank you po sa free of charge checkup and non-extra charges! 
-                    Sulit po binayad namin!"</p>
-                <div class="client-info">
-                    <span class="client-dot"></span>
-                    <span class="client-name">Ms. S.</span>
-                    <span class="client-role">(Woodland, Bahayang Pag-asa)</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                    <img src="assets/images/team-1.jpg" alt="On-site Maintenance" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <div class="p-4 text-center font-bold text-[#0d413f] text-sm">On-site Maintenance</div>
+                </div>
+
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                    <img src="assets/images/team-2.jpg" alt="Quality Inspection" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <div class="p-4 text-center font-bold text-[#0d413f] text-sm">Quality Inspection</div>
+                </div>
+
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                    <img src="assets/images/team-3.jpg" alt="Installation Service" loading="lazy" class="w-full h-56 object-cover bg-slate-200" />
+                    <div class="p-4 text-center font-bold text-[#0d413f] text-sm">Installation Service</div>
                 </div>
             </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ================= FEEDBACK SECTION ================= -->
-<section id="rate-us" class="section-padding">
-  <div class="form-card">
-    <div id="feedbackFormWrapper">
-      <h2 class="section-title">Share Your Koolest Experience</h2>
-      <p class="section-subtitle">Tell us how your fresh, clean air is feeling! Your feedback helps us keep your cooling top-tier.</p>
+    <!-- CONTACT SECTION -->
+    <section id="contact-us" class="py-20 bg-[#0d413f] text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-center sm:text-left">
+            <div class="space-y-2">
+                <h2 class="font-heading text-3xl sm:text-4xl text-brandAccent">Get Your Cool Back</h2>
+                <p class="text-slate-200">Ready to fix your unit's performance? Reserve your slot now!</p>
+            </div>
 
-      <form id="feedbackForm" class="styled-form">
-        <div class="form-group">
-          <label for="clientName">Your Name</label>
-          <input type="text" id="clientName" class="form-input" placeholder="e.g. Jane Doe" required />
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 text-sm sm:text-base">
+                <li class="flex items-center gap-3 justify-center sm:justify-start">
+                    <i class="fa-solid fa-phone text-brandAccent text-lg w-6"></i>
+                    <span><strong>Support:</strong> <a href="tel:+639753396764" class="underline hover:text-brandAccent transition-colors">+63 975 339 6764</a></span>
+                </li>
+                <li class="flex items-center gap-3 justify-center sm:justify-start">
+                    <i class="fa-solid fa-envelope text-brandAccent text-lg w-6"></i>
+                    <span><strong>Email:</strong> <a href="mailto:koolest.acservices@gmail.com" class="underline hover:text-brandAccent transition-colors">koolest.acservices@gmail.com</a></span>
+                </li>
+                <li class="flex items-center gap-3 justify-center sm:justify-start">
+                    <i class="fa-solid fa-location-dot text-brandAccent text-lg w-6"></i>
+                    <span><strong>Location:</strong> Dasmariñas, Cavite, Philippines</span>
+                </li>
+                <li class="flex items-center gap-3 justify-center sm:justify-start">
+                    <i class="fa-solid fa-clock text-brandAccent text-lg w-6"></i>
+                    <span><strong>Service Hours:</strong> Mon – Sat (8:00 AM – 5:00 PM)</span>
+                </li>
+            </ul>
         </div>
+    </section>
 
-        <div class="form-group">
-          <label>Rating</label>
-          <div class="star-rating">
-              <input type="radio" id="star5" name="rating" value="5"/>
-              <label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
-
-              <input type="radio" id="star4" name="rating" value="4" />
-              <label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
-
-              <input type="radio" id="star3" name="rating" value="3" />
-              <label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
-
-              <input type="radio" id="star2" name="rating" value="2" />
-              <label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
-
-              <input type="radio" id="star1" name="rating" value="1" />
-              <label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
-          </div>
-          <span id="ratingError" class="rating-error-text" style="display: none;"></span>
+    <!-- FOOTER -->
+    <footer class="bg-[#082b2a] border-t border-white/10 text-slate-400 py-8 text-center text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
+            <div>
+                <a href="../public/report-issue.html" class="underline hover:text-brandAccent transition-colors">Report a Problem</a>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label for="comment">Your Feedback</label>
-          <textarea id="comment" class="form-input form-textarea" rows="4" placeholder="Tell us about your experience..." required></textarea>
-        </div>
-
-        <button type="submit" class="btn-yellow btn-full">Submit Feedback</button>
-      </form>
-    </div>
-
-    <div id="feedbackSuccess" class="success-message-banner" style="display: none;">
-      Thank you for your feedback! We're thrilled to hear from you and appreciate you taking the time to share your experience.
-    </div>
-  </div>
-</section>
-
-<!-- ================= GALLERY SECTION ================= -->
-<section id="gallery" class="section-padding">
-  <div class="container">
-    <h2 class="section-title">Our Team in Action</h2>
-    <p class="section-subtitle">Take a look at our team delivering quality service on the job.</p>
-
-    <div class="gallery-grid">
-      <div class="gallery-card">
-        <div class="img-wrapper">
-          <img src="assets/images/team-1.jpg" alt="On-site Maintenance" loading="lazy" />
-        </div>
-        <div class="gallery-caption">On-site Maintenance</div>
-      </div>
-
-      <div class="gallery-card">
-        <div class="img-wrapper">
-          <img src="assets/images/team-2.jpg" alt="Quality Inspection" loading="lazy" />
-        </div>
-        <div class="gallery-caption">Quality Inspection</div>
-      </div>
-
-      <div class="gallery-card">
-        <div class="img-wrapper">
-          <img src="assets/images/team-3.jpg" alt="Installation Service" loading="lazy" />
-        </div>
-        <div class="gallery-caption">Installation Service</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- ================= CONTACT SECTION ================= -->
-<section id="contact-us" class="section-padding contact-container">
-  <div class="contact-info">
-    <h2 class="section-title text-light">Get Your Cool Back</h2>
-    <p class="section-subtitle text-light">Ready to fix your unit's performance? Reserve your slot now!</p>
-
-    <ul class="contact-details">
-      <li><i class="fa-solid fa-phone"></i> <strong>Support:</strong> <a href="tel:+639753396764">+63 975 339 6764</a></li>
-      <li><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> <a href="mailto:koolest.acservices@gmail.com">koolest.acservices@gmail.com</a></li>
-      <li><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> Dasmariñas, Cavite, Philippines</li>
-      <li><i class="fa-solid fa-map-location-dot"></i> <strong>Service Area:</strong> Cavite, Philippines</li>
-      <li><i class="fa-solid fa-clock"></i> <strong>Service Hours:</strong> Mon – Sat (8:00 AM – 5:00 PM)</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <p>&copy; 2026 Koolest AC Services. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="../public/report-issue.html">Report a Problem</a>
-    </div>
-  </div>
-</footer>
-
-<!-- ================= BACK TO TOP BUTTON ================= -->
-<button id="backToTopBtn" title="Go to top">
-  <i class="fa-solid fa-arrow-up"></i>
-</button>
     </footer>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTopBtn" title="Go to top" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-brandAccent text-brandDark rounded-full shadow-lg items-center justify-center font-bold text-lg hover:bg-brandAccentHover transition-all hidden hover:scale-110 active:scale-90">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- INITIALIZE TYPED.JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('typed-text')) {
+                new Typed('#typed-text', {
+                    strings: [
+                        'Cooling &amp; Appliances.',
+                        'Air Conditioners.',
+                        'Washing Machines.'
+                    ],
+                    typeSpeed: 50,      // Slightly faster typing prevents micro-stutter
+                    backSpeed: 30,      // Smooth deletion speed
+                    backDelay: 1800,    // Pause duration before erasing
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: '|'
+                });
+            }
+        });
+    </script>
+</body>
 </html>

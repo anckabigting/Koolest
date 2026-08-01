@@ -7,11 +7,12 @@
     --cream: #fffdf6;            /* Warm Cream Base Background */
     --white: #ffffff;            
     --text-dark: #2d3748;        /* Deep Charcoal for general body text readability */
+    --dark-theme: #0d413f;
     --light-gray: #fcfbf7;       /* Soft alternate section background */
     --error-red: #e53e3e;        
     --font-heading: 'Righteous', cursive;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-    --footer-bg: #0d413f;        /* Deep Premium Aqua-Navy for Footer */
+    --footer-bg: #062120;        /* Deep Premium Aqua-Navy for Footer */
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -142,6 +143,7 @@ header {
 }
 
 /* Frosted Glass Header */
+/* Frosted Glass Header */
 .navbar {
     position: sticky;
     top: 0;
@@ -150,10 +152,15 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
-    backdrop-filter: blur(12px); /* Frosted blur effect */
+    
+    /* Reduced alpha from 1 to 0.8 for transparency */
+    background: rgba(13, 65, 63, 0.8) !important; 
+    
+    /* Frosted glass blur effect */
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Logo Alignment */
@@ -329,7 +336,7 @@ header {
 
 /* --- HERO SECTION --- */
 .hero {
-    background: linear-gradient(135deg, var(--white) 50%, var(--dark-aqua) 100%);
+    background: linear-gradient(135deg, var(--light-aqua) 60%, var(--text-dark) 100%);
     padding: 100px 0;
     position: relative !important;
     overflow: hidden;
@@ -753,7 +760,7 @@ header {
 
 /* --- PART 2 & 3: SERVICES SECTION --- */
 .services-section {
-    background-color: var(--light-gray);
+    background-color: var(--light-aqua);
 }
 .services-grid {
     display: grid;
@@ -937,13 +944,13 @@ header {
 }
 
 .testimonials-section {
-    background-color: var(--light-gray);
+    background-color: var(--light-aqua);
     overflow: hidden; /* Fallback protection */
     padding: 60px 0;
 }
 
 .testimonial-card {
-    background-color: var(--white);
+    background-color: var(--light-aqua);
     padding: 28px 24px;                 /* Increased padding for a more spacious feel */
     border-radius: 32px;           /* Noticeably smoother, larger rounded corners */
     border-top: 5px solid var(--accent-yellow);
