@@ -7,7 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (hamburgerBtn && navMenu) {
     const toggleMenu = () => {
       const isHidden = navMenu.classList.contains("hidden");
-      navMenu.classList.toggle("hidden");
+      
+      if (isHidden) {
+        navMenu.classList.remove("hidden");
+      } else {
+        navMenu.classList.add("hidden");
+      }
 
       const icon = hamburgerBtn.querySelector("i");
       if (icon) {
