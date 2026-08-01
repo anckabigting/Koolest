@@ -337,13 +337,11 @@ function initCalendar() {
     height: "auto",
     dayMaxEvents: 2, // keeps each day cell compact; overflow shows a "+N more" link
     events: [],
-    dayCellDidMount: function (arg) {
-      // Mark past dates so they render muted/darker, independent of booking status
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (arg.date < today) {
-        arg.el.classList.add("day-tile-past");
-      }
+    // Fires on every render AND every navigation (prev/next/today/view switch) —
+    // more reliable than dayCellDidMount, which can skip recycled DOM cells.
+    datesSet: function () {
+      markPastDays();
+      highlightDayTiles(rawBookingsData.filter((b) => b.status !== "CANCELLED"));
     },
     eventClick: function(info) {
       const props = info.event.extendedProps;
@@ -364,6 +362,21 @@ function initCalendar() {
     }
   });
   calendarInstance.render();
+}
+
+// Marks every day cell before today as "past" using a plain string comparison
+// on the cell's own data-date attribute (YYYY-MM-DD sorts correctly as a
+// string), avoiding timezone/Date-object edge cases entirely.
+function markPastDays() {
+  const todayStr = new Date().toLocaleDateString("en-CA"); // en-CA gives YYYY-MM-DD
+  document.querySelectorAll(".fc-daygrid-day[data-date]").forEach((cell) => {
+    const cellDate = cell.getAttribute("data-date");
+    if (cellDate < todayStr) {
+      cell.classList.add("day-tile-past");
+    } else {
+      cell.classList.remove("day-tile-past");
+    }
+  });
 }
 
 /* Transform Bookings into Calendar Events */

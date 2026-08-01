@@ -1,8 +1,8 @@
 :root {
   --primary-aqua: #20b2aa;
-  --dark-aqua: #3f8083;
+  --dark-aqua: #1c3c3e;
   --light-aqua: #e6f7f6;
-  --yellow: #ffd86e;
+  --accent-yellow: #ffbd00;
   --cream: #fffdf6;
   --text-dark: #2d3748;
   --error-red: #e53e3e;
@@ -122,7 +122,7 @@ body {
 
 /* --- TABLE: redesigned to fit without horizontal scroll --- */
 .table-wrap {
-  background: var(--yellow);
+  background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   margin-bottom: 32px;
