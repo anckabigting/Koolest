@@ -47,8 +47,9 @@ export const bookingSchema = z.object({
   .min(3, "Please enter a valid service location")
   .max(200, "Location is too long")
   .regex(
-    /^[A-Z][a-zA-Z'-]*(\s[A-Z][a-zA-Z'-]*)+$/,
-    "Please capitalize the location name properly (e.g. Dasmariñas, Cavite)"),
+    /^[\p{L}\p{N}\s.,'-]+$/u,
+    "Location contains invalid characters"
+  ),
 
   notes: z
   .string()
