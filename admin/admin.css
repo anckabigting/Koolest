@@ -72,6 +72,107 @@ body {
   display: none;
 }
 
+/* --- ADMIN NAVBAR STYLING --- */
+.admin-navbar {
+  background: rgba(28, 60, 62, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 189, 0, 0.2);
+  border-radius: 12px;
+  padding: 14px 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-name {
+  color: var(--accent-yellow);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent-yellow);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+  color: var(--dark-aqua);
+  background: var(--accent-yellow);
+}
+
+/* Adjust header actions within navbar */
+.admin-navbar .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-navbar button {
+  background: var(--light-aqua);
+  color: var(--dark-aqua);
+  border: 1px solid var(--primary-aqua);
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+
+.admin-navbar button:hover {
+  background: var(--primary-aqua);
+  color: #ffffff;
+}
+
+.admin-navbar .btn-signout {
+  background: rgba(229, 62, 62, 0.15);
+  color: #ff8a8a;
+  border-color: rgba(229, 62, 62, 0.4);
+}
+
+.admin-navbar .btn-signout:hover {
+  background: var(--error-red);
+  color: #ffffff;
+  border-color: var(--error-red);
+}
+
 #dashboard { 
   display: none; 
   padding: 32px 24px; 

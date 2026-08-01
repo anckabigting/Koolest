@@ -29,14 +29,30 @@
   </div>
 
   <div id="dashboard">
-    <div class="dash-header">
-      <h1>Bookings Dashboard</h1>
-      <div class="header-actions">
-        <span class="signed-in-as" id="signedInAs"></span>
-        <button id="refreshBtn">Refresh</button>
-        <button id="signOutBtn">Sign Out</button>
+    <!-- Admin Navbar Header -->
+    <header class="admin-navbar">
+      <div class="nav-container">
+        <!-- Brand / Logo -->
+        <a href="../index.html" class="nav-brand">
+          <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="nav-logo" />
+          <span class="brand-name">Koolest Admin</span>
+        </a>
+
+        <!-- Quick Nav Links -->
+        <nav class="nav-links">
+          <a href="../index.html" class="nav-link">Main Site</a>
+          <a href="#bookingsTable" class="nav-link active">Bookings</a>
+          <a href="#calendar" class="nav-link">Calendar</a>
+        </nav>
+
+        <!-- Actions & Profile Info -->
+        <div class="header-actions">
+          <span class="signed-in-as" id="signedInAs"></span>
+          <button id="refreshBtn">Refresh</button>
+          <button id="signOutBtn" class="btn-signout">Sign Out</button>
+        </div>
       </div>
-    </div>
+    </header>
 
     <!-- Table Section -->
     <div class="table-wrap">
