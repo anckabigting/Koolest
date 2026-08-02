@@ -25,5 +25,6 @@ export const issueReportSchema = z.object({
   details: z
   .string()
   .trim()
-  .min(5, "Please provide more details about the issue."),
+  .min(5, "Please provide more details about the issue.")
+  .max(600, "Details cannot exceed 600 characters."),
 });
