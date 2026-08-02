@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const openPrivacyBtn = document.getElementById("openPrivacyModal");
   const closePrivacyBtn = document.getElementById("closePrivacyModal");
   const acceptPrivacyBtn = document.getElementById("acceptPrivacyBtn");
-  const privacyConsentCheckbox = document.getElementById("privacyConsent");
+  const dpaCheckbox = document.getElementById("dpaAgreeCheckbox");
 
   const openModal = () => {
     if (!privacyModal) return;
@@ -397,7 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
   closePrivacyBtn?.addEventListener("click", closeModal);
 
   acceptPrivacyBtn?.addEventListener("click", () => {
-    if (privacyConsentCheckbox) privacyConsentCheckbox.checked = true;
+    if (dpaCheckbox) dpaCheckbox.checked = true;
     closeModal();
   });
 
