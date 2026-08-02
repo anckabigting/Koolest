@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (hamburgerBtn && navMenu) {
     const toggleMenu = () => {
       const isHidden = navMenu.classList.contains("hidden");
-      
+
       if (isHidden) {
         navMenu.classList.remove("hidden");
+        navMenu.classList.add("flex");
       } else {
         navMenu.classList.add("hidden");
+        navMenu.classList.remove("flex");
       }
 
       const icon = hamburgerBtn.querySelector("i");
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const closeMenu = () => {
       navMenu.classList.add("hidden");
+      navMenu.classList.remove("flex");
       const icon = hamburgerBtn.querySelector("i");
       if (icon) {
         icon.classList.remove("fa-xmark");
