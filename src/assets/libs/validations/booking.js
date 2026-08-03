@@ -47,7 +47,7 @@ export const bookingSchema = z.object({
     })
     // 3. Validate strict PH mobile format: +63 followed by '9' and 9 digits
     .refine((val) => /^\+639\d{9}$/.test(val), {
-      message: "Please enter a valid PH contact number (e.g., 09171234567 or +639171234567)",
+      message: "Please enter a valid PH contact number (e.g., +639171234567)",
     }),
     
     serviceType: z
