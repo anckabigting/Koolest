@@ -7,7 +7,26 @@ export default async function handler(req, res) {
   }
 
   try {
-    const validatedData = issueReportSchema.parse(req.body);
+    // Use safeParse to prevent unhandled exceptions and safely extract issues
+    const validation = issueReportSchema.safeParse(req.body);
+
+    if (!validation.success) {
+      // Extract formatted Zod field details for report-issue.js
+      const formattedErrors = validation.error.format();
+      
+      // Safely grab the first error message without relying on error.errors[0]
+      const firstErrorMsg = 
+        validation.error.issues?.[0]?.message || 
+        "Invalid issue submission data.";
+
+      return res.status(400).json({
+        success: false,
+        error: firstErrorMsg,
+        details: formattedErrors, // Passed to frontend for field-level highlighting
+      });
+    }
+
+    const validatedData = validation.data;
 
     const newReport = await prisma.issueReport.create({
       data: {
@@ -24,17 +43,14 @@ export default async function handler(req, res) {
       data: newReport,
     });
   } catch (error) {
-    if (error.name === "ZodError") {
-      return res.status(400).json({
-        success: false,
-        error: error.errors[0].message,
-      });
-    }
-
     console.error("Issue Report Error:", error);
+
+    // Fallback error handler in case Prisma or another system throws
+    const fallbackMsg = error?.issues?.[0]?.message || error?.message || "Internal Server Error";
+
     return res.status(500).json({
       success: false,
-      error: "Internal Server Error",
+      error: fallbackMsg,
     });
   }
 }
