@@ -123,13 +123,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Automatically prepends +63 when user types 09... or 9...
       if (digits.startsWith("63")) {
-        e.target.value = ("+" + digits).slice(0, 13);
+        e.target.value = ("+" + digits).slice(0, 14);
       } else if (digits.startsWith("0")) {
-        e.target.value = ("+63" + digits.slice(1)).slice(0, 13);
+        e.target.value = ("+63" + digits.slice(1)).slice(0, 14);
       } else if (digits.startsWith("9")) {
-        e.target.value = ("+63" + digits).slice(0, 13);
+        e.target.value = ("+63" + digits).slice(0, 14);
       } else {
-        e.target.value = rawVal.slice(0, 13);
+        e.target.value = rawVal.slice(0, 14);
       }
     });
   }
