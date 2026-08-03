@@ -354,7 +354,8 @@
                             </div>
                             <div class="space-y-2">
                                 <label for="location" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Service Location</label>
-                                <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" required>
+                                <input type="text" id="location" name="location" placeholder="Dasmariñas, Cavite" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" 
+                                required maxlength="45">
                             </div>
                         </div>
 
@@ -381,14 +382,23 @@
                     </form>
                 </div>
 
-                <!-- Success Banner -->
-                <div id="bookingSuccess" class="hidden empty:hidden bg-[#0d413f] text-white p-8 rounded-2xl text-center space-y-3 font-medium animate-fade-in">
-                    <i class="fa-solid fa-circle-check text-[#38bdf8] text-4xl mb-2"></i>
-                    <h3 class="text-2xl font-heading text-[#38bdf8]">Booking Request Received!</h3>
-                    <p class="text-slate-200">We've saved your slot. Our customer concierge will text or call you shortly to confirm.</p>
-                </div>
+                <!-- 2. Booking Success Box (Initially Hidden) -->
+                <div id="bookingSuccess" class="hidden text-center space-y-4 py-6">
+                  <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full mb-2">
+                    <i class="fa-solid fa-calendar-check text-3xl"></i>
+                  </div>
+                  
+                  <h3 class="text-2xl font-bold text-[#0d413f]">Booking Request Received!</h3>
+                  
+                  <p class="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
+                    Thank you for choosing Koolest AC Services. We’ve received your booking details and will contact you shortly to confirm your schedule.
+                  </p>
 
-            </div>
+                  <div class="pt-4">
+                    <button type="button" onclick="resetBookingForm()" class="inline-flex items-center gap-2 bg-[#0d413f] text-white font-semibold px-6 py-3 rounded-xl text-xs hover:bg-[#145c58] transition-all">
+                      <i class="fa-solid fa-plus"></i> Book Another Service
+                    </button>
+                  </div>
         </div>
     </section>
 

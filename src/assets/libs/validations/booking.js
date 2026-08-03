@@ -65,7 +65,7 @@ export const bookingSchema = z.object({
     .string()
     .trim()
     .min(3, "Please enter a valid service location")
-    .max(200, "Location is too long")
+    .max(45, "Location is too long")
     .regex(
       /^[\p{L}\p{N}\s.,'-]+$/u,
       "Location contains invalid characters"
