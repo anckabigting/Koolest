@@ -25,11 +25,14 @@ export const bookingSchema = z.object({
 
   email: z
   .string()
-  .email("Please enter a valid email address")
   .trim()
+  .max(50, "Email address is too long")
+  .email("Please enter a valid email address.")
   .toLowerCase(),
+
   phone: z
   .string().trim().length(11, "Phone number must be exactly 11 digits").regex(/^[0-9]{11}$/, "Phone number must contain digits only"),
+  
   serviceType: z
   .enum([SERVICE_TYPES[0], ...SERVICE_TYPES.slice(1)], { message: "Please select a valid service type" }),
   

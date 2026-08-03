@@ -18,7 +18,9 @@ export const issueReportSchema = z.object({
   email: z
   .string()
   .trim()
-  .email("Please enter a valid email address."),
+  .max(50, "Email address is too long")
+  .email("Please enter a valid email address.")
+  .toLowerCase(),
 
   issueType: issueTypeEnum,
 
