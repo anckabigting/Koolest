@@ -1,7 +1,7 @@
 // Hamburger Mobile Nav & Page Interactions
 document.addEventListener("DOMContentLoaded", () => {
-  const hamburgerBtn = document.getElementById("hamburger-btn");
-  const navMenu = document.getElementById("nav-menu");
+  const hamburgerBtn = document.getElementById("hamburger-btn") || document.getElementById("mobileMenuBtn");
+  const navMenu = document.getElementById("nav-menu") || document.getElementById("mobileMenu");
   const navLinks = navMenu?.querySelectorAll("a");
 
   if (hamburgerBtn && navMenu) {
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   revealElements.forEach((element) => revealObserver.observe(element));
 
   // 5. Input constraints & formatters (+63 PH Phone Formatter)
-  const phoneInput = document.getElementById("phone");
+  const phoneInput = document.getElementById("customerPhone") || document.getElementById("phone");
   if (phoneInput) {
     phoneInput.addEventListener("input", (e) => {
       let rawVal = e.target.value.replace(/[^\d+]/g, ""); // Keep numbers & leading plus
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const locationInput = document.getElementById("location");
+  const locationInput = document.getElementById("customerAddress") || document.getElementById("location");
   if (locationInput) {
     locationInput.addEventListener("blur", (e) => {
       if (!e.target.value) return;
@@ -145,46 +145,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. Booking Form Submission
+  // 6. Booking Form Submission & Reset
   const bookingForm = document.getElementById("bookingForm");
+  const bookingSuccess = document.getElementById("bookingSuccess");
+  const resetBookingBtn = document.getElementById("resetBookingBtn");
+  const bookingErrorBanner = document.getElementById("bookingErrorBanner");
+
+  // Element getter map for field-level tooltips
   const fieldInputMap = {
-    fullName: () => document.getElementById("fullName"),
-    email: () => document.getElementById("email"),
-    phone: () => document.getElementById("phone"),
-    serviceType: () => document.getElementById("service-type"),
+    fullName: () => document.getElementById("customerName") || document.getElementById("fullName"),
+    name: () => document.getElementById("customerName") || document.getElementById("fullName"),
+    email: () => document.getElementById("customerEmail") || document.getElementById("email"),
+    phone: () => document.getElementById("customerPhone") || document.getElementById("phone"),
+    serviceType: () => document.getElementById("serviceType") || document.getElementById("service-type"),
     bookingDate: () => document.getElementById("bookingDate"),
-    location: () => document.getElementById("location"),
+    location: () => document.getElementById("customerAddress") || document.getElementById("location"),
+    address: () => document.getElementById("customerAddress") || document.getElementById("location"),
   };
 
   if (bookingForm) {
     bookingForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // Clear custom validity messages
       Object.values(fieldInputMap).forEach((getEl) => {
         const el = getEl();
         if (el) el.setCustomValidity("");
       });
 
-      if (locationInput) {
-        locationInput.value = locationInput.value.trim();
-      }
-
-      const strictCapitalizationRegex = /^[A-Z\u00C0-\u024F][a-zA-Z\u00C0-\u024F\s,.'-]*\s*$/;
-
-      if (locationInput && locationInput.value && !strictCapitalizationRegex.test(locationInput.value)) {
-        locationInput.setCustomValidity("Please capitalize the location name properly (e.g. Dasmariñas, Cavite)");
-        locationInput.reportValidity();
-        locationInput.addEventListener("input", () => locationInput.setCustomValidity(""), { once: true });
-        return;
+      // Clear previous global error banner if present
+      if (bookingErrorBanner) {
+        bookingErrorBanner.classList.add("hidden");
+        bookingErrorBanner.textContent = "";
       }
 
       const formData = {
-        fullName: document.getElementById("fullName")?.value || "",
-        email: document.getElementById("email")?.value || "",
-        phone: document.getElementById("phone")?.value || "",
-        serviceType: document.getElementById("service-type")?.value || "",
-        bookingDate: document.getElementById("bookingDate")?.value || "",
-        location: document.getElementById("location")?.value || "",
+        fullName: fieldInputMap.fullName()?.value || "",
+        name: fieldInputMap.fullName()?.value || "",
+        email: fieldInputMap.email()?.value || "",
+        phone: fieldInputMap.phone()?.value || "",
+        serviceType: fieldInputMap.serviceType()?.value || "",
+        bookingDate: fieldInputMap.bookingDate()?.value || "",
+        location: fieldInputMap.location()?.value || "",
+        address: fieldInputMap.location()?.value || "",
+        notes: document.getElementById("bookingNotes")?.value || "",
       };
 
       try {
@@ -197,15 +201,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-          console.error("Submission error details:", data.details || data.error);
+          console.error("Booking submission error details:", data.details || data.error);
           showFieldError(data);
           return;
         }
 
         showSuccessUI();
       } catch (err) {
-        console.error("API request failed:", err);
-        showGenericError(`Something went wrong: ${err.message}`);
+        console.error("Booking API request failed:", err);
+        showGenericError(`An error occurred while submitting your booking. Please check your internet connection.`);
+      }
+    });
+  }
+
+  if (resetBookingBtn) {
+    resetBookingBtn.addEventListener("click", () => {
+      if (bookingForm) {
+        bookingForm.reset();
+        bookingForm.classList.remove("hidden");
+        bookingForm.style.display = "";
+      }
+      if (bookingSuccess) {
+        bookingSuccess.classList.add("hidden");
+        bookingSuccess.style.display = "";
+      }
+      if (bookingErrorBanner) {
+        bookingErrorBanner.classList.add("hidden");
       }
     });
   }
@@ -226,26 +247,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
-    showGenericError(data?.error || "Failed to submit booking. Please try again.");
+    showGenericError(data?.error || data?.message || "Failed to submit booking. Please try again.");
   }
 
   function showGenericError(message) {
-    const el = document.getElementById("fullName");
-    if (el) {
-      el.setCustomValidity(message);
-      el.reportValidity();
-      el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+    if (bookingErrorBanner) {
+      bookingErrorBanner.textContent = message;
+      bookingErrorBanner.classList.remove("hidden");
     } else {
-      alert(message);
+      const el = fieldInputMap.email() || fieldInputMap.fullName();
+      if (el) {
+        el.setCustomValidity(message);
+        el.reportValidity();
+        el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+      } else {
+        alert(message);
+      }
     }
   }
 
   function showSuccessUI() {
-    const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
-    const successMsg = document.getElementById("bookingSuccess");
-
-    if (bookingCard) bookingCard.style.display = "none";
-    if (successMsg) successMsg.style.display = "block";
+    if (bookingForm) {
+      bookingForm.classList.add("hidden");
+    }
+    if (bookingSuccess) {
+      bookingSuccess.classList.remove("hidden");
+      bookingSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   }
 
   // 7. Feedback Form Submission
@@ -394,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       try {
-        const response = await fetch("/api/report-issue", { // Update to your issue API endpoint if different
+        const response = await fetch("/api/report-issue", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
