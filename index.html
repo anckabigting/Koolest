@@ -33,8 +33,21 @@
     <!-- Typed.js for Typewriter Animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
 
-    <!-- Compiled Tailwind CSS Output -->
-    <link rel="stylesheet" href="public/output.css">
+    <!-- Custom Floating Particles CSS -->
+    <style>
+      .breeze-particle {
+        position: absolute;
+        bottom: -30px;
+        background: rgba(56, 189, 248, 0.15);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: floatUp linear infinite;
+      }
+      @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+      }
+    </style>
 
     <script src="script.js" defer></script>
 </head>
@@ -291,8 +304,12 @@
     <!-- BOOKING SECTION -->
     <section id="booking" class="py-20 bg-[#0d413f] border-b-8 border-[#38bdf8]">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="booking-card bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100">
+            <div id="bookingCard" class="booking-card bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100">
                 
+                <!-- Server Error Alert Banner -->
+                <div id="bookingErrorBanner" class="hidden mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium"></div>
+
+                <!-- 1. Booking Form Wrapper -->
                 <div id="bookingFormWrapper" class="space-y-8">
                     <div class="text-center space-y-2">
                         <h2 class="font-heading text-3xl sm:text-4xl text-[#0d413f]">Schedule Your Appointment</h2>
@@ -319,7 +336,7 @@
                             <div class="space-y-2">
                                 <label for="phone" class="block text-xs font-bold text-[#0d413f] uppercase tracking-wider">Contact Number</label>
                                 <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-[#0d413f] focus:ring-2 focus:ring-[#0d413f]/20 outline-none text-slate-800 text-sm transition-all" 
-                                  placeholder="+639123456789" pattern="^\+639\d{9}$|^09\d{9}$" minlength="11" maxlength="13" 
+                                  placeholder="+639123456789" pattern="^\+639\d{9}$|^09\d{9}$" minlength="11" maxlength="14" 
                                   inputmode="tel" 
                                   title="Please enter a valid PH contact number (e.g., +639171234567)" 
                                   required autocomplete="tel">
@@ -395,10 +412,13 @@
                   </p>
 
                   <div class="pt-4">
-                    <button type="button" onclick="resetBookingForm()" class="inline-flex items-center gap-2 bg-[#0d413f] text-white font-semibold px-6 py-3 rounded-xl text-xs hover:bg-[#145c58] transition-all">
+                    <button type="button" id="resetBookingBtn" class="inline-flex items-center gap-2 bg-[#0d413f] text-white font-semibold px-6 py-3 rounded-xl text-xs hover:bg-[#145c58] transition-all">
                       <i class="fa-solid fa-plus"></i> Book Another Service
                     </button>
                   </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
