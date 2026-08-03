@@ -363,15 +363,99 @@ document.addEventListener("DOMContentLoaded", () => {
     if (successMsg) successMsg.style.display = "block";
   }
 
-  // 8. Issue Form
+  // 8. Issue Form Submission
   const issueForm = document.getElementById("issueForm");
+  const issueFieldInputMap = {
+    name: () => document.getElementById("issueName") || document.getElementById("fullName"),
+    email: () => document.getElementById("issueEmail") || document.getElementById("email"),
+    issueType: () => document.getElementById("issueType") || document.getElementById("typeOfIssue"),
+    message: () => document.getElementById("issueMessage") || document.getElementById("message"),
+  };
+
   if (issueForm) {
-    issueForm.addEventListener("submit", (e) => {
+    issueForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      issueForm.style.display = "none";
-      const formSuccess = document.getElementById("formSuccess");
-      if (formSuccess) formSuccess.style.display = "block";
+
+      // Clear previous custom validity errors
+      Object.values(issueFieldInputMap).forEach((getEl) => {
+        const el = getEl();
+        if (el) el.setCustomValidity("");
+      });
+
+      // Hide red error banner if it exists
+      const issueErrorBanner = document.getElementById("issueErrorBanner");
+      if (issueErrorBanner) issueErrorBanner.style.display = "none";
+
+      const formData = {
+        name: issueFieldInputMap.name()?.value || "",
+        email: issueFieldInputMap.email()?.value || "",
+        issueType: issueFieldInputMap.issueType()?.value || "",
+        message: issueFieldInputMap.message()?.value || "",
+      };
+
+      try {
+        const response = await fetch("/api/report-issue", { // Update to your issue API endpoint if different
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error("Report issue submission error:", data.details || data.error);
+          showIssueFieldError(data);
+          return;
+        }
+
+        // Show Success UI
+        issueForm.style.display = "none";
+        const formSuccess = document.getElementById("formSuccess");
+        if (formSuccess) formSuccess.style.display = "block";
+
+      } catch (err) {
+        console.error("Report issue API request failed:", err);
+        showIssueGenericError("An error occurred while submitting your report. Please check your connection.");
+      }
     });
+  }
+
+  function showIssueFieldError(data) {
+    if (data?.details) {
+      const firstField = Object.keys(data.details).find(
+        (key) => key !== "_errors" && data.details[key]?._errors?.length
+      );
+
+      if (firstField && issueFieldInputMap[firstField]) {
+        const message = data.details[firstField]._errors[0];
+        const el = issueFieldInputMap[firstField]();
+        if (el) {
+          el.setCustomValidity(message);
+          el.reportValidity();
+          el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+          return;
+        }
+      }
+    }
+    // Fallback to error message string sent from server/Zod
+    showIssueGenericError(data?.error || data?.message || "Failed to submit report. Please check your inputs.");
+  }
+
+  function showIssueGenericError(message) {
+    const issueErrorBanner = document.getElementById("issueErrorBanner");
+    if (issueErrorBanner) {
+      issueErrorBanner.textContent = message;
+      issueErrorBanner.style.display = "block";
+    } else {
+      const el = issueFieldInputMap.email() || issueFieldInputMap.name();
+      if (el) {
+        el.setCustomValidity(message);
+        el.reportValidity();
+        el.addEventListener("input", () => el.setCustomValidity(""), { once: true });
+      } else {
+        alert(message);
+      }
+    }
   }
 
   // 9. Back to Top Button
