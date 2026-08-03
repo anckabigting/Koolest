@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         console.error("Submission failed:", err);
-        showBanner("An error occurred while submitting your report. Please check your connection.", false);
+        showBanner("Invalid input. Please enter a valid input.", false);
       }
     });
   }
