@@ -109,11 +109,28 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   revealElements.forEach((element) => revealObserver.observe(element));
 
-  // 5. Input constraints & formatters
+  // 5. Input constraints & formatters (+63 PH Phone Formatter)
   const phoneInput = document.getElementById("phone");
   if (phoneInput) {
-    phoneInput.addEventListener("input", () => {
-      phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
+    phoneInput.addEventListener("input", (e) => {
+      let rawVal = e.target.value.replace(/[^\d+]/g, ""); // Keep numbers & leading plus
+      let digits = rawVal.replace(/\D/g, ""); // Pure numeric digits
+
+      if (!digits) {
+        e.target.value = "";
+        return;
+      }
+
+      // Automatically prepends +63 when user types 09... or 9...
+      if (digits.startsWith("63")) {
+        e.target.value = ("+" + digits).slice(0, 13);
+      } else if (digits.startsWith("0")) {
+        e.target.value = ("+63" + digits.slice(1)).slice(0, 13);
+      } else if (digits.startsWith("9")) {
+        e.target.value = ("+63" + digits).slice(0, 13);
+      } else {
+        e.target.value = rawVal.slice(0, 13);
+      }
     });
   }
 
