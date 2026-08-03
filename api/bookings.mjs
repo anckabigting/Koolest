@@ -1,6 +1,6 @@
 import { bookingSchema } from "../src/assets/libs/validations/booking.js";
 import { prisma } from "../src/assets/libs/prisma.js";
-import { ratelimit } from "../src/assets/libs/ratelimit.js";
+import { bookingRatelimit } from "../src/assets/libs/ratelimit.js";
 
 export default async function handler(req, res) {
   // 1. HTTP Method Check
@@ -19,14 +19,18 @@ export default async function handler(req, res) {
       : req.socket.remoteAddress || "127.0.0.1";
 
     // 3. Rate Limit Check (Upstash Redis)
-    if (ratelimit) {
-      const { success } = await ratelimit.limit(clientIp);
-      if (!success) {
-        return res.status(429).json({
-          success: false,
-          error: "Too many requests. Please try again later.",
-        });
-      }
+    const { success, limit, remaining, reset } = await bookingRatelimit.limit(clientIp);
+
+    // Set standard rate limit headers
+    res.setHeader("X-RateLimit-Limit", limit);
+    res.setHeader("X-RateLimit-Remaining", remaining);
+    res.setHeader("X-RateLimit-Reset", reset);
+
+    if (!success) {
+      return res.status(429).json({
+        success: false,
+        error: "Too many booking requests. Please try again in 10 minutes.",
+      });
     }
 
     // 4. Ensure Body Parsing
