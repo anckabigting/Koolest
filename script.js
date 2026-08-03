@@ -214,19 +214,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // "Book Another Service" Button Event Listener
   if (resetBookingBtn) {
-    resetBookingBtn.addEventListener("click", () => {
+    resetBookingBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Clear form inputs
       if (bookingForm) {
         bookingForm.reset();
         bookingForm.classList.remove("hidden");
-        bookingForm.style.display = "";
+        bookingForm.style.display = "block";
       }
+
+      // Hide success message
       if (bookingSuccess) {
         bookingSuccess.classList.add("hidden");
-        bookingSuccess.style.display = "";
+        bookingSuccess.style.display = "none";
       }
+
+      // Clear active error banner if any
       if (bookingErrorBanner) {
         bookingErrorBanner.classList.add("hidden");
+        bookingErrorBanner.textContent = "";
+      }
+
+      // Smooth scroll back to form container center
+      const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
+      if (bookingCard) {
+        bookingCard.style.display = "block";
+        bookingCard.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
   }
@@ -267,12 +283,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showSuccessUI() {
+    const bookingCard = document.getElementById("bookingCard") || document.querySelector(".booking-card");
+
     if (bookingForm) {
       bookingForm.classList.add("hidden");
+      bookingForm.style.display = "none";
     }
+
     if (bookingSuccess) {
       bookingSuccess.classList.remove("hidden");
-      bookingSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+      bookingSuccess.style.display = "block";
+    }
+
+    if (bookingCard) {
+      bookingCard.style.display = "block";
+      bookingCard.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
 
