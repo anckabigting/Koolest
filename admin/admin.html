@@ -1,279 +1,739 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow">
   <title>Koolest | Admin - Bookings</title>
   
-  <link rel="icon" type="image/png" href="../public/assets/koolest_logo.png">
-
-   <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self'; 
-    script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://vercel.live; 
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; 
-    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
-    img-src 'self' data: https:; 
-    connect-src 'self' https://cdnjs.cloudflare.com https://*.upstash.io https://*.neon.tech https://accounts.google.com https://vercel.live; 
-    frame-src 'self' https://accounts.google.com https://vercel.live;
-">
-  <!-- Google Font: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Preload critical stylesheet to eliminate FOUC layout glitch -->
-    <link rel="preload" href="public/output.css" as="style">
-    <link rel="stylesheet" href="public/output.css"> 
-    
-  <!-- Tailwind CSS Play CDN & Configuration -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
-          colors: {
-            aqua: {
-              primary: '#20b2aa',
-              dark: '#1c3c3e',
-              light: '#e6f7f6',
-            },
-            accent: {
-              yellow: '#ffbd00',
-            },
-            cream: '#fffdf6',
-            textDark: '#2d3748',
-            errorRed: '#e53e3e',
-            successGreen: '#277b48',
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="icon" type="image/png" href="../public/assets/koolest_logo.png">
 
   <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>    
   <script src="https://accounts.google.com/gsi/client?hl=en" async defer onload="initGoogleSignIn()"></script>
 
-  <!-- Custom FullCalendar & Specific Component Overrides -->
-  <style type="text/tailwindcss">
-    @layer components {
-      /* FullCalendar Overrides to match theme */
-      .fc {
-        @apply font-sans text-xs sm:text-sm;
-      }
-      .fc .fc-toolbar {
-        @apply flex-wrap gap-2 mb-3 !important;
-      }
-      .fc .fc-toolbar-title {
-        @apply text-base sm:text-lg font-bold text-aqua-dark;
-      }
-      .fc .fc-button-primary {
-        @apply bg-aqua-dark border-aqua-dark text-white text-xs font-medium px-3 py-1 rounded-md transition-colors shadow-none hover:bg-aqua-primary hover:border-aqua-primary !important;
-      }
-      .fc .fc-button-primary:disabled {
-        @apply bg-gray-300 border-gray-300 opacity-60 !important;
-      }
-      .fc .fc-button-primary:not(:disabled).fc-button-active {
-        @apply bg-accent-yellow border-accent-yellow text-aqua-dark font-bold !important;
-      }
-      .fc .fc-daygrid-body tr {
-        @apply h-[95px] !important;
-      }
-      .fc .fc-daygrid-day-frame {
-        @apply h-full min-h-[95px] flex flex-col justify-start p-1 box-border !important;
-      }
-      .fc .fc-col-header-cell {
-        @apply bg-accent-yellow text-aqua-dark font-bold text-[11px] uppercase tracking-wider py-1.5 !important;
-      }
-      .fc .fc-daygrid-day-number {
-        @apply text-xs font-semibold text-textDark p-1;
-      }
-      .fc-event {
-        @apply bg-transparent border-none p-0.5 mb-1 shadow-none cursor-pointer text-xs leading-tight whitespace-normal break-words !important;
-      }
-      .fc-event .fc-event-main {
-        @apply whitespace-normal overflow-visible text-aqua-dark font-semibold text-[11px] !important;
-      }
-      .fc-event:hover {
-        @apply bg-aqua-dark/10 rounded !important;
-      }
-
-      /* Custom Day Tile Highlights */
-      .fc-daygrid-day.day-tile-pending { @apply bg-[#20b2aa]/20 !important; }
-      .fc-daygrid-day.day-tile-confirmed { @apply bg-[#277b48]/25 !important; }
-      .fc-daygrid-day.day-tile-completed { @apply bg-gray-400/20 !important; }
-
-      .fc-daygrid-day.day-tile-past { @apply bg-gray-200 !important; }
-      .fc-daygrid-day.day-tile-past .fc-daygrid-day-number { @apply text-gray-400; }
-
-      .fc-daygrid-day.day-tile-past.day-tile-confirmed {
-        @apply bg-[#277b48]/20 border border-[#277b48]/50 !important;
-      }
-      .fc-daygrid-day.day-tile-past.day-tile-pending {
-        @apply bg-[#20b2aa]/15 border border-[#20b2aa]/40 !important;
-      }
-      .fc-day-today { @apply bg-accent-yellow/30 !important; }
-
-      .fc .fc-today-button {
-        @apply bg-aqua-dark border-aqua-dark text-white font-semibold rounded-lg px-3.5 py-1.5 capitalize transition-all opacity-100 hover:bg-aqua-primary hover:border-aqua-primary !important;
-      }
-      .fc .fc-today-button:disabled {
-        @apply bg-aqua-primary/20 border-aqua-primary/30 text-aqua-dark opacity-100 cursor-default !important;
-      }
+  <!-- Consolidated Styles -->
+  <style>
+    :root {
+      --primary-aqua: #20b2aa;
+      --dark-aqua: #1c3c3e;
+      --light-aqua: #e6f7f6;
+      --accent-yellow: #ffbd00;
+      --cream: #fffdf6;
+      --text-dark: #2d3748;
+      --error-red: #e53e3e;
+      --success-green: #277b48;
     }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--dark-aqua);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    #loginGate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .login-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 1.4rem;
+      color: var(--dark-aqua);
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: #667;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    #googleSignInBtn {
+      display: flex;
+      justify-content: center;
+      min-height: 40px;
+    }
+
+    .login-error {
+      color: var(--error-red);
+      font-size: 0.85rem;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .session-expired-msg {
+      color: var(--dark-aqua);
+      font-size: 0.85rem;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* --- ADMIN NAVBAR STYLING --- */
+    .admin-navbar {
+      background: rgba(28, 60, 62, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 189, 0, 0.2);
+      border-radius: 12px;
+      padding: 14px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      color: var(--accent-yellow);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-yellow);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+      color: var(--dark-aqua);
+      background: var(--accent-yellow);
+    }
+
+    /* Header Actions */
+    .admin-navbar .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-navbar button {
+      background: var(--light-aqua);
+      color: var(--dark-aqua);
+      border: 1px solid var(--primary-aqua);
+      border-radius: 8px;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+    }
+
+    .admin-navbar button:hover {
+      background: var(--primary-aqua);
+      color: #ffffff;
+    }
+
+    .admin-navbar .btn-signout {
+      background: rgba(229, 62, 62, 0.15);
+      color: #ff8a8a;
+      border-color: rgba(229, 62, 62, 0.4);
+    }
+
+    .admin-navbar .btn-signout:hover {
+      background: var(--error-red);
+      color: #ffffff;
+      border-color: var(--error-red);
+    }
+
+    #dashboard { 
+      display: none; 
+      padding: 32px 24px; 
+      max-width: 1300px; 
+      margin: 0 auto; 
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dash-header h1 { 
+      color: var(--accent-yellow); 
+      font-size: 1.6rem; 
+    }
+
+    .dash-header .header-actions { 
+      display: flex; 
+      gap: 10px; 
+      align-items: center; 
+    }
+
+    .dash-header button {
+      background: var(--light-aqua);
+      color: var(--dark-aqua);
+      border: 1px solid var(--primary-aqua);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .dash-header button:hover {
+      background: var(--primary-aqua);
+      color: #fff;
+    }
+
+    .signed-in-as {
+      font-size: 0.8rem;
+      color: #ffffff;
+    }
+
+    /* --- TABLE STYLING --- */
+    .table-wrap {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 0.82rem;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      vertical-align: middle;
+    }
+
+    /* Proportional column widths */
+    th:nth-child(1), td:nth-child(1) { width: 13%; }
+    th:nth-child(2), td:nth-child(2) { width: 15%; }
+    th:nth-child(3), td:nth-child(3) { width: 10%; }
+    th:nth-child(4), td:nth-child(4) { width: 12%; }
+    th:nth-child(5), td:nth-child(5) { width: 15%; }
+    th:nth-child(6), td:nth-child(6) { width: 10%; }
+    th:nth-child(7), td:nth-child(7) { width: 15%; }
+    th:nth-child(8), td:nth-child(8) { width: 10%; }
+
+    th {
+      background: var(--accent-yellow);
+      color: var(--dark-aqua);
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    th:first-child, td:first-child { padding-left: 24px !important; }
+    th:last-child, td:last-child { padding-right: 24px !important; }
+
+    tr:hover td { background: var(--light-aqua); }
+
+    tr.row-completed td { background: rgba(47, 158, 92, 0.08); }
+    tr.row-completed:hover td { background: rgba(47, 158, 92, 0.14); }
+    tr.row-completed td:first-child { border-left: 3px solid var(--success-green); }
+
+    select.status-select {
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.78rem;
+      cursor: pointer;
+      max-width: 100%;
+    }
+
+    .loading, .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #889;
+    }
+
+    .save-indicator {
+      font-size: 0.72rem;
+      color: var(--success-green);
+      margin-left: 6px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: block;
+    }
+
+    .save-indicator.show { opacity: 1; }
+
+    /* --- CALENDAR STYLING --- */
+    .calendar-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 32px;
+    }
+
+    .calendar-card h2 {
+      color: var(--dark-aqua);
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+    }
+
+    #calendar { max-width: 100%; }
+
+    .fc {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+    }
+
+    .fc .fc-toolbar {
+      margin-bottom: 10px !important;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .fc .fc-toolbar-title {
+      font-size: 1.05rem;
+      color: var(--dark-aqua);
+      font-weight: 700;
+    }
+
+    .fc .fc-button-primary {
+      background-color: var(--dark-aqua);
+      border-color: var(--dark-aqua);
+      color: #fff;
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      text-transform: capitalize;
+      box-shadow: none !important;
+    }
+
+    .fc .fc-button-primary:hover {
+      background-color: var(--primary-aqua);
+      border-color: var(--primary-aqua);
+    }
+
+    .fc .fc-button-primary:disabled {
+      background-color: #ccc;
+      border-color: #ccc;
+    }
+
+    .fc .fc-button-primary:not(:disabled).fc-button-active {
+      background-color: var(--accent-yellow);
+      border-color: var(--accent-yellow);
+      color: var(--dark-aqua);
+    }
+
+    .fc .fc-daygrid-body tr { height: 95px !important; }
+
+    .fc .fc-daygrid-day-frame {
+      height: 100% !important;
+      min-height: 95px !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 4px !important;
+      box-sizing: border-box;
+    }
+
+    .fc .fc-col-header-cell {
+      background: var(--accent-yellow);
+      color: var(--dark-aqua);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 6px 0;
+    }
+
+    .fc .fc-daygrid-day-number {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      padding: 4px 6px;
+    }
+
+    .fc-event {
+      background: transparent !important;
+      border: none !important;
+      padding: 1px 2px !important;
+      margin-bottom: 3px !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      white-space: normal !important;
+      word-break: break-word !important;
+      line-height: 1.25 !important;
+    }
+
+    .fc-event .fc-event-main {
+      white-space: normal !important;
+      overflow: visible !important;
+    }
+
+    .fc-event .fc-event-main,
+    .fc-event-title,
+    .fc-event-time {
+      color: var(--dark-aqua) !important;
+      font-weight: 600 !important;
+      font-size: 0.72rem !important;
+    }
+
+    .fc-event:hover {
+      background-color: rgba(28, 60, 62, 0.08) !important;
+      border-radius: 4px;
+    }
+
+    /* Day Tile Customizations */
+    .fc-daygrid-day.day-tile-pending { background-color: rgba(32, 178, 170, 0.22) !important; }
+    .fc-daygrid-day.day-tile-confirmed { background-color: rgba(39, 123, 72, 0.28) !important; }
+    .fc-daygrid-day.day-tile-completed { background-color: rgba(120, 120, 120, 0.22) !important; }
+
+    .fc-daygrid-day.day-tile-past { background-color: #e2e2e2 !important; }
+    .fc-daygrid-day.day-tile-past .fc-daygrid-day-number { color: #a0a0a0; }
+
+    .fc-daygrid-day.day-tile-past.day-tile-confirmed {
+      background-color: rgba(39, 123, 72, 0.20) !important;
+      border: 1.5px solid rgba(39, 123, 72, 0.5) !important;
+    }
+
+    .fc-daygrid-day.day-tile-past.day-tile-pending {
+      background-color: rgba(32, 178, 170, 0.18) !important;
+      border: 1.5px solid rgba(32, 178, 170, 0.4) !important;
+    }
+
+    .fc-day-today { background-color: rgba(255, 189, 0, 0.30) !important; }
+
+    .fc .fc-today-button {
+      background-color: var(--dark-aqua) !important;
+      border-color: var(--dark-aqua) !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      border-radius: 8px !important;
+      padding: 6px 14px !important;
+      text-transform: capitalize;
+      opacity: 1 !important;
+      transition: all 0.2s ease;
+    }
+
+    .fc .fc-today-button:hover:not(:disabled) {
+      background-color: var(--primary-aqua) !important;
+      border-color: var(--primary-aqua) !important;
+      color: #ffffff !important;
+      cursor: pointer;
+    }
+
+    .fc .fc-today-button:disabled {
+      background-color: rgba(32, 178, 170, 0.25) !important;
+      border-color: rgba(32, 178, 170, 0.3) !important;
+      color: var(--dark-aqua) !important;
+      cursor: default;
+    }
+
+    /* --- MODAL STYLING --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(45, 55, 72, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(12px);
+      transition: transform 0.25s ease;
+      overflow: hidden;
+    }
+
+    .modal-overlay.open .modal-card { transform: translateY(0); }
+
+    .modal-header {
+      background: var(--accent-yellow) !important;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(32, 178, 170, 0.2);
+    }
+
+    .modal-header h3 {
+      color: var(--dark-aqua);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--dark-aqua);
+      cursor: pointer;
+      line-height: 1;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close-btn:hover { background: rgba(63, 128, 131, 0.1); }
+
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed #edf2f7;
+    }
+
+    .modal-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .modal-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: #718096;
+    }
+
+    .modal-value {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+
+    .status-pill.PENDING { background: var(--light-aqua); color: var(--dark-aqua); }
+    .status-pill.CONFIRMED { background: #e6f4ea; color: var(--success-green); }
+    .status-pill.COMPLETED { background: #edf2f7; color: #4a5568; }
+    .status-pill.CANCELLED { background: #feebc8; color: #c05621; }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background: #fafdfd;
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .modal-footer button {
+      background: var(--dark-aqua);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .modal-footer button:hover { background: var(--primary-aqua); }
   </style>
 </head>
-<body class="bg-aqua-dark text-textDark font-sans min-h-screen antialiased">
+<body>
 
   <!-- LOGIN GATE -->
-  <div id="loginGate" class="flex items-center justify-center min-h-screen p-6">
-    <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-2xl w-full max-w-sm text-center border border-white/10">
-      <h1 class="text-2xl font-extrabold text-aqua-dark mb-2">Koolest Admin</h1>
-      <p class="text-gray-500 text-sm mb-6">Sign in with your authorized Google account to view bookings.</p>
-      
-      <div id="googleSignInBtn" class="flex justify-center min-h-[40px]"></div>
-      
-      <div class="text-errorRed text-xs font-medium mt-4 hidden" id="loginError">
-        This Google account is not authorized to access the admin dashboard.
-      </div>
-      <div class="text-aqua-dark text-xs font-medium mt-4 hidden" id="sessionExpiredMsg">
-        Your session has expired. Please sign in again.
-      </div>
+  <div id="loginGate">
+    <div class="login-box">
+      <h1>Koolest Admin</h1>
+      <p>Sign in with your authorized Google account to view bookings.</p>
+      <div id="googleSignInBtn"></div>
+      <div class="login-error" id="loginError">This Google account is not authorized to access the admin dashboard.</div>
+      <div class="session-expired-msg" id="sessionExpiredMsg">Your session has expired. Please sign in again.</div>
     </div>
   </div>
 
   <!-- MAIN DASHBOARD -->
-  <div id="dashboard" class="hidden p-4 sm:p-8 max-w-[1300px] mx-auto">
+  <div id="dashboard">
     <!-- Admin Navbar Header -->
-    <header class="bg-aqua-dark/95 backdrop-blur-md border-b border-accent-yellow/20 rounded-xl px-4 py-3.5 sm:px-6 mb-7 shadow-lg">
-      <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <header class="admin-navbar">
+      <div class="nav-container">
         <!-- Brand / Logo -->
-        <a href="../index.html" class="flex items-center gap-3 group">
-          <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="h-9 w-auto object-contain" />
-          <span class="text-accent-yellow text-xl font-extrabold tracking-tight group-hover:opacity-90 transition-opacity">
-            Koolest Admin
-          </span>
+        <a href="../index.html" class="nav-brand">
+          <img src="../public/assets/koolest_logo.png" alt="Koolest Logo" class="nav-logo" />
+          <span class="brand-name">Koolest Admin</span>
         </a>
 
         <!-- Quick Nav Links -->
-        <nav class="flex items-center gap-2 sm:gap-4">
-          <a href="../index.html" class="text-white hover:text-accent-yellow hover:bg-white/5 text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors">
-            Main Site
-          </a>
-          <a href="#bookingsTable" class="text-aqua-dark bg-accent-yellow text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors">
-            Bookings
-          </a>
-          <a href="#calendar" class="text-white hover:text-accent-yellow hover:bg-white/5 text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors">
-            Calendar
-          </a>
+        <nav class="nav-links">
+          <a href="../index.html" class="nav-link">Main Site</a>
+          <a href="#bookingsTable" class="nav-link active">Bookings</a>
+          <a href="#calendar" class="nav-link">Calendar</a>
         </nav>
 
         <!-- Actions & Profile Info -->
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-white/90 hidden md:inline-block font-medium" id="signedInAs"></span>
-          <button id="refreshBtn" class="bg-aqua-light text-aqua-dark border border-aqua-primary hover:bg-aqua-primary hover:text-white rounded-lg px-3.5 py-1.5 font-semibold text-xs transition-colors">
-            Refresh
-          </button>
-          <button id="signOutBtn" class="bg-errorRed/15 text-red-300 border border-errorRed/40 hover:bg-errorRed hover:text-white rounded-lg px-3.5 py-1.5 font-semibold text-xs transition-colors">
-            Sign Out
-          </button>
+        <div class="header-actions">
+          <span class="signed-in-as" id="signedInAs"></span>
+          <button id="refreshBtn">Refresh</button>
+          <button id="signOutBtn" class="btn-signout">Sign Out</button>
         </div>
       </div>
     </header>
 
     <!-- Table Section -->
-    <div class="bg-white rounded-xl shadow-md mb-8 overflow-hidden">
-      <div id="loadingState" class="text-center py-16 px-5 text-gray-500 font-medium">
-        Loading bookings...
-      </div>
-      
-      <div class="overflow-x-auto">
-        <table id="bookingsTable" class="w-full text-left text-xs sm:text-sm border-collapse hidden table-fixed">
-          <thead>
-            <tr class="bg-accent-yellow text-aqua-dark font-bold text-[11px] uppercase tracking-wider">
-              <th class="py-3 px-3 pl-6 w-[13%]">Full Name</th>
-              <th class="py-3 px-3 w-[15%]">Email</th>
-              <th class="py-3 px-3 w-[10%]">Phone</th>
-              <th class="py-3 px-3 w-[12%]">Service</th>
-              <th class="py-3 px-3 w-[15%]">Location</th>
-              <th class="py-3 px-3 w-[10%]">Schedule Date</th>
-              <th class="py-3 px-3 w-[15%]">Status</th>
-              <th class="py-3 px-3 pr-6 w-[10%]">Booked On</th>
-            </tr>
-          </thead>
-          <tbody id="bookingsBody" class="divide-y divide-gray-100"></tbody>
-        </table>
-      </div>
-
-      <div id="emptyState" class="text-center py-16 px-5 text-gray-500 font-medium hidden">
-        No bookings yet.
-      </div>
+    <div class="table-wrap">
+      <div id="loadingState" class="loading">Loading bookings...</div>
+      <table id="bookingsTable" style="display: none;">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Service</th>
+            <th>Location</th>
+            <th>Schedule Date</th>
+            <th>Status</th>
+            <th>Booked On</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsBody"></tbody>
+      </table>
+      <div id="emptyState" class="empty-state" style="display: none;">No bookings yet.</div>
     </div>
 
     <!-- Calendar View Section -->
-    <div class="bg-white rounded-xl p-5 shadow-md mb-8">
-      <h2 class="text-aqua-dark font-bold text-lg mb-3.5">Booking Schedule Calendar</h2>
-      <div id="calendar" class="w-full"></div>
+    <div class="calendar-card">
+      <h2>Booking Schedule Calendar</h2>
+      <div id="calendar"></div>
     </div>
   </div>
 
   <!-- Modern Details Modal -->
-  <div id="detailsModal" class="fixed inset-0 bg-textDark/40 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-250 z-50">
-    <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl transform translate-y-3 transition-transform duration-250 overflow-hidden">
-      <!-- Modal Header -->
-      <div class="bg-accent-yellow px-6 py-4 flex justify-between items-center border-b border-aqua-primary/20">
-        <h3 class="text-aqua-dark font-bold text-lg">Booking Details</h3>
-        <button id="modalCloseX" class="text-aqua-dark hover:bg-aqua-primary/10 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold transition-colors">
-          &times;
-        </button>
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Booking Details</h3>
+        <button class="modal-close-btn" id="modalCloseX">&times;</button>
       </div>
-
-      <!-- Modal Body -->
-      <div class="p-6 flex flex-col gap-4 text-sm">
-        <div class="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-200">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Client Name</span>
-          <span id="modalClientName" class="text-textDark font-semibold text-base">-</span>
+      <div class="modal-body">
+        <div class="modal-row">
+          <span class="modal-label">Client Name</span>
+          <span class="modal-value" id="modalClientName">-</span>
         </div>
-        <div class="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-200">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Service Type</span>
-          <span id="modalServiceType" class="text-textDark font-medium">-</span>
+        <div class="modal-row">
+          <span class="modal-label">Service Type</span>
+          <span class="modal-value" id="modalServiceType">-</span>
         </div>
-        <div class="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-200">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Scheduled Date</span>
-          <span id="modalScheduleDate" class="text-textDark font-medium">-</span>
+        <div class="modal-row">
+          <span class="modal-label">Scheduled Date</span>
+          <span class="modal-value" id="modalScheduleDate">-</span>
         </div>
-        <div class="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-200">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Location</span>
-          <span id="modalLocation" class="text-textDark font-medium">-</span>
+        <div class="modal-row">
+          <span class="modal-label">Location</span>
+          <span class="modal-value" id="modalLocation">-</span>
         </div>
-        <div class="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-200">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Phone Number</span>
-          <span id="modalPhone" class="text-textDark font-medium">-</span>
+        <div class="modal-row">
+          <span class="modal-label">Phone Number</span>
+          <span class="modal-value" id="modalPhone">-</span>
         </div>
-        <div class="flex flex-col gap-1">
-          <span class="text-[11px] uppercase tracking-wider font-bold text-gray-400">Status</span>
+        <div class="modal-row">
+          <span class="modal-label">Status</span>
           <div>
-            <span id="modalStatusPill" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase">
-              PENDING
-            </span>
+            <span class="status-pill" id="modalStatusPill">PENDING</span>
           </div>
         </div>
       </div>
-
-      <!-- Modal Footer -->
-      <div class="px-6 py-4 bg-gray-50 flex justify-end border-t border-gray-100">
-        <button id="modalCloseBtn" class="bg-aqua-dark hover:bg-aqua-primary text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">
-          Close
-        </button>
+      <div class="modal-footer">
+        <button id="modalCloseBtn">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript Logic -->
+  <!-- Consolidated JavaScript Logic -->
   <script>
     const GOOGLE_CLIENT_ID = "1027962690032-67mdn9rnofps2peorjbbqljhi9llpr78.apps.googleusercontent.com";
     const STATUS_OPTIONS = ["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"];
@@ -346,7 +806,7 @@
         });
       }
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && detailsModal && !detailsModal.classList.contains("pointer-events-none")) {
+        if (e.key === "Escape" && detailsModal && detailsModal.classList.contains("open")) {
           closeModal();
         }
       });
@@ -363,47 +823,34 @@
 
       if (modalStatusPill) {
         modalStatusPill.textContent = data.status || "PENDING";
-        
-        // Dynamically style status pill based on status
-        let pillStyles = "bg-aqua-light text-aqua-dark";
-        if (data.status === "CONFIRMED") pillStyles = "bg-emerald-100 text-successGreen";
-        if (data.status === "COMPLETED") pillStyles = "bg-gray-100 text-gray-600";
-        if (data.status === "CANCELLED") pillStyles = "bg-amber-100 text-amber-800";
-
-        modalStatusPill.className = `inline-block px-3 py-1 rounded-full text-xs font-bold uppercase ${pillStyles}`;
+        modalStatusPill.className = `status-pill ${data.status || 'PENDING'}`;
       }
 
-      // Tailwind modal trigger
-      detailsModal.classList.remove("opacity-0", "pointer-events-none");
-      const card = detailsModal.querySelector("div");
-      if (card) card.classList.remove("translate-y-3");
+      detailsModal.classList.add("open");
     }
 
     function closeModal() {
-      if (!detailsModal) return;
-      detailsModal.classList.add("opacity-0", "pointer-events-none");
-      const card = detailsModal.querySelector("div");
-      if (card) card.classList.add("translate-y-3");
+      if (detailsModal) detailsModal.classList.remove("open");
     }
 
     async function handleGoogleSignIn(response) {
       idToken = response.credential;
-      sessionExpiredMsg.classList.add("hidden");
+      sessionExpiredMsg.style.display = "none";
       const ok = await loadBookings(true);
       if (ok) {
         sessionStorage.setItem("koolest_admin_id_token", idToken);
         unlockDashboard();
       } else {
         idToken = null;
-        loginError.classList.remove("hidden");
+        loginError.style.display = "block";
       }
     }
 
     function unlockDashboard() {
-      loginGate.classList.add("hidden");
-      dashboard.classList.remove("hidden");
-      loginError.classList.add("hidden");
-      sessionExpiredMsg.classList.add("hidden");
+      loginGate.style.display = "none";
+      dashboard.style.display = "block";
+      loginError.style.display = "none";
+      sessionExpiredMsg.style.display = "none";
       initCalendar();
       loadBookings();
       try {
@@ -462,10 +909,10 @@
       if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
         google.accounts.id.disableAutoSelect();
       }
-      dashboard.classList.add("hidden");
-      loginGate.classList.remove("hidden");
-      loginError.classList.add("hidden");
-      sessionExpiredMsg.classList.remove("hidden");
+      dashboard.style.display = "none";
+      loginGate.style.display = "flex";
+      loginError.style.display = "none";
+      sessionExpiredMsg.style.display = "block";
       initGoogleSignIn();
     }
 
@@ -482,18 +929,18 @@
         if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
           google.accounts.id.disableAutoSelect();
         }
-        dashboard.classList.add("hidden");
-        loginGate.classList.remove("hidden");
-        loginError.classList.add("hidden");
-        sessionExpiredMsg.classList.add("hidden");
+        dashboard.style.display = "none";
+        loginGate.style.display = "flex";
+        loginError.style.display = "none";
+        sessionExpiredMsg.style.display = "none";
         initGoogleSignIn();
       });
     }
 
     async function loadBookings(isLoginAttempt = false) {
-      loadingState.classList.remove("hidden");
-      bookingsTable.classList.add("hidden");
-      emptyState.classList.add("hidden");
+      loadingState.style.display = "block";
+      bookingsTable.style.display = "none";
+      emptyState.style.display = "none";
 
       try {
         const res = await fetch("/api/admin/bookings", {
@@ -526,45 +973,43 @@
     }
 
     function renderBookings(bookings) {
-      loadingState.classList.add("hidden");
+      loadingState.style.display = "none";
 
       if (!bookings || bookings.length === 0) {
-        emptyState.classList.remove("hidden");
+        emptyState.style.display = "block";
         return;
       }
 
       const sorted = sortWithCompletedLast(bookings);
 
-      bookingsTable.classList.remove("hidden");
+      bookingsTable.style.display = "table";
       bookingsBody.innerHTML = "";
 
       sorted.forEach((booking) => {
         const row = document.createElement("tr");
-        row.className = "hover:bg-aqua-light transition-colors border-b border-gray-100";
-
         if (booking.status === "COMPLETED") {
-          row.className += " bg-emerald-500/5 hover:bg-emerald-500/10 border-l-4 border-l-successGreen";
+          row.classList.add("row-completed");
         }
 
         const scheduleDate = new Date(booking.bookingDate).toLocaleDateString();
         const bookedOn = new Date(booking.createdAt).toLocaleDateString();
 
         row.innerHTML = `
-          <td class="py-2.5 px-3 pl-6 font-medium break-words">${escapeHtml(booking.fullName || "-")}</td>
-          <td class="py-2.5 px-3 break-words">${escapeHtml(booking.email)}</td>
-          <td class="py-2.5 px-3 break-words">${escapeHtml(booking.phone)}</td>
-          <td class="py-2.5 px-3 break-words font-medium text-aqua-dark">${escapeHtml(booking.serviceType)}</td>
-          <td class="py-2.5 px-3 break-words">${escapeHtml(booking.location || "-")}</td>
-          <td class="py-2.5 px-3 break-words font-medium">${scheduleDate}</td>
-          <td class="py-2.5 px-3 break-words">
-            <select class="status-select py-1 px-2 text-xs rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-aqua-primary bg-white cursor-pointer" data-id="${booking.id}">
+          <td>${escapeHtml(booking.fullName || "-")}</td>
+          <td>${escapeHtml(booking.email)}</td>
+          <td>${escapeHtml(booking.phone)}</td>
+          <td>${escapeHtml(booking.serviceType)}</td>
+          <td>${escapeHtml(booking.location || "-")}</td>
+          <td>${scheduleDate}</td>
+          <td>
+            <select class="status-select" data-id="${booking.id}">
               ${STATUS_OPTIONS.map(
                 (s) => `<option value="${s}" ${s === booking.status ? "selected" : ""}>${s}</option>`
               ).join("")}
             </select>
-            <span class="save-indicator text-[11px] text-successGreen font-semibold block transition-opacity opacity-0" id="save-${booking.id}">Saved!</span>
+            <span class="save-indicator" id="save-${booking.id}">Saved!</span>
           </td>
-          <td class="py-2.5 px-3 pr-6 break-words text-gray-500">${bookedOn}</td>
+          <td>${bookedOn}</td>
         `;
 
         bookingsBody.appendChild(row);
@@ -605,8 +1050,8 @@
 
           const indicator = document.getElementById(`save-${id}`);
           if (indicator) {
-            indicator.classList.remove("opacity-0");
-            setTimeout(() => indicator.classList.add("opacity-0"), 1500);
+            indicator.classList.add("show");
+            setTimeout(() => indicator.classList.remove("show"), 1500);
           }
         }
       } catch (err) {
