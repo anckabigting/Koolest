@@ -1,9 +1,8 @@
-import { feedbackSchema } from "../src/assets/libs/validations/feedback.js";
-import { prisma } from "../src/assets/libs/prisma.js";
-import { ratelimit } from "../src/assets/libs/ratelimit.js";
+import { feedbackSchema } from "../src/libs/validations/feedback.js";
+import { prisma } from "../src/libs/prisma.js";
+import { ratelimit } from "../src/libs/ratelimit.js";
 
 export default async function handler(req, res) {
-  // 1. Enforce POST Method
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -12,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 2. Safe IP resolution & Rate limiting
+    // 1. Safe Rate Limiting
     if (ratelimit) {
       try {
         const xForwardedFor = req.headers["x-forwarded-for"];
@@ -28,31 +27,25 @@ export default async function handler(req, res) {
           });
         }
       } catch (rateLimitErr) {
-        console.warn("Rate limit check failed, proceeding without rate limit:", rateLimitErr);
+        console.warn("Rate limit error (bypassed):", rateLimitErr);
       }
     }
 
-    // 3. Safe Request Body Parsing
+    // 2. Safe Parsing
     let body = req.body;
     if (typeof body === "string") {
       try {
         body = JSON.parse(body);
-      } catch (parseError) {
-        return res.status(400).json({
-          success: false,
-          error: "Invalid JSON format in request body.",
-        });
+      } catch (e) {
+        return res.status(400).json({ success: false, error: "Invalid JSON format." });
       }
     }
 
     if (!body || typeof body !== "object") {
-      return res.status(400).json({
-        success: false,
-        error: "Empty or invalid payload.",
-      });
+      return res.status(400).json({ success: false, error: "Invalid request payload." });
     }
 
-    // 4. Validate with Zod
+    // 3. Validation
     const validationResult = feedbackSchema.safeParse(body);
     if (!validationResult.success) {
       return res.status(400).json({
@@ -64,11 +57,11 @@ export default async function handler(req, res) {
 
     const { name, rating, message } = validationResult.data;
 
-    // 5. Save to Prisma Database (Ensure rating is an Integer)
+    // 4. Save to Database
     const newFeedback = await prisma.feedback.create({
       data: {
         name,
-        rating: Number(rating), // Explicitly parse as number for Prisma Int/Float
+        rating: Number(rating),
         message,
       },
     });
@@ -78,10 +71,8 @@ export default async function handler(req, res) {
       message: "Feedback submitted successfully!",
       data: newFeedback,
     });
-
   } catch (error) {
     console.error("Feedback Handler Error:", error);
-
     return res.status(500).json({
       success: false,
       error: "Internal Server Error",
