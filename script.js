@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 7. Feedback Form Submission
+ // 7. Feedback Form Submission
   const feedbackForm = document.getElementById("feedbackForm");
   const feedbackFieldInputMap = {
     name: () => document.getElementById("clientName"),
@@ -335,7 +336,16 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify(formData),
         });
 
-        const data = await response.json();
+        // SAFE PARSING: Handle Non-JSON HTML/Text server errors gracefully
+        let data;
+        const contentType = response.headers.get("content-type");
+
+        if (contentType && contentType.includes("application/json")) {
+          data = await response.json();
+        } else {
+          const rawText = await response.text();
+          throw new Error(rawText || `Server returned error status ${response.status}`);
+        }
 
         if (!response.ok || !data.success) {
           console.error("Feedback submission error:", data.details || data.error);
@@ -346,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showFeedbackSuccess();
       } catch (err) {
         console.error("Feedback API request failed:", err);
-        showFeedbackGenericError(`Something went wrong: ${err.message}`);
+        showFeedbackGenericError(err.message || "Something went wrong. Please try again.");
       }
     });
   }
