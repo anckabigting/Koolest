@@ -1,107 +1,89 @@
-# Koolest
+
+# Koolest 
+
 ![Koolest](./src/assets/Koolest-main.png)
 
-[![Status](https://img.shields.io/badge/Status-Deployed-00C853)](https://koolest.vercel.app)
-[![Audience](https://img.shields.io/badge/Audience-Homeowners%20%26%20Businesses-purple)](https://koolest.vercel.app)
-[![Platform](https://img.shields.io/badge/Type-Web%20Application-blue)](https://koolest.vercel.app)
+[![Status](https://img.shields.io/badge/Status-Deployed-00C853?style=for-the-badge&logo=vercel)](https://koolest.vercel.app)
+[![Audience](https://img.shields.io/badge/Audience-Homeowners%20%26%20Businesses-7B2CBF?style=for-the-badge)](https://koolest.vercel.app)
+[![Platform](https://img.shields.io/badge/Type-Web%20Application-0284C7?style=for-the-badge)](https://koolest.vercel.app)
 
 **Live Site:** [koolest.vercel.app](https://koolest.vercel.app)
 ---
-A high-conversion landing page and booking system for **Koolest Aircon & Appliance Services** (Dasmariñas, Cavite, Philippines). Engineered with a modern aesthetic, real-time input formatting, strict server-side validation, rate-limiting, and an automated PostgreSQL database pipeline with a Google-authenticated Admin Dashboard for end-to-end service management.
+
+A web-based booking and administrative management application for **Koolest Aircon Services**, enabling customers to schedule air conditioning services online and providing administrators with a secure dashboard to manage appointments, track schedules via an interactive calendar, send automatic email notifications, and handle customer feedback and issue reports.
+
 ---
 # Preview & Showcase
 ![Koolest-booking](./src/assets/Koolest-booking.png)
 ---
 ![Koolest-feedback](./src/assets/Koolest-feedback.png)
-
 ---
 
 # Key Features
 
-* **Modern & Responsive UI/UX:** Built with an Aqua Blue, Cream, and Soft Yellow visual language optimized for high contrast, readability, and mobile responsiveness.
-* **Live Automated Booking Pipeline:** Captures appointments with real-time field masks (live Proper Case full-name auto-capitalization and strict 11-digit phone formatting) submitted asynchronously via `fetch`.
-* **Smart Booking Boundary Checks & Anti-Abuse:** 
+### Public & Customer Facing
+* **Modern & Responsive UI/UX:** Built with a Deep Teal, Bright Cyan, and Crisp White visual language optimized for high contrast, readability, and mobile responsiveness across all devices.
+* **Interactive Service Booking Pipeline:** Step-by-step booking form allowing customers to select services, choose dates/times, and submit contact details.
+* **Live Automated Input Formatting:** Features real-time field masks including live Proper Case full-name auto-capitalization and strict 11-digit phone formatting, submitted asynchronously via `fetch`.
+* **Smart Booking Boundary Checks & Anti-Abuse:**
   * Prevents past dates and enforces a minimum 1-day advance notice window.
   * Caps far-future bookings to a 90-day maximum limit.
   * Prevents overbooking by capping daily total submissions (5 slots/day) and blocking exact duplicate client slots.
-* **Rate Limiting & Protection:** Leverages Upstash Redis (`@upstash/ratelimit`) with sliding-window rate limiting per IP address to prevent spam and DDoS attempts.
-* **Native Inline Validation UX:** Connects server-side validation responses directly to HTML5 constraint validation (`setCustomValidity()` and `reportValidity()`), anchoring error tooltips to specific form inputs.
-* **Google OAuth Protected Admin Dashboard:** Secured `/admin.html` control panel for managing bookings (status workflows: `PENDING` → `CONFIRMED` → `COMPLETED` / `CANCELLED`), viewing customer feedback, and inspecting issue escalation reports.
-* **Granular Identity Verification:** Server-side token verification using `google-auth-library` ensuring only the designated `ADMIN_EMAIL` can view or update records. Includes auto-logout on a 15-minute inactivity timer.
-* **Escalation & Feedback System:** Integrated endpoints for handling customer issue reporting and service feedback collection.
+* **Rate Limiting & Spam Protection:** Leverages Upstash Redis (`@upstash/ratelimit`) with sliding-window rate limiting per IP address to prevent spam and DDoS attempts.
+* **Native Inline Validation UX:** Connects server-side validation responses directly to HTML5 constraint validation (`setCustomValidity()` and `reportValidity()`), anchoring error tooltips directly to specific form inputs.
+* **Data Privacy Act (DPA) Compliance:** Integrated DPA / Privacy Policy consent checkbox and explicit modal to ensure customer data handling compliance prior to submission.
+* **Customer Feedback & Rating System:** Dedicated interface for customers to rate services and leave feedback.
+* **Escalation & Issue Reporting:** Integrated endpoints and quick reporting tools for customers to log service or technical issues.
 
 ---
 
-## Tech Stack
+### Admin Dashboard & Management
+* **Google OAuth Protected Control Panel:** Secured `/admin.html` dashboard for managing bookings, customer feedback, and issue escalation reports.
+* **Granular Identity Verification:** Server-side token verification using `google-auth-library` ensuring only the designated `ADMIN_EMAIL` can view or update records.
+* **Interactive Admin Calendar View:** Full-month and week schedule visualization powered by FullCalendar, featuring whole-day tile color coding by booking status (e.g., green for confirmed, muted for past dates) and click-to-view detail modals.
+* **Real-time Booking Table UX:** Filterable and sortable table of all bookings, with completed bookings automatically sorted to the bottom with green status highlights.
+* **Status Workflows & Email Notifications:** Manage booking lifecycles (`PENDING` → `CONFIRMED` → `COMPLETED` / `CANCELLED`) with automatic customer notification emails sent via Resend API (includes a developer test mode).
+* **Feedback & Issue Management:** Dedicated admin tabs to review, process, and resolve submitted customer feedback and issue reports.
+* **Search Engine Shielding:** Configured `robots.txt` and `<meta name="robots" content="noindex, nofollow">` on admin interfaces to prevent search engine indexing.
 
-* **Frontend:** HTML5, CSS3 (Custom CSS Properties, Flexbox, CSS Grid, Keyframe Animations), Vanilla JavaScript (ES6+).
-* **Backend:** Vercel Serverless Functions (Node.js runtime, ES Modules `.mjs`).
+---
+
+# Tech Stack & Architecture
+
+* **Frontend:** HTML5, Tailwind CSS (compiled via CLI to `public/output.css`), Vanilla JavaScript (ES6+), FullCalendar.js.
+* **Backend:** Node.js, Express.js / Vercel Serverless Functions (ES Modules `.mjs`).
 * **Database & ORM:** Neon Serverless PostgreSQL with Prisma ORM using `@prisma/adapter-neon` and `TIMESTAMPTZ` timezone support set to `Asia/Manila`.
 * **Validation:** Zod Schema Validation (`booking.js`).
 * **Rate Limiting:** Upstash Redis REST API (`@upstash/redis`, `@upstash/ratelimit`).
+* **Email Service:** Resend API.
 * **Authentication:** Google Identity Services (GIS) Client SDK + Server-side Verification (`google-auth-library`).
-* **Deployment & Hosting:** Vercel Platform.
+* **Deployment & Hosting:** Vercel Platform (Serverless Functions & Static Hosting).
 
 ---
 
-## System Architecture
+# Security & Session Management
 
-```
-┌─────────────────────────┐      ┌──────────────────────────────┐      ┌─────────────────────────────┐
-│       index.html        │      │      /api/bookings.mjs       │      │       Neon Postgres         │
-│  (Public Booking Form)  │────▶ │  (Validates, Rate Limits,    │────▶ │  (Prisma + @prisma/adapter- │
-└─────────────────────────┘      │   Checks Limits & Inserts)   │      │   neon with Timestamptz)    │
-                                 └──────────────────────────────┘      └─────────────────────────────┘
-                                                │
-                                                ▼
-                                 ┌──────────────────────────────┐
-                                 │        Upstash Redis         │
-                                 │    (Sliding Rate Limiter)    │
-                                 └──────────────────────────────┘
-
-┌─────────────────────────┐      ┌──────────────────────────────┐
-│       admin.html        │      │   /api/admin/bookings.mjs    │
-│  (Google Sign-In        │────▶ │   /api/admin/update-status   │
-│   Protected Dashboard)  │      │   (Verifies Google ID Token) │
-└─────────────────────────┘      └──────────────────────────────┘
-```
+* **Dual-Layer Session Security:**
+  * **Inactivity Protection:** 15-minute automatic inactivity timer that clears sessions upon idle detection.
+  * **Token Expiry Lifecycle:** Proactively manages the ~1-hour Google ID Token expiry window via re-authentication timers and reactive `401`/`403` status handling on API requests.
+* **Backend Authentication Middleware:** Verifies Google JWT ID Tokens against allowed admin Google accounts on every API request.
+* **Deployment Security Headers:** Configured via `vercel.json` (Content Security Policy (CSP), `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`) to harden the application against cross-site scripting (XSS) and clickjacking.
 
 ---
 
-## Project Structure
-
-```
-├── api/
-│   ├── bookings.mjs             # Public booking endpoint (validations, date bounds & limits)
-│   ├── feedback.mjs             # Public feedback submission endpoint
-│   ├── issues.mjs               # Public issue reporting endpoint
-│   └── admin/
-│       ├── _verifyAdmin.js      # Shared middleware helper for Google OAuth ID token check
-│       ├── bookings.mjs         # Protected endpoint: Fetch all customer bookings
-│       ├── feedback.mjs         # Protected endpoint: Fetch customer feedback
-│       ├── issues.mjs           # Protected endpoint: Fetch customer issue reports
-│       └── update-status.mjs    # Protected endpoint: Update booking lifecycle status
-├── src/
-│   └── assets/
-│       └── libs/
-│           ├── validations/
-│           │   └── booking.js   # Zod validation schema definition
-│           ├── prisma.js        # Prisma Client initialization with Neon adapter
-│           └── ratelimit.js     # Upstash Redis rate limiter setup
-├── prisma/
-│   └── schema.prisma            # PostgreSQL models (Booking, Feedback, IssueReport)
-├── index.html                   # Main customer landing page & booking modal
-├── admin.html                   # Protected management portal
-├── script.js                    # Client-side form formatting, modal controls, and state management
-├── style.css                    # Design system and responsive layout styling
-└── vercel.json                  # Vercel deployment configuration
-```
-
----
-
-## Database Schema Highlights
+## Database Schema (Prisma)
 
 ```prisma
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
 enum BookingStatus {
   PENDING
   CONFIRMED
@@ -110,60 +92,190 @@ enum BookingStatus {
 }
 
 model Booking {
-  id          String        @id @default(cuid())
-  email       String
+  id          String   @id @default(cuid())
+  email       String    
   phone       String
-  bookingDate DateTime      @db.Timestamptz(6)
-  createdAt   DateTime      @default(now()) @db.Timestamptz(6)
-  updatedAt   DateTime      @updatedAt @db.Timestamptz(6)
-  fullName    String?
-  serviceType String
-  location    String?
-  notes       String?
+  bookingDate DateTime @map("bookingDate")
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  fullName    String?   @map("fullName")
+  serviceType String   @map("serviceType")
+  notes String? @map("notes")
+  location    String?        @map("location")
   status      BookingStatus @default(PENDING)
 
-  @@map("Booking")
+  @@map("Booking") // Ensures Prisma targets the exact "Booking" table name
 }
+
+model Feedback {
+  id        String   @id @default(cuid())
+  name      String
+  rating    Int
+  message   String
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("Feedback")
+}
+
+enum IssueType {
+  BROKEN_LINK_OR_BUTTON
+  VISUAL_LAYOUT_GLITCH
+  FORM_SUBMISSION_ERROR
+  MOBILE_SCREEN_DISPLAY
+  OTHER_WEBSITE_BUG
+}
+
+model IssueReport {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String
+  issueType IssueType
+  details   String
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("IssueReport")
+}
+
+
+
+
 ```
 
 ---
 
-## Development Setup
+## Project Structure
 
-### Prerequisites
-* Node.js (v18+ recommended)
-* Vercel CLI (`npm install -g vercel`)
-* Neon PostgreSQL Database Instance
-* Upstash Redis Instance
+```text
+koolest/
+├── api/                   # Express.js backend & serverless endpoints
+│   ├── admin           # Server entry point & route registration
+│   └── client
+├── admin/
+│   └── admin.html
+├── genrated/prisma
+│   └── schema.prisma      # Database schema definitions
+├── public/                # Static assets & public web pages
+│   ├── assets
+│   ├── admin.html         # Secure admin dashboard & calendar view
+│   ├── report-issue.html  # Issue reporting page
+│   ├── output.css         # Compiled Tailwind CSS output
+│   ├── js                # Client-side JS scripts (booking, admin, fullcalendar logic)
+│   │   └── report-issue.js
+│   └── robots.txt         # Crawler disallow configuration for admin routes
+├── src/
+│   ├── assets
+│   │   ├── libs
+│   │   │   ├── validations  # Bookings, Feddback and Report Page Zod validation
+│   │   │   │   ├── booking.js
+│   │   │   │   ├── feedback.js
+│   │   │   │   ├── issue.js
+│   │   │   │   ├── test-validation.ts
+│   │   │   ├── email.js
+│   │   │   ├── prisma.js
+│   │   │   ├── ratelimit.js
+│   │   │   ├── ratelimit.ts
+│   │   ├── // assets here
+│   └── generated          # Tailwind CSS source entry file
+│   │   └── input.css
+├── .gitignore
+├── index.html
+├── package.json           # Dependencies and build scripts
+├── package-lock.json      # Dependencies and build scripts
+├── prisma.config.ts
+├── script.js
+├── skills-lock.json
+├── vercel.json            # Deployment routing & security headers configuration
+├── tailwind.config.js     # Tailwind CSS configuration
+├── tsconfig.json           
+├── .env.local 
+└── .env                   # Environment variables (git-ignored)
 
-Create a `.env` file in the root directory:
-
-```env
-DATABASE_URL="postgresql://user:password@ep-example.neon.tech/neondb?sslmode=require&options=-c%20timezone=Asia/Manila&channel_binding=require"
-DIRECT_URL="postgresql://user:password@ep-example.neon.tech/neondb?sslmode=require"
-UPSTASH_REDIS_REST_URL="https://your-redis.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="your_upstash_token"
-GOOGLE_CLIENT_ID="your_google_oauth_client_id.apps.googleusercontent.com"
-ADMIN_EMAIL="authorized_admin@gmail.com"
 ```
 
-### Database Migration
-Generate the Prisma Client and push your schema to Neon:
+---
 
+## Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/koolest_db?schema=public"
+
+# Google Auth
+GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+ALLOWED_ADMIN_EMAILS="admin1@gmail.com,admin2@gmail.com"
+
+# Resend Email Integration
+RESEND_API_KEY="re_123456789..."
+FROM_EMAIL="Koolest Aircon Services <onboarding@resend.dev>"
+
+# Email Testing Mode (Redirects all outbound status emails to developer during staging)
+EMAIL_TEST_MODE="true"
+TEST_RECIPIENT_EMAIL="your-test-email@example.com"
+
+```
+
+---
+
+## Build & Local Development Setup
+
+1. **Install Dependencies:**
+```bash
+npm install
+
+```
+
+
+2. **Generate Prisma Client & Run Migrations:**
 ```bash
 npx prisma generate
 npx prisma db push
+
 ```
 
-### Running Locally
-Start the local serverless development environment using the Vercel CLI:
 
+3. **Build Tailwind CSS:**
+For local development watch mode:
 ```bash
-vercel dev
+npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
+
 ```
+
+
+For production build:
+```bash
+npx tailwindcss -i ./src/input.css -o ./public/output.css --minify
+
+```
+
+
+4. **Start Development Server:**
+```bash
+npm run dev
+
+```
+
+
+
+---
+
+## Vercel Deployment Notes
+
+* **Build Command:** Configure Vercel's Build Command in Project Settings to run the Tailwind compilation step alongside Prisma generation:
+```bash
+npx tailwindcss -i ./src/input.css -o ./public/output.css --minify && npx prisma generate
+
+```
+
+
+* **Output Directory:** Default static output serves from `public/`.
+* **Environment Variables:** Ensure all keys listed under **Environment Configuration** are registered in the Vercel Dashboard Settings.
 
 ---
 
 ## License
 
 This project is proprietary software developed for Koolest Aircon & Appliance Services. All rights reserved.
+
+
+
