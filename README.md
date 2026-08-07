@@ -9,14 +9,14 @@
 ---
 A high-conversion landing page and booking system for **Koolest Aircon & Appliance Services** (Dasmariñas, Cavite, Philippines). Engineered with a modern aesthetic, real-time input formatting, strict server-side validation, rate-limiting, and an automated PostgreSQL database pipeline with a Google-authenticated Admin Dashboard for end-to-end service management.
 ---
-## Preview & Showcase
+# Preview & Showcase
 ![Koolest-booking](./src/assets/Koolest-booking.png)
 ---
 ![Koolest-feedback](./src/assets/Koolest-feedback.png)
 
 ---
 
-## Key Features
+# Key Features
 
 * **Modern & Responsive UI/UX:** Built with an Aqua Blue, Cream, and Soft Yellow visual language optimized for high contrast, readability, and mobile responsiveness.
 * **Live Automated Booking Pipeline:** Captures appointments with real-time field masks (live Proper Case full-name auto-capitalization and strict 11-digit phone formatting) submitted asynchronously via `fetch`.
