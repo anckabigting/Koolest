@@ -1,13 +1,13 @@
 # Koolest
 ![Koolest](./src/assets/Koolest-main.png)
+
+A high-conversion landing page and booking system for **Koolest Aircon & Appliance Services** (Dasmariñas, Cavite, Philippines). Engineered with a modern aesthetic, real-time input formatting, strict server-side validation, rate-limiting, and an automated PostgreSQL database pipeline with a Google-authenticated Admin Dashboard for end-to-end service management.
 ---
 ## Preview & Showcase
 ![Koolest-booking](./src/assets/Koolest-booking.png)
 ---
 ![Koolest-feedback](./src/assets/Koolest-feedback.png)
-
-A high-conversion landing page and booking system for **Koolest Aircon & Appliance Services** (Dasmariñas, Cavite, Philippines). Engineered with a modern aesthetic, real-time input formatting, strict server-side validation, rate-limiting, and an automated PostgreSQL database pipeline with a Google-authenticated Admin Dashboard for end-to-end service management.
-
+---
 [![Status](https://img.shields.io/badge/Status-Deployed-00C853)](https://koolest.vercel.app)
 [![Audience](https://img.shields.io/badge/Audience-Homeowners%20%26%20Businesses-purple)](https://koolest.vercel.app)
 [![Platform](https://img.shields.io/badge/Type-Web%20Application-blue)](https://koolest.vercel.app)
